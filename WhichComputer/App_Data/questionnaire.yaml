@@ -1,0 +1,123 @@
+---
+questions:
+  - prompt: How proficient would you say you are with computers?
+    id: 1
+    explanation: We will keep this knowledge level in mind when prompting you with questions.
+    follow-up: 2
+    answers:
+      - choice: Novice
+        tags:
+          - novice
+      - choice: Intermediate
+        tags:
+          - intermediate
+      - choice: Expert
+        tags:
+          - expert
+  - prompt: Are you looking for a laptop or a desktop?
+    id: 2
+    explanation: We will keep this in mind when prompting you with questions.
+    follow-up: 3
+    answers:
+      - choice: Laptop
+        tags:
+          - laptop
+      - choice: Desktop
+        tags:
+          - destkop
+  - prompt: What would you use this computer for?
+    id: 3
+    explanation: We want to get a better idea of what you need.
+    answers:
+      - choice: Browsing the Internet only
+        explanation: For if you don't see yourself using this machine often, and only really need to browse the Internet.
+        follow-up: 4
+        tags:
+          - low-use
+          - office
+          - browser-focused
+          - minimal
+      - choice: A few applications, but nothing too intensive
+        follow-up: 5
+        explanation: For if you would like to install more than just office applications on your computer, but don't intend on doing much gaming or graphic-intensive activities.
+        tags:
+          - low-use
+          - lightweight
+          - casual
+      - choice: Everything! I'm a power user
+        follow-up: 5
+        explanation: For if you use technology frequently, and want something that can serve and last you for a good while, but don't need top-quality graphics
+        tags:
+          - high-use
+          - casual
+      - choice: Gaming, rendering - only the best!
+        explanation: For if you use technology frequently, and need something with a lot of space and graphic capabilities
+        follow-up: -1
+        tags:
+          - high-use
+          - professional
+          - graphics
+          - gaming
+          - high-storage
+  - prompt: Do you download applications regularly?
+    id: 4
+    explanation: we want to know if you'd like a computer that only supports a few applications.
+    answers:
+      - choice: No
+        follow-up: -1
+        explanation: >
+          Though restrictions may seem like a negative thing, if you're generally inexperienced with computers and/or concerned about scams and hacks,
+          having a computer that only supports the browser may be right for you.
+        tags:
+          - low-use
+          - minimal
+          - browser-focused
+          - lightweight
+          - office
+      - choice: Yes
+        explanation: For if you would prefer a computer that can download and run applications.
+        follow-up: 5
+        tags:
+          - no-chromebook
+  - prompt: How much storage space do you need?
+    id: 5
+    explanation: We want to know how much you'll need to do your tasks.
+    follow-up: -1
+    answers:
+      - choice: A small amount
+        explanation: >
+          For if you only use applications like Microsoft Office, and don't really need to have many large items on the computer at once
+        tags:
+          - minimal
+          - lightweight
+          - small-storage
+      - choice: A decent amount
+        explanation: > 
+          For if you have to keep a few large applications or large files (20GB+) on your computer constantly, but don't foresee yourself ever needing the amount of storage
+          that an expensive computer comes with.
+        tags:
+          - medium-storage
+      - choice: A lot
+        explanation: For if you have to keep many very large files (50GB+) on your computer constantly.
+        tags:
+          - high-storage
+tags:
+  - novice
+  - intermediate
+  - expert
+  - laptop
+  - desktop
+  - low-use
+  - office
+  - browser-focused
+  - minimal
+  - lightweight
+  - casual
+  - high-use
+  - professional
+  - graphics
+  - gaming
+  - small-storage
+  - medium-storage
+  - high-storage
+  - no-chromebook

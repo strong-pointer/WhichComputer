@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\WhichComputer",
+    "\\WhichComputer\\App_Data",
+    "\\WhichComputer\\App_Start"
   ],
+  "SelectedNode": "\\WhichComputer\\App_Start\\FilterConfig.cs",
   "PreviewInSolutionExplorer": false
 }
