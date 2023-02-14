@@ -1,10 +1,13 @@
+using Westwind.AspNetCore.LiveReload;
+
 namespace WhichComputer
 {
     public class Program
     {
+        private static QuestionnaireLoader loader = QuestionnaireLoader.Instance;
         public static void Main(string[] args)
         {
-            var questionnaire = QuestionnaireLoader.LoadQuestionnaire(File.ReadAllText(QuestionnaireLoader.LOCAL_PATH));
+            Console.WriteLine(loader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -19,6 +22,16 @@ namespace WhichComputer
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            else
+            {
+                builder.Services.AddLiveReload(config =>
+                {
+                    // optional - use config instead
+                    //config.LiveReloadEnabled = true;
+                    //config.FolderToMonitor = Path.GetFullname(Path.Combine(Env.ContentRootPath,"..")) ;
+                });
+                app.UseLiveReload();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -30,7 +43,6 @@ namespace WhichComputer
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
             app.Run();
         }
     }

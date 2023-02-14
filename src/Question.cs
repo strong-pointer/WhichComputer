@@ -9,8 +9,8 @@ namespace WhichComputer.App_Start
     {
         public string prompt;
         public int id;
-        public string explanation;
-        public int follow_up;
-        public List<Answer> answers;
+        public string explanation = String.Empty;
+        public List<int> follow_up = new();
+        public List<Answer> answers = new();
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhichComputer", "WhichComputer\WhichComputer.csproj", "{8CC15519-D245-4C5E-88B4-A6196CC7E45A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhichComputer", "WhichComputer.csproj", "{8CC15519-D245-4C5E-88B4-A6196CC7E45A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

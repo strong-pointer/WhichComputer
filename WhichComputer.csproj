@@ -7,7 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
       <PackageReference Include="YamlDotNet" Version="13.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+        <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+        <UpToDateCheckBuilt Include="wwwroot/css/output.css" Set="Css" />
+        <UpToDateCheckBuilt Include="postcss.config.js" Set="Css" />
+        <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+    </ItemGroup>
+
+    <Target Name="Tailwind" BeforeTargets="Build">
+        <Exec Command="npm run css:build" />
+    </Target>
 
 </Project>
