@@ -1,5 +1,5 @@
-using WhichComputer.App_Start;
 using System.Linq;
+using WhichComputer.App_Start;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -7,11 +7,15 @@ namespace WhichComputer
 {
     public class QuestionnaireLoader
     {
-        public static Questionnaire Questions { get; private set; }
         private QuestionnaireLoader()
         {
             Questions = LoadQuestionnaire(File.ReadAllText("data/questionnaire.yaml"));
         }
+
+        public static Questionnaire? Questions { get; private set; }
+
+        public static QuestionnaireLoader Instance { get; } = new QuestionnaireLoader();
+
         private Questionnaire LoadQuestionnaire(string yaml)
         {
             var deserializer = new DeserializerBuilder()
@@ -19,18 +23,17 @@ namespace WhichComputer
             .Build();
 
             Questionnaire data = deserializer.Deserialize<Questionnaire>(yaml);
-            foreach (Question question in data.questions)
+            foreach (Question question in data.Questions)
             {
-                bool sameFollowUp = question.follow_up.Count != 0;
-                question.answers.ForEach(answer =>
+                bool sameFollowUp = question.FollowUp.Count != 0;
+                question.Answers.ForEach(answer =>
                 {
-                    if (sameFollowUp) answer.follow_up = question.follow_up;
+                    if (sameFollowUp)
+                        answer.FollowUp = question.FollowUp;
                 });
             }
+
             return data;
         }
-        
-        public static QuestionnaireLoader Instance { get; } = new QuestionnaireLoader();
-
     }
 }

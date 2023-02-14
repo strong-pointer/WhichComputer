@@ -7,17 +7,17 @@ namespace WhichComputer.App_Start
 {
     public class Questionnaire
     {
-        public List<Question> questions = new();
-        public List<string> tags = new();
+        public List<Question> Questions = new();
+        public List<string> Tags = new();
 
         public Question? GetFirstQuestion()
         {
-            return questions.Find(question => question.id == 1);
+            return Questions.Find(question => question.Id == 1);
         }
 
         public List<Question> GetFollowUpQuestions(Answer answer)
         {
-            return questions.Where(q => answer.follow_up.Contains(q.id)).ToList();
+            return Questions.Where(q => answer.FollowUp.Contains(q.Id)).ToList();
         }
     }
 }

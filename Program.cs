@@ -4,10 +4,9 @@ namespace WhichComputer
 {
     public class Program
     {
-        private static QuestionnaireLoader loader = QuestionnaireLoader.Instance;
+        // private static QuestionnaireLoader _loader = QuestionnaireLoader.Instance;
         public static void Main(string[] args)
         {
-            Console.WriteLine(loader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -19,17 +18,13 @@ namespace WhichComputer
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             else
             {
-                builder.Services.AddLiveReload(config =>
-                {
-                    // optional - use config instead
-                    //config.LiveReloadEnabled = true;
-                    //config.FolderToMonitor = Path.GetFullname(Path.Combine(Env.ContentRootPath,"..")) ;
-                });
+                builder.Services.AddLiveReload();
                 app.UseLiveReload();
             }
 

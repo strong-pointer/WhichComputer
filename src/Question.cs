@@ -7,10 +7,10 @@ namespace WhichComputer.App_Start
 {
     public class Question
     {
-        public string prompt;
-        public int id;
-        public string explanation = String.Empty;
-        public List<int> follow_up = new();
-        public List<Answer> answers = new();
+        public string? Prompt;
+        public int Id;
+        public string Explanation = string.Empty;
+        public List<int> FollowUp = new();
+        public List<Answer> Answers = new();
     }
 }

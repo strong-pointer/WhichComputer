@@ -4,9 +4,15 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.4.2" />
       <PackageReference Include="YamlDotNet" Version="13.0.0" />
     </ItemGroup>
@@ -20,6 +26,10 @@
 
     <Target Name="Tailwind" BeforeTargets="Build">
         <Exec Command="npm run css:build" />
+    </Target>
+
+    <Target Name="Format" BeforeTargets="Build">
+        <Exec Command="dotnet format WhichComputer.csproj" />
     </Target>
 
 </Project>
