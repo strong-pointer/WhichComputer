@@ -2,9 +2,10 @@ namespace WhichComputer
 {
     public class Program
     {
+        private static QuestionnaireLoader loader = QuestionnaireLoader.Instance;
         public static void Main(string[] args)
         {
-            var questionnaire = QuestionnaireLoader.LoadQuestionnaire(File.ReadAllText(QuestionnaireLoader.LOCAL_PATH));
+            Console.WriteLine(loader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
