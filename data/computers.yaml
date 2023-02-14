@@ -1,0 +1,51 @@
+﻿# Specs and storage are measured in gigabytes.
+# Weight is in pounds.
+# Screen size is in inches.
+---
+computers:
+  "Samsung Galaxy Chromebook 2":
+    exclude-tags:
+      - no-chromebook
+    tags:
+      - small-storage: 10.0
+        explanation: This computer only comes in 64GB or 128GB.
+      - laptop: 10.0
+      - office: 5.0
+      - novice: 10.0
+      - minimal: 10.0
+      - lightweight: 10.0
+      - browser-focused: 10.0
+        explanation: This computer only runs Play Store apps and Google Chrome.
+    brand: Samsung
+    available-from:
+      - Amazon
+      - Best Buy
+    caveats:
+      - Buying this computer used may not come with the perks that Google offers for buying Chromebooks.
+    description: |
+      The Samsung Galaxy Chromebook 2 is a great choice if you only need a computer for office work.
+      It's running Chrome OS, which means that although it can run many Play Store (the Android mobile
+      store) apps, it cannot download most computer applications (think .exe or .dmg.)
+      It also can fold into a tablet, so it is great for portability.
+    specs:
+      options:
+        - storage: 64
+          RAM: 4
+          processor: Intel Celeron 5205U 1.9 GHz
+          cores: 2
+          threads: 2
+        - storage: 128
+          RAM: 8
+          processor: Intel Core i3 (10th Gen) i3-10110U 2.10 GHz
+          cores: 2
+          threads: 4
+        - storage: 128
+          RAM: 16
+          processor: Intel Core i3 (10th Gen) i3-10110U 2.10 GHz
+          cores: 2
+          threads: 4
+      OS: Chrome OS
+      weight: 4.49
+      resolution: 1920 x 1080
+      screen: 13.3
+      ports: 2 USB-C, headphone, mic, microSD

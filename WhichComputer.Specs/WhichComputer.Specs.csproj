@@ -7,26 +7,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Using Include="TechTalk.SpecFlow" />
+        <Using Include="TechTalk.SpecFlow"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-        <PackageReference Include="nunit" Version="3.13.2" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
-        <PackageReference Include="FluentAssertions" Version="6.2.0" />
-        <PackageReference Include="SpecFlow.NUnit" Version="4.0.16-beta" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
+        <PackageReference Include="nunit" Version="3.13.2"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.2.0"/>
+        <PackageReference Include="SpecFlow.NUnit" Version="4.0.16-beta"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WhichComputer.csproj" />
-      <ProjectReference Include="..\WhichComputer.Main\WhichComputer.Main.csproj" />
+        <ProjectReference Include="..\WhichComputer.csproj"/>
+        <ProjectReference Include="..\WhichComputer.Main\WhichComputer.Main.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\data\questionnaire.yaml">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <Content Include="..\data\questionnaire.yaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\data\computers.yaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
