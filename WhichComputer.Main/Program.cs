@@ -4,9 +4,11 @@ namespace WhichComputer
 {
     public class Program
     {
-        // private static QuestionnaireLoader _loader = QuestionnaireLoader.Instance;
+        private static QuestionnaireLoader _loader = QuestionnaireLoader.Instance;
+
         public static void Main(string[] args)
         {
+            Console.WriteLine(_loader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

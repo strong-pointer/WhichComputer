@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WhichComputer.App_Start
+﻿namespace WhichComputer
 {
     public class Answer
     {

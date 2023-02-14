@@ -29,7 +29,13 @@
     </Target>
 
     <Target Name="Format" BeforeTargets="Build">
-        <Exec Command="dotnet format WhichComputer.csproj" />
+        <Exec Command="dotnet format" />
     </Target>
+
+    <ItemGroup>
+      <Content Include="..\data\questionnaire.yaml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 
 </Project>

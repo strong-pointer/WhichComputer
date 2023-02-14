@@ -7,14 +7,21 @@ namespace WhichComputer
 {
     public class QuestionnaireLoader
     {
-        private QuestionnaireLoader()
+        public QuestionnaireLoader(string filePath)
         {
-            Questions = LoadQuestionnaire(File.ReadAllText("data/questionnaire.yaml"));
+            Questions = LoadQuestionnaire(File.ReadAllText(filePath));
         }
 
-        public static Questionnaire? Questions { get; private set; }
+        private QuestionnaireLoader()
+        {
+            Questions = LoadQuestionnaire(File.ReadAllText(LocalPath));
+        }
+
+        public static string LocalPath => "../data/questionnaire.yaml";
 
         public static QuestionnaireLoader Instance { get; } = new QuestionnaireLoader();
+
+        public Questionnaire? Questions { get; private set; }
 
         private Questionnaire LoadQuestionnaire(string yaml)
         {
