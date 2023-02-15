@@ -1,4 +1,6 @@
-﻿namespace WhichComputer
+﻿using System.Collections.Generic;
+
+namespace WhichComputer
 {
     public class QuestionnaireResponse
     {
@@ -40,6 +42,12 @@
                     we can simply assign the Total Score to score*/
                 TagToTotalScoreAndCount[tag][0] = score;
             }
+        }
+
+        // Returns a list of each of the tags currently associated with the Dictionary
+        public List<string> GetAllTags()
+        {
+            return new List<string>(TagToTotalScoreAndCount.Keys);
         }
 
         // If the given tag is valid, the average score is calculated and returned as a double
