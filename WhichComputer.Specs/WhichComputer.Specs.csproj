@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WhichComputer.csproj"/>
         <ProjectReference Include="..\WhichComputer.Main\WhichComputer.Main.csproj"/>
     </ItemGroup>
 

@@ -104,6 +104,41 @@ namespace WhichComputer.Specs.Features
             }
             await this.ScenarioCleanupAsync();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Ensure response object is properly filled in")]
+        public async System.Threading.Tasks.Task EnsureResponseObjectIsProperlyFilledIn()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Ensure response object is properly filled in", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 10
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 11
+  await testRunner.GivenAsync("a QuestionnaireResponse object is initialized and not null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 12
+  await testRunner.AndAsync("I add a tag \"laptop\" with a score of 10.0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+  await testRunner.ThenAsync("I expect that when retreiving all tags, a list with each of the currently entered" +
+                        " tags are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 14
+  await testRunner.AndAsync("I expect that when calling for the hashed string representation, \"laptop10\" is re" +
+                        "turned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
     }
 }
 #pragma warning restore
