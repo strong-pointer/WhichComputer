@@ -130,7 +130,7 @@ namespace WhichComputer.Specs.Features
 #line hidden
 #line 13
   await testRunner.ThenAsync("I expect that when retreiving all tags, a list with each of the currently entered" +
-                        " tags are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                        " tags \"laptop\" are returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 14
   await testRunner.AndAsync("I expect that when calling for the hashed string representation, \"laptop10\" is re" +

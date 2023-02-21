@@ -14,6 +14,7 @@ public sealed class QuestionnaireStepDefinitions
     [AllowNull] private Answer _currentAnswer;
 
     [NotNull] private QuestionnaireResponse _response = new QuestionnaireResponse();
+    [NotNull] private List<string> tagsList = new List<string>();
 
     public QuestionnaireStepDefinitions(ScenarioContext scenarioContext)
     {
@@ -24,6 +25,7 @@ public sealed class QuestionnaireStepDefinitions
     public void Before()
     {
         _currentAnswer = null;
+        tagsList.Clear();
     }
 
     [Given("all questions are loaded")]
@@ -58,12 +60,11 @@ public sealed class QuestionnaireStepDefinitions
         _response.AddTagScore(tag, score);
     }
 
-    [Then("I expect that when retreiving all tags, a list with each of the currently entered tags are returned")]
-    public void ThenAllTagsPresent()
+    [Then("I expect that when retreiving all tags, a list with each of the currently entered tags {string} are returned")]
+    public void ThenAllTagsPresent(string tags)
     {
-        List<string> temp = new List<string>();
-        temp.Add("laptop");
-        Assert.AreEqual(_response.GetAllTags(), temp);
+        tagsList = tags.Split(',').ToList();
+        Assert.AreEqual(_response.GetAllTags(), tagsList);
     }
 
     [Then("I expect that when calling for the hashed string representation, {string} is returned")]
