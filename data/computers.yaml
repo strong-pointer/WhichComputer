@@ -49,3 +49,294 @@ computers:
       resolution: 1920 x 1080
       screen: 13.3
       ports: 2 USB-C, headphone, mic, microSD
+
+  "Apple MacBook Air":
+    exclude-tags:
+      - gaming
+      - no-macbook
+    tags:
+      - laptop: 10.0
+      - office: 8.0
+      - professional: 10.0
+      - lightweight: 8.0
+      - design: 6.0
+      - high-resolution: 7.0
+      - audio-video-editing: 8.0
+    brand: Apple
+    available-from:
+      - Apple Store
+      - Best Buy
+    caveats:
+      - Upgrading the storage is expensive, so be sure to choose the right size when you purchase.
+    description: |
+      The Apple MacBook Air is a classic laptop that has been updated to work well for everyday use.
+      It is lightweight, and the battery lasts for up to 12 hours, so it's great for working on the go.
+      It comes with macOS, which is a stable and intuitive operating system.
+    specs:
+      options:
+        - storage: 256
+          RAM: 8
+          processor: Apple M1 chip with 8-core CPU and 7-core GPU
+          cores: 8
+          threads: 8
+        - storage: 512
+          RAM: 8
+          processor: Apple M1 chip with 8-core CPU and 8-core GPU
+          cores: 8
+          threads: 8
+      OS: macOS
+      weight: 2.8 
+      resolution: 2560 x 1600
+      screen: 13.3
+      ports: Two Thunderbolt/USB 4 ports, 3.5 mm headphone jack
+
+  "HP Spectre x360":
+    exclude-tags:
+      - no-convertible
+    tags:
+      - 2-in-1: 10.0
+        explanation: This computer can convert from laptop to tablet.
+      - office: 10.0
+      - professional: 10.0
+      - power-user: 7.0
+      - lightweight: 8.0
+    brand: HP
+    available-from:
+      - Amazon
+      - Best Buy
+      - HP
+    caveats:
+      - The battery life is shorter than some of the other laptops on this list.
+    description: |
+      The HP Spectre x360 is a great choice if you need a computer that can convert from a laptop to a
+      tablet. It has a slim design and weighs just 2.87 pounds, making it easy to take with you wherever
+      you go. It has a long battery life and can run demanding applications.
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+        - storage: 1TB
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Home
+      weight: 2.87
+      resolution: 1920 x 1080(HD) or 3840 x 2160(4K)
+      screen: 13.3 or 15.6
+      ports: Two Thunderbolt 4 ports, one USB Type-A port, headphone/microphone combo jack, microSD card reade
+
+  "Dell XPS 13":
+    exclude-tags:
+      - no-xps
+    tags:
+      - powerful: 9.0
+      - ultrabook: 10.0
+      - office: 8.0
+      - business: 7.0
+      - lightweight: 8.0
+      - stylish: 7.0
+    brand: Dell
+    available-from:
+      - Dell
+      - Amazon
+      - Best Buy
+    caveats:
+      - The webcam is located at the bottom of the screen, which may not be ideal for video calls.
+    description: |
+      The Dell XPS 13 is a powerful ultrabook that is great for both office work and personal use.
+      It's known for its sleek and stylish design, as well as its fast performance.
+    specs:
+      options:
+        - storage: 256
+          RAM: 8
+          processor: Intel Core i5-1135G7 2.4 GHz
+          cores: 4
+          threads: 8
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+        - storage: 1TB
+          RAM: 16
+          processor: Intel Core i7-1185G7 3.0 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Home
+      weight: 2.8
+      resolution: 1920 x 1200
+      screen: 13.4
+      ports: 2 Thunderbolt 4, 1 headphone/microphone combo, 1 microSD card reader
+
+  "Lenovo ThinkPad X1 Carbon":
+    exclude-tags:
+      - no-thinkpad
+    tags:
+      - business: 10.0
+      - ultrabook: 10.0
+      - lightweight: 9.0
+      - durable: 9.0
+      - office: 8.0
+      - powerful: 8.0
+      - security: 8.0
+    brand: Lenovo
+    available-from:
+      - Lenovo
+      - Amazon
+      - Best Buy
+    caveats:
+      - The X1 Carbon has limited upgrade options, so choose the right configuration upfront.
+    description: |
+      The Lenovo ThinkPad X1 Carbon is a powerful, durable ultrabook designed for business users.
+      It's lightweight and portable, making it a great choice for professionals who are always on the go.
+      It also has strong security features, including a built-in fingerprint reader and optional IR camera.
+    specs:
+      options:
+        - storage: 256
+          RAM: 8
+          processor: Intel Core i5-10210U 1.6 GHz
+          cores: 4
+          threads: 8
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-10510U 1.8 GHz
+          cores: 4
+          threads: 8
+        - storage: 1TB
+          RAM: 16
+          processor: Intel Core i7-10610U 1.8 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Pro
+      weight: 2.4
+      resolution: 1920 x 1080
+      screen: 14
+      ports: 2 Thunderbolt 3, 2 USB-A 3.1 Gen 1, HDMI 1.4, headphone/mic combo, microSD card reader
+ 
+  "ASUS ZenBook 13":
+    exclude-tags:
+      - no-zenbook
+    tags:
+      - ultrabook: 10.0
+      - portable: 9.0
+      - powerful: 8.0
+      - sleek: 10.0
+      - gaming-capable: 6.0
+    brand: ASUS
+    available-from:
+      - Amazon
+      - Best Buy
+      - Newegg
+    caveats:
+      - Some models may have coil whine or touchpad issues.
+    description: |
+      The ASUS ZenBook 13 is a sleek and portable ultrabook that packs a punch. With powerful
+      hardware and a long-lasting battery, it's great for both work and play. However, some models
+      may have minor issues like coil whine or touchpad problems, so make sure to read reviews before
+      making a purchase. 
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+        - storage: 1TB
+          RAM: 16
+          processor: AMD Ryzen 7 4700U 2.0 GHz
+          cores: 8
+          threads: 8
+      OS: Windows 10
+      weight: 2.5
+      resolution: 1920 x 1080
+      screen: 13.3
+      ports: USB-C (x2), USB-A, HDMI, microSD, audio jack
+  
+  "Asus ROG Zephyrus G14":
+    exclude-tags:
+      - no-asus
+    tags:
+      - gaming: 10.0
+      - high-performance: 10.0
+      - powerful: 10.0
+    brand: Asus
+    available-from:
+      - Amazon
+      - Best Buy
+    caveats:
+      - The powerful hardware can cause the laptop to run hot and loud.
+    description: |
+      The Asus ROG Zephyrus G14 is a high-performance gaming laptop that is also suitable for demanding tasks like video editing and 3D rendering. It features an AMD Ryzen 9 processor and an NVIDIA GeForce RTX 2060 Max-Q graphics card, as well as a fast 120Hz refresh rate display.
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: AMD Ryzen 9 4900HS 3.0 GHz
+          cores: 8
+          threads: 16
+          graphics: NVIDIA GeForce RTX 2060 Max-Q
+      OS: Windows 10
+      weight: 3.64
+      resolution: 1920 x 1080
+      screen: 14.0
+      ports: 2 USB-C, 2 USB-A, HDMI, headphone, mic, Kensington lock slot
+
+  "Acer Swift 5":
+    exclude-tags:
+      - no-acer
+    tags:
+      - ultrabook: 10.0
+      - lightweight: 10.0
+      - office: 5.0
+      - travel: 10.0
+    brand: Acer
+    available-from:
+      - Amazon
+      - Best Buy
+    description: |
+      The Acer Swift 5 is a lightweight ultrabook that's perfect for frequent travelers and students. It features a magnesium-lithium and magnesium-aluminum alloy chassis that is both durable and lightweight, as well as a backlit keyboard for comfortable typing in low light environments.
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10
+      weight: 2.31
+      resolution: 1920 x 1080
+      screen: 14.0
+      ports: 2 USB-C, 2 USB-A, HDMI, headphone, mic, SD card reader
+ 
+  "HP Envy x360":
+    exclude-tags:
+      - no-hp
+    tags:
+      - 2-in-1: 10.0
+      - multimedia: 8.0
+      - office: 7.0
+      - touchscreen: 10.0
+    brand: HP
+    available-from:
+      - Amazon
+      - Best Buy
+    description: |
+      The HP Envy x360 is a versatile 2-in-1 laptop that's great for multimedia and entertainment. Its 15.6-inch touchscreen display is perfect for streaming movies and TV shows, and its AMD Ryzen processor provides plenty of power for multitasking and office work. It also features a backlit keyboard for comfortable typing in low light environments.
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: AMD Ryzen 7 4700U 2.0 GHz
+          cores: 8
+          threads: 8
+      OS: Windows 10
+      weight: 4.53
+      resolution: 1920 x 1080
+      screen: 15.6
+      ports: 2 USB-C, 2 USB-A, HDMI, headphone, mic, SD card reader
+
+
