@@ -339,4 +339,42 @@ computers:
       screen: 15.6
       ports: 2 USB-C, 2 USB-A, HDMI, headphone, mic, SD card reader
 
-
+"Acer Aspire 5 A515-56-73AP":
+    exclude-tags:
+      - no-windows
+      - no-acer
+    tags:
+      - medium-storage: 10.0
+        explanation: This computer has a 512GB SSD.
+      - laptop: 10.0
+      - office: 8.0
+      - casual-gaming: 4.0
+      - multimedia: 7.0
+      - lightweight: 5.0
+    brand: Acer
+    available-from:
+      - Amazon
+      - Best Buy
+    caveats:
+      - The build quality of this laptop may not be as durable as some other laptops in this price range.
+    description: |
+      The Acer Aspire 5 A515-56-73AP is a great choice if you need a laptop for everyday use. It comes
+      with a 512GB SSD, which provides plenty of storage for most people. It's not designed for gaming
+      or heavy multimedia tasks, but it can handle basic office tasks and casual web browsing with ease.
+    specs:
+      options:
+        - storage: 512
+          RAM: 8
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Home
+      weight: 3.64
+      resolution: 1920 x 1080
+      screen: 15.6
+      ports: 2 USB-A, 1 USB-C, HDMI, Ethernet, headphone, mic, SD card reader
