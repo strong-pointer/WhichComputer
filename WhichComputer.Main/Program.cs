@@ -1,7 +1,7 @@
 using Westwind.AspNetCore.LiveReload;
 using WhichComputer.Main;
 
-namespace WhichComputer
+namespace WhichComputer.Main
 {
     public class Program
     {
