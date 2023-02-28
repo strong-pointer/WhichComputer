@@ -41,4 +41,10 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="System.Web">
+        <HintPath>..\..\..\..\Program Files (x86)\dotnet\shared\Microsoft.NETCore.App\7.0.2\System.Web.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
