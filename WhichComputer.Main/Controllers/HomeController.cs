@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WhichComputer.Models;
 
 namespace WhichComputer.Main.Controllers;
@@ -32,10 +34,45 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public ActionResult AnswerBtn_Click(int questionID, string choice)
+    public ActionResult GetFollowUpToQuestion(int questionID, string choice)
     {
         Question question = _loader.GetQuestionWithID(questionID);
         Answer answer = question.GetAnswer(choice);
-        return PartialView("QuestionCard", _loader.GetFollowUpQuestions(answer)[0]);
+        return Json(new Dictionary<string, object>()
+        {
+            { "followUps", _loader.GetFollowUpQuestions(answer).Select(q => q.Id) },
+        });
+    }
+
+    [HttpPost]
+    public ActionResult GetQuestionHTML(int questionID)
+    {
+        Question question = _loader.GetQuestionWithID(questionID);
+        return PartialView("QuestionCard", question);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> UploadQuestionnaireResponse()
+    {
+        try
+        {
+            using StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8);
+            QuestionnaireResponse questionnaireResponse = new QuestionnaireResponse();
+            var responses = JsonConvert.DeserializeObject<Dictionary<int, string>>(await reader.ReadToEndAsync());
+
+            foreach (var kvp in responses)
+            {
+                Question question = _loader.GetQuestionWithID(kvp.Key);
+                Answer answer = question.GetAnswer(kvp.Value);
+                answer.Tags.ToList().ForEach(tag => questionnaireResponse.AddTagScore(tag.Key, tag.Value));
+            }
+
+            return Ok(Json("Success"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.StackTrace);
+            return BadRequest(Json("Unable to upload those responses"));
+        }
     }
 }

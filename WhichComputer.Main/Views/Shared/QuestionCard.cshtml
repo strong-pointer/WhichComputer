@@ -1,10 +1,10 @@
 ﻿@model WhichComputer.Main.Question
 <div id="question-card" >
     <div class="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
-        <a href="#">
+        <p>
             <h5 class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@Model.Prompt</h5>
             <p class="text-sm text-gray-500 pb-4">@Model.Explanation</p>
-        </a>
+        <p>
         <div class="max-w-lg text-sm items-center font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             @foreach (var answer in @Model.Answers)
             {
