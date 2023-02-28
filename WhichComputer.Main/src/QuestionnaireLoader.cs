@@ -1,9 +1,8 @@
 using System.Linq;
-using WhichComputer.App_Start;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace WhichComputer
+namespace WhichComputer.Main
 {
     public class QuestionnaireLoader
     {
@@ -12,16 +11,9 @@ namespace WhichComputer
             Questions = LoadQuestionnaire(File.ReadAllText(filePath));
         }
 
-        private QuestionnaireLoader()
-        {
-            Questions = LoadQuestionnaire(File.ReadAllText(LocalPath));
-        }
-
         public static string LocalPath => "../data/questionnaire.yaml";
 
-        public static QuestionnaireLoader Instance { get; } = new QuestionnaireLoader();
-
-        public Questionnaire? Questions { get; private set; }
+        public Questionnaire Questions { get; private set; }
 
         private Questionnaire LoadQuestionnaire(string yaml)
         {
