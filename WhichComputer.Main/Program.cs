@@ -6,12 +6,18 @@ namespace WhichComputer.Main
     public class Program
     {
         private static QuestionnaireLoader _loader = new QuestionnaireLoader(QuestionnaireLoader.LocalPath);
-        private static ComputerLoader _computerLoader = new ComputerLoader(ComputerLoader.LocalPath);
+
+        private static ComputerLoader ComputerLoader { get; } = new ComputerLoader(ComputerLoader.LocalPath);
+
+        public static QuestionnaireLoader GetQuestionnaireLoader()
+        {
+            return _loader;
+        }
 
         public static void Main(string[] args)
         {
             Console.WriteLine(_loader);
-            Console.WriteLine(_computerLoader);
+            Console.WriteLine(ComputerLoader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
