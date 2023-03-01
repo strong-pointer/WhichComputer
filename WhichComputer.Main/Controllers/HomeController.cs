@@ -2,7 +2,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using WhichComputer.Models;
+using WhichComputer.Main.Models.JSON;
 
 namespace WhichComputer.Main.Controllers;
 
@@ -27,17 +27,21 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-
     [HttpPost]
-    public ActionResult GetFollowUpToQuestion(int questionID, string choice)
+    public ActionResult GetFollowUpToQuestion(int questionId, string choice)
     {
-        Question question = _loader.GetQuestionWithID(questionID);
-        Answer answer = question.GetAnswer(choice);
+        var question = _loader.GetQuestionWithID(questionId);
+        if (question == null)
+        {
+            return Json(new ErrorResponse($"There was no question with the ID {questionId}."));
+        }
+
+        var answer = question.GetAnswer(choice);
+        if (answer == null)
+        {
+            return Json(new ErrorResponse($"There was no answer '{choice}' for question ID {questionId}."));
+        }
+
         return Json(new Dictionary<string, object>()
         {
             { "followUps", _loader.GetFollowUpQuestions(answer).Select(q => q.Id) },
@@ -45,10 +49,18 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public ActionResult GetQuestionHTML(int questionID)
+    public ActionResult GetQuestionHtml(int questionId)
     {
-        Question question = _loader.GetQuestionWithID(questionID);
-        return PartialView("QuestionCard", question);
+        Question? question = _loader.GetQuestionWithID(questionId);
+
+        if (question != null)
+        {
+            return PartialView("QuestionCard", question);
+        }
+        else
+        {
+            return PartialView("Error");
+        }
     }
 
     [HttpPost]
@@ -57,17 +69,32 @@ public class HomeController : Controller
         try
         {
             using StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8);
-            QuestionnaireResponse questionnaireResponse = new QuestionnaireResponse();
+            QuestionnaireResponse questionnaireResponse = new();
             var responses = JsonConvert.DeserializeObject<Dictionary<int, string>>(await reader.ReadToEndAsync());
+            var failures = new List<int>();
+            if (responses == null)
+            {
+                throw new Exception();
+            }
 
             foreach (var kvp in responses)
             {
-                Question question = _loader.GetQuestionWithID(kvp.Key);
-                Answer answer = question.GetAnswer(kvp.Value);
-                answer.Tags.ToList().ForEach(tag => questionnaireResponse.AddTagScore(tag.Key, tag.Value));
+                Question? question = _loader.GetQuestionWithID(kvp.Key);
+                Answer? answer = question?.GetAnswer(kvp.Value);
+                if (question != null && answer != null)
+                    answer.Tags.ToList().ForEach(tag => questionnaireResponse.AddTagScore(tag.Key, tag.Value));
+                else
+                    failures.Add(kvp.Key);
             }
 
-            return Ok(Json("Success"));
+            if (failures.Count != 0)
+            {
+                return BadRequest(Json(new ErrorResponse($"The following responses could not be parsed: {failures}")));
+            }
+            else
+            {
+                return Ok(Json("Success"));
+            }
         }
         catch (Exception e)
         {

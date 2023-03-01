@@ -3,6 +3,8 @@
 
 // initialize queuedQuestions with the first question
 let queuedQuestions = [1];
+let previousQuestions = [];
+let numberOfFollowUpsAdded = [];
 let answers = {}
 function answerChosen(questionId, answer) {
     let data = {
@@ -16,7 +18,10 @@ function answerChosen(questionId, answer) {
         data: data,
         success: function (result, status, xhr) {
             let followUps = result['followUps'];
-            queuedQuestions.shift();
+            numberOfFollowUpsAdded.splice(0, 0, followUps.length);
+            previousQuestions.splice(0, 0, questionId);
+            queuedQuestions.shift()
+            console.log({previous: previousQuestions, follows: numberOfFollowUpsAdded})
             if (!followUps.includes(-1)) {
                 // This is not the last question in the sequence.
                 queuedQuestions = queuedQuestions.concat(followUps);
@@ -32,9 +37,30 @@ function answerChosen(questionId, answer) {
             console.log(queuedQuestions)
             
         },
-        //error: function (xhr, status, error) {
-          //  $("#question-card").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-        //}
+        error: function (xhr, status, error) {
+            $("#question-card").html(xhr.responseText);
+        }
+    });
+}
+
+function goBack() {
+    let $card = $("#question-card");
+    let questionID = previousQuestions.shift();
+    let followUps = numberOfFollowUpsAdded.shift();
+    $.ajax({
+        type: "POST",
+        url: "/Home/GetQuestionHTML",
+        contentType: "application/x-www-form-urlencoded",
+        data: {questionID: questionID},
+        success: function (result, status, xhr) {
+            for (let i = 0; i < followUps; i++) {
+                queuedQuestions.pop();
+            }
+            $card.fadeOut(500, () => $card.html(result).fadeIn(500));
+        },
+        error: function (xhr, status, error) {
+            $("#question-card").html(xhr.responseText);
+        }
     });
 }
 
@@ -48,9 +74,9 @@ function setQuestionHTML(questionId) {
         success: function (result, status, xhr) {
             $card.fadeOut(500, () => $card.html(result).fadeIn(500));
         },
-        //error: function (xhr, status, error) {
-        //  $("#question-card").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-        //}
+        error: function (xhr, status, error) {
+          $("#question-card").html(xhr.responseText);
+        }
     });
 }
 
@@ -61,10 +87,15 @@ function postAnswers() {
         contentType: "application/json",
         data: JSON.stringify(answers),
         success: function (result, status, xhr) {
-            $("#question-card > div").fadeOut(500).html("<h5 class=\"pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center\">All done!</h5>").fadeIn(500);
+            $("#question-card *").contents()
+                .filter(function() {
+                    return this.nodeType === 3; //Node.TEXT_NODE
+                }).remove();
+            $(".answer-div").css("display", "none");
+            $("#prompt").text("All done!");
         },
-        //error: function (xhr, status, error) {
-        //  $("#question-card").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-        //}
+        error: function (xhr, status, error) {
+            $("#question-card").html(xhr.responseText);
+        }
     });
 }
