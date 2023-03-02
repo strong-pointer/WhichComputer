@@ -4,3 +4,5 @@ packages/*
 node_modules/
 /.vs/whichcomputer/FileContentIndex
 *.feature.cs
+.idea/
+WhichComputer.Main/wwwroot/css/output.css
