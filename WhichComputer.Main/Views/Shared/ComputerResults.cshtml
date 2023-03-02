@@ -1,0 +1,10 @@
+﻿@model WhichComputer.Main.ComputerList
+
+<body class="bg-black">
+    <div class="py-4 m-auto">
+        @foreach (var computer in @Model.Computers)
+        {
+            @await Component.InvokeAsync("ComputerCard", computer)
+        }
+    </div>
+</body>

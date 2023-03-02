@@ -102,4 +102,9 @@ public class HomeController : Controller
             return BadRequest(Json("Unable to upload those responses"));
         }
     }
+
+    public IActionResult ComputerResults()
+    {
+        return View(Program.GetComputerLoader().Computers);
+    }
 }

@@ -14,6 +14,11 @@ namespace WhichComputer.Main
             return _loader;
         }
 
+        public static ComputerLoader GetComputerLoader()
+        {
+            return ComputerLoader;
+        }
+
         public static void Main(string[] args)
         {
             Console.WriteLine(_loader);
