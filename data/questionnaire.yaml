@@ -80,41 +80,77 @@ questions:
   - prompt: How much storage space do you need?
     id: 5
     explanation: We want to know how much you'll need to do your tasks.
-    follow-up: [-1]
+    follow-up: [6]
     answers:
       - choice: A small amount
         explanation: >
-          For if you only use applications like Microsoft Office, and don't really need to have many large items on the computer at once
+          For if you only use applications like Microsoft Office, and don't really need to have many large items on the computer at once (250GB of Storage).
         tags:
           minimal: 7.0
           lightweight: 7.0
           small-storage: 10.0
       - choice: A decent amount
         explanation: > 
-          For if you have to keep a few large applications or large files (20GB+) on your computer constantly, but don't foresee yourself ever needing the amount of storage
-          that an expensive computer comes with.
+          For if you have to keep a few large applications or large files (500GB of Storage) on your computer constantly, but don't foresee yourself ever needing the amount of storage
+          that an expensive computer comes with (Some Games, Large Applications, PSD Files).
         tags:
           medium-storage: 10.0
       - choice: A lot
-        explanation: For if you have to keep many very large files (50GB+) on your computer constantly.
+        explanation: For if you have to keep many very large files (1TB+ of Storage) on your computer constantly (Games, RAW Files, Video Exports).
         tags:
           high-storage: 10.0
+  - prompt: What is your price range?
+    id: 6
+    explanation: We want to be able to provide you with the best PC within your budget.
+    answers:  
+      - choice: $100 - $200
+        explanation: Typically this price range includes Chromebooks, Thin Clients, and Mini PCs. Build quality is typically the lowest of the low.
+        tags:
+          price-range: 1.0
+      - choice: $200 - $350
+        explanation: Typically this price range includes budget laptops and entry-level desktops, usually cheap build-quality and low end hardware.
+        tags:
+          price-range: 2.0
+      - choice: $350 - $500
+        explanation: Typically this price range includes mid-level productivity PCs, enough for basic schoolwork and include decent build-quality.
+        tags:
+          price-range: 3.0
+      - choice: $500 - $750
+        explanation: Typically this price range includes Mid-Tier Business Grade Laptops, some Last-Gen Gaming PCs, and 2-in-1 Laptops. Most of these have solid build-quality.
+        tags:
+          price-range: 4.0
+      - choice: $750 - $1000
+        explanation: Typically this price range includes Low-End Gaming PCs, Solid Business Computers, and Lower-End Macbooks.
+        tags:
+          price-range: 5.0
+      - choice: $1000-$2000
+        explanation: Typically this price range includes Mid to High-End Gaming PCs, Workstation Computers, and High-End Macbooks.
+        tags:
+          price-range: 6.0
+      - choice: $2000+
+        explanation: Typically this price range includes Enthusiast-Grade Gaming/Workstation PCs and Mac Pro Configurations. This is the best of the best.
+        tags:
+          price-range: 6.0
+
+            
+
 tags:
-  - novice
-  - intermediate
-  - expert
-  - laptop
-  - desktop
-  - low-use
-  - office
-  - browser-focused
-  - minimal
-  - lightweight
-  - high-use
-  - professional
-  - graphics
-  - gaming
-  - small-storage
-  - medium-storage
-  - high-storage
-  - no-chromebook
+  - novice              # - Filter out computers with steep learning curves. Recommend touch-screen computers, Chromebooks, Mac Products
+  - intermediate        # - Do not show Chromebooks
+  - expert              # - Do not show Chromebooks. Lean towards computers running Windows
+  - laptop              # - Only show laptop computers, tablet PCs, and 2-in-1 laptops
+  - desktop             # - Do not show any laptops. Show Desktops, Mini-PCs, All-In-One Computers
+  - low-use             # - Battery life is not a priority, neither is portability
+  - office              # - Specs are a lower priority than other factors such as Price Range
+  - browser-focused     # - Chromebooks should be shown, same for Mini-PCs
+  - minimal             # - Tablet PCs, 2-In-1s, and Macbook Airs should be displayed
+  - lightweight         # - Prioritize lightweight machines. Macbook Airs, Surface Laptops, etc.
+  - high-use            # - Aluminum Cases/Good Build Quality should be a priority. Battery Life should be large factor
+  - professional        # - i5 as a bare minimum, i7/Ryzen 7 should be options. Engineering Sample GPUs should be recommended.
+  - graphics            # - Use this point value to determine a GPU, higher numbers require some kind of dedicated GPU.
+  - gaming              # - A GPU for gaming will be displayed based on this value (RTX, Radeon RX, Intel Arc, etc.)
+  - small-storage       # - 250GB minimum for storage
+  - medium-storage      # - 500GB minimum for storage
+  - high-storage        # - 1TB minimum for storage
+  - no-chromebook       # - Do not show Chromebooks
+  - price-range         # - Computer will display according to price range (1.0 = $100-$200, 2.0 = $200 - $350, 3.0 = $350 - $500, 4.0 = $500 - $750, 5.0 = $750 - $1000, 6.0 = $1000-$2000, 7.0 = $2000+)
