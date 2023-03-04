@@ -1,0 +1,13 @@
+﻿@model WhichComputer.Main.ComputerList
+@{
+    ViewData["Title"] = "Computer Results";
+}
+
+<body class="bg-black">
+    <div class="py-4 m-auto grid grid-cols-3 gap-4 m-4 w-11/12" data-accordion="open" data-inactive-classes="dark:text-emerald-300" data-active-classes="dark:text-white">
+        @foreach (var computer in @Model.Computers)
+        {
+            @await Component.InvokeAsync("ComputerCard", computer)
+        }
+    </div>
+</body>

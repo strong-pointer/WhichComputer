@@ -1,14 +1,28 @@
 using Westwind.AspNetCore.LiveReload;
+using WhichComputer.Main;
 
-namespace WhichComputer
+namespace WhichComputer.Main
 {
     public class Program
     {
-        private static QuestionnaireLoader _loader = QuestionnaireLoader.Instance;
+        private static QuestionnaireLoader _loader = new QuestionnaireLoader(QuestionnaireLoader.LocalPath);
+
+        private static ComputerLoader ComputerLoader { get; } = new ComputerLoader(ComputerLoader.LocalPath);
+
+        public static QuestionnaireLoader GetQuestionnaireLoader()
+        {
+            return _loader;
+        }
+
+        public static ComputerLoader GetComputerLoader()
+        {
+            return ComputerLoader;
+        }
 
         public static void Main(string[] args)
         {
             Console.WriteLine(_loader);
+            Console.WriteLine(ComputerLoader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

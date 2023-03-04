@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
-using WhichComputer.App_Start;
+using WhichComputer.Main;
 
 namespace WhichComputer.Specs.Steps;
 
@@ -55,7 +55,7 @@ public sealed class QuestionnaireStepDefinitions
     }
 
     [Given("I add a tag {string} with a score of {double}")]
-    public void GivenAddedTagAndScore (string tag, double score)
+    public void GivenAddedTagAndScore(string tag, double score)
     {
         _response.AddTagScore(tag, score);
     }

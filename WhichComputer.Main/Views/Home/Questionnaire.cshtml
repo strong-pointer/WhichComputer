@@ -1,32 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Questionnaire";
+    ViewData["Title"] = "Computer";
 }
 
-<body style="background-color:black;">
-    
-
-    <div class="py-4"><center>
-        <div class="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-                <h5 class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">QUESTION GOES HERE</h5>
-            </a>
-
-            <div class="max-w-lg text-sm items-center font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"><center>
-                <a href="#" class="block w-full px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-                    Answer Choice 1
-                </a>
-                <a href="#" class="block w-full px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-                    Answer Choice 2
-                </a>
-                <a href="#" class="block w-full px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-                    Answer Choice 3
-                </a>
-                <a href="#" class="block w-full px-4 py-2 rounded-b-lg cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-                    Answer Choice 4
-                </a>
-            </center></div>
-
-        </div>
-    </center></div>
-
+<body class="bg-black">
+    <div class="py-4 m-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        @await Component.InvokeAsync("QuestionCard", ViewData["Question"])
+    </div>
 </body>

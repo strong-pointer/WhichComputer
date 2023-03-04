@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WhichComputer.App_Start
+﻿namespace WhichComputer.Main
 {
     public class Questionnaire
     {
         public List<Question> Questions = new();
         public List<string> Tags = new();
+
+        public Question? GetQuestionWithID(int id)
+        {
+            return Questions.Find(q => q.Id == id);
+        }
 
         public Question? GetFirstQuestion()
         {
