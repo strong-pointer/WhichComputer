@@ -99,6 +99,37 @@ questions:
         explanation: For if you have to keep many very large files (50GB+) on your computer constantly.
         tags:
           high-storage: 10.0
+  - prompt: What is your price range?
+    id: 6
+    explanation: We want to be able to provide you with the best PC within your budget.
+    answers:  
+      - choice: $100 - $200
+        explanation: Typically this price range includes Chromebooks, Thin Clients, and Mini PCs. Build quality is typically the lowest of the low.
+        tags:
+          price-range: 1.0
+      - choice: $200 - $350
+        explanation: Typically this price range includes budget laptops and entry-level desktops, usually cheap build-quality and low end hardware.
+        tags:
+          price-range: 2.0
+      - choice: $350 - $500
+        explanation: Typically this price range includes mid-level productivity PCs, enough for basic schoolwork and include decent build-quality.
+        tags:
+          price-range: 3.0
+      - choice: $500 - $750
+        explanation: Typically this price range includes Mid-Tier Business Grade Laptops, some Last-Gen Gaming PCs, and 2-in-1 Laptops. Most of these have solid build-quality.
+        tags:
+          price-range: 4.0
+      - choice: $750 - $1000
+        explanation: Typically this price range includes Low-End Gaming PCs, Solid Business Computers, and Lower-End Macbooks.
+        tags:
+          price-range: 5.0
+      - choice: $1000 - $2000
+        explanation: Typically this price range includes Mid to High-End Gaming PCs, Workstation Computers, and High-End Macbooks.
+        tags:
+          price-range: 6.0
+
+            
+
 tags:
   - novice
   - intermediate
@@ -118,3 +149,4 @@ tags:
   - medium-storage
   - high-storage
   - no-chromebook
+  - price-range
