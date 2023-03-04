@@ -84,19 +84,19 @@ questions:
     answers:
       - choice: A small amount
         explanation: >
-          For if you only use applications like Microsoft Office, and don't really need to have many large items on the computer at once
+          For if you only use applications like Microsoft Office, and don't really need to have many large items on the computer at once (250GB of Storage).
         tags:
           minimal: 7.0
           lightweight: 7.0
           small-storage: 10.0
       - choice: A decent amount
         explanation: > 
-          For if you have to keep a few large applications or large files (20GB+) on your computer constantly, but don't foresee yourself ever needing the amount of storage
-          that an expensive computer comes with.
+          For if you have to keep a few large applications or large files (500GB of Storage) on your computer constantly, but don't foresee yourself ever needing the amount of storage
+          that an expensive computer comes with (Some Games, Large Applications, PSD Files).
         tags:
           medium-storage: 10.0
       - choice: A lot
-        explanation: For if you have to keep many very large files (50GB+) on your computer constantly.
+        explanation: For if you have to keep many very large files (1TB+ of Storage) on your computer constantly (Games, RAW Files, Video Exports).
         tags:
           high-storage: 10.0
   - prompt: What is your price range?
