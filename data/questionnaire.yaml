@@ -80,7 +80,7 @@ questions:
   - prompt: How much storage space do you need?
     id: 5
     explanation: We want to know how much you'll need to do your tasks.
-    follow-up: [-1]
+    follow-up: [6]
     answers:
       - choice: A small amount
         explanation: >
