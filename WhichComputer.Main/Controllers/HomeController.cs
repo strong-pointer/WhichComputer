@@ -115,14 +115,14 @@ public class HomeController : Controller
         }
 
         // Get the computers that match the decrypted hash's criteria
-        QuestionnaireResponse response = QuestionnaireResponse.FromEncrypted(queryParam);
+        QuestionnaireResponse response = QuestionnaireResponse.FromEncryptedHash(queryParam);
 
-        // Verify that the response was valid
+        /* Verify that the response was valid
         if (response == null)
         {
             // Not a valid query parameter, throw an error
             return View("Error");
-        }
+        }*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
         return View(Program.GetComputerLoader().Computers);

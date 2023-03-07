@@ -17,7 +17,7 @@ namespace WhichComputer
 
         // Assume hash is encrypted, this function decrypts that string, un-hashes it, and puts it into the new
         //  QuestionnaireResponse object that is made and returned.
-        public static QuestionnaireResponse? FromEncrypted(string encryptedHash)
+        public static QuestionnaireResponse? FromEncryptedHash(string encryptedHash)
         {
             QuestionnaireResponse newResponse = new QuestionnaireResponse();
 
@@ -43,8 +43,11 @@ namespace WhichComputer
             List<string> hashedEntries = decryptedHash.Split(';').ToList();
             foreach (var entry in hashedEntries)
             {
-                string[] tagAndScore = entry.Split("'");
-                newResponse.AddTagScore(tagAndScore[0], Convert.ToDouble(tagAndScore[1]));
+                if (entry != string.Empty)
+                {
+                    string[] tagAndScore = entry.Split("'");
+                    newResponse.AddTagScore(tagAndScore[0], Convert.ToDouble(tagAndScore[1]));
+                }
             }
 
             // create object from hash string
@@ -100,8 +103,30 @@ namespace WhichComputer
             }
         }
 
-        // Returns the encrypted hash response that is put at the end of the url as a query param
+        // Helper function that simply pulls from the existing tags and scores and then creates an unencrypted hash string
         public string GetHashedResponse()
+        {
+            // Reset string in case of this function being called >1 time
+            string hashedResponse = string.Empty;
+
+            // Calculate the hashed string by iterating through the dictionary in sorted order by its key
+            foreach (var kvp in _TagToTotalScoreAndCount.OrderBy(x => x.Key))
+            {
+                // The average scores are given some leeway in that they are always rounded up to the nearest integer
+                hashedResponse += kvp.Key + "'" + Math.Ceiling(kvp.Value[0] / kvp.Value[1]).ToString() + ";";
+            }
+
+            // Checks if the hash function worked
+            if (string.IsNullOrEmpty(hashedResponse))
+            {
+                Console.WriteLine("Error! Hash String is empty upon calling GetHashedResponse in Questionnaire.cs");
+            }
+
+            return hashedResponse;
+        }
+
+        // Returns the encrypted hash response that is put at the end of the url as a query param
+        public string GetHashedAndEncryptedResponse()
         {
             // Reset string in case of this function being called >1 time
             string hashedResponse = string.Empty;
