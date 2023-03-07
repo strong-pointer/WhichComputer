@@ -124,7 +124,7 @@ public class HomeController : Controller
             return View("Error");
         }
 
-        // Replace this with computer matching function call?
+        // Replace this with computer matching function call that returns a list of computers that is matching the tags?
         return View(Program.GetComputerLoader().Computers);
     }
 }
