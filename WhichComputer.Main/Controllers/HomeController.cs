@@ -103,8 +103,24 @@ public class HomeController : Controller
         }
     }
 
+    [HttpGet]
     public IActionResult ComputerResults()
     {
+        string queryParam = String.Empty;
+        
+        // "QResponse" is QuestionnaireResponse, the hashed and then encrypted string for the results
+        if (!String.IsNullOrEmpty(HttpContext.Request.Query["QResponse"]))
+        {
+            queryParam = HttpContext.Request.Query["QResponse"];
+        }
+
+        // Get the computers that match the decrypted hash's criteria
+        QuestionnaireResponse response = QuestionnaireResponse.FromEncrypted(queryParam);
+        if (response == null)
+        {
+            // Not a valid query parameter
+            return View("Error");
+        }
         return View(Program.GetComputerLoader().Computers);
     }
 }
