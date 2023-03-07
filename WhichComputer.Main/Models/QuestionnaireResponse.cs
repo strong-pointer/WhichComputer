@@ -14,13 +14,13 @@ namespace WhichComputer
             // Initialize the private vars
             _TagToTotalScoreAndCount = new Dictionary<string, double[]>();
         }
-        
+
         // Assume hash is encrypted, this function decrypts that string, un-hashes it, and puts it into the new
         //  QuestionnaireResponse object that is made and returned.
         public static QuestionnaireResponse? FromEncrypted(string encryptedHash)
         {
             QuestionnaireResponse newResponse = new QuestionnaireResponse();
-            
+
             // Decrypt hash
             string decryptedHash;
             try
@@ -31,14 +31,14 @@ namespace WhichComputer
             {
                 return null;
             }
-            
+
             // Verify/validate that the decryptedHash is a valid hash (in our case)
             // For the 3500 folks, the regex it checks for is: ([text]'[number];)*
             if (!Regex.IsMatch(decryptedHash, "([A-Za-z]+['][0-9]+[;])+", RegexOptions.IgnoreCase))
             {
                 return null;
             }
-            
+
             // Split decryptedHash into filling dictionary
             List<string> hashedEntries = decryptedHash.Split(';').ToList();
             foreach (var entry in hashedEntries)
@@ -120,7 +120,7 @@ namespace WhichComputer
             }
 
             // Encrypts and returns the hash
-            return Convert.ToBase64String( Encoding.UTF8.GetBytes(hashedResponse));;
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(hashedResponse));
         }
     }
 }

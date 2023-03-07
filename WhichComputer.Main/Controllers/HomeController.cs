@@ -106,21 +106,25 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult ComputerResults()
     {
-        string queryParam = String.Empty;
-        
+        string queryParam = string.Empty;
+
         // "QResponse" is QuestionnaireResponse, the hashed and then encrypted string for the results
-        if (!String.IsNullOrEmpty(HttpContext.Request.Query["QResponse"]))
+        if (!string.IsNullOrEmpty(HttpContext.Request.Query["QResponse"]))
         {
             queryParam = HttpContext.Request.Query["QResponse"];
         }
 
         // Get the computers that match the decrypted hash's criteria
         QuestionnaireResponse response = QuestionnaireResponse.FromEncrypted(queryParam);
+
+        // Verify that the response was valid
         if (response == null)
         {
-            // Not a valid query parameter
+            // Not a valid query parameter, throw an error
             return View("Error");
         }
+
+        // Replace this with computer matching function call?
         return View(Program.GetComputerLoader().Computers);
     }
 }
