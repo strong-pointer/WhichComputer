@@ -130,7 +130,7 @@ questions:
       - choice: $2000+
         explanation: Typically this price range includes Enthusiast-Grade Gaming/Workstation PCs and Mac Pro Configurations. This is the best of the best.
         tags:
-          price-range: 6.0
+          price-range: 7.0
 
             
 
