@@ -121,7 +121,7 @@ public class HomeController : Controller
         if (response == null)
         {
             // Not a valid query parameter, throw an error
-            return View("Error");
+            return View("ResultsError");
         }*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
