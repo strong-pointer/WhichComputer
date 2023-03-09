@@ -122,6 +122,7 @@ public class HomeController : Controller
         {
             // Not a valid query parameter, throw an error
             return View("ResultsError");
+            // Or we could do a simple 404 return: Response.StatusCode = 404; return View();
         }*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
