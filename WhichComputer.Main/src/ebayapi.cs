@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using eBay.Service.Core.Soap;
 using eBay.Service.Call;
 
-namespace WhichComputer
+namespace WhichComputer.Main
 {
-    class eBayAPI
+    class eBayAPI : IComputerResultHandler
     {
-        static void Main(string[] args)
+        public SupportedServices Service => SupportedServices.eBay;
+
+        public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount)
         {
             ApiContext apiContext = new ApiContext();
             apiContext.ApiCredential = new ApiCredential();
@@ -16,12 +19,38 @@ namespace WhichComputer
             apiContext.ApiCredential.CertId = "PRD-756826fccb48-e32f-4f1c-a73c-a0c4";
             apiContext.SoapApiServerUrl = "https://api.ebay.com/wsapi";
 
-            // Create the GeteBayOfficialTime API call
-            GeteBayOfficialTimeCall apiCall = new GeteBayOfficialTimeCall(apiContext);
+            FindItemsAdvancedCall apiCall = new FindItemsAdvancedCall(apiContext);
+            apiCall.Keywords = computer.Brand + " " + computer.Model;
+            if (used)
+            {
+                apiCall.ConditionIds = new int[] { 3000 };
+            }
+            apiCall.Sort = 2; // sort by lowest price
 
-            // Call the API and print the result
-            Console.WriteLine(apiCall.GeteBayOfficialTime());
-            Console.ReadLine();
+            // pages
+            apiCall.Pagination = new PaginationType();
+            apiCall.Pagination.EntriesPerPage = amount;
+            apiCall.Pagination.PageNumber = 1;
+
+
+            var results = new List<ComputerResult>();
+            var response = apiCall.Execute();
+            foreach (var item in response.SearchResult.Item)
+            {
+                var result = new ComputerResult();
+                result.Title = item.Title;
+                result.Price = (decimal)item.SellingStatus.CurrentPrice.Value;
+                result.Currency = item.SellingStatus.CurrentPrice.CurrencyID.ToString();
+                result.Condition = item.ConditionDisplayName;
+                result.Url = item.ViewItemURLForNaturalSearch;
+                results.Add(result);
+            }
+            return results;
+        }
+
+        public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
+        {
+            throw new NotImplementedException();
         }
     }
 }
