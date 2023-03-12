@@ -21,8 +21,6 @@ namespace WhichComputer.Main
 
         public static void Main(string[] args)
         {
-            Console.WriteLine(_loader);
-            Console.WriteLine(ComputerLoader);
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
