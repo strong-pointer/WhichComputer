@@ -29,9 +29,9 @@
         <Exec Command="npm run css:build" />
     </Target>
     
-    <!--<Target Name="Format" BeforeTargets="Build">
+    <Target Name="Format" BeforeTargets="Build">
         <Exec Command="dotnet format" />
-    </Target>-->
+    </Target>
 
     <ItemGroup>
         <Content Include="..\data\questionnaire.yaml">
