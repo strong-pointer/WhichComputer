@@ -1,55 +1,27 @@
 using System;
-using System.Net;
-using System.Xml;
-using eBay.Service.Call;
-using eBay.Service.Core.Sdk;
 using eBay.Service.Core.Soap;
+using eBay.Service.Call;
 
 namespace WhichComputer
 {
-    // ComputerResult interface or abstract class to store result information about a computer (price, model).
-    public interface IComputerResult
+    class eBayAPI
     {
-        string Model { get; set; }
-        decimal Price { get; set; }
-    }
-
-    // eBayComputerResult class that implements IComputerResult.
-    public class EBayComputerResult : IComputerResult
-    {
-        public string Model { get; set; }
-        public decimal Price { get; set; }
-        
-        // Fetch function that accepts an enum as parameter with what type of site to search.
-        public static EBayComputerResult Fetch(SiteCodeType siteCode, string query)
+        static void Main(string[] args)
         {
-            // Create an instance of the eBay API client.
-            ApiContext context = new ApiContext();
-            context.ApiCredential.eBayToken = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06c40ac8de-96cf-4601-bd0b-21418807e2c6PRD-756826fccb48-e32f-4f1c-a73c-a0c4"; 
-            context.SoapApiServerUrl = "https://api.ebay.com/wsapi";
-            context.Site = siteCode;
+            ApiContext apiContext = new ApiContext();
+            apiContext.ApiCredential = new ApiCredential();
+            apiContext.ApiCredential.eBayToken = "v^1.1#i^1#I^3#f^0#p^3#r^1#t^Ul4xMF8xMDo5MzlGODZCODgzRTU5REExNEY4QjBBNzY3RjlCOUNCM18zXzEjRV4yNjA=";
+            apiContext.ApiCredential.AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
+            apiContext.ApiCredential.DevId = "c40ac8de-96cf-4601-bd0b-21418807e2c6";
+            apiContext.ApiCredential.CertId = "PRD-756826fccb48-e32f-4f1c-a73c-a0c4";
+            apiContext.SoapApiServerUrl = "https://api.ebay.com/wsapi";
 
-            // Create a request to search for items on eBay.
-            ItemType[] items;
-            FindItemsAdvancedCall call = new FindItemsAdvancedCall(context);
-            call.keywords = query;
-            call.Execute();
-            items = call.ApiResponse.SearchResult.ItemArray;
+            // Create the GeteBayOfficialTime API call
+            GeteBayOfficialTimeCall apiCall = new GeteBayOfficialTimeCall(apiContext);
 
-            // Parse the search results and return the first item as a ComputerResult object.
-            if (items.Length > 0)
-            {
-                ItemType item = items[0];
-                return new EBayComputerResult
-                {
-                    Model = item.Title,
-                    Price = item.CurrentPrice.Value
-                };
-            }
-            else
-            {
-                return null;
-            }
+            // Call the API and print the result
+            Console.WriteLine(apiCall.GeteBayOfficialTime());
+            Console.ReadLine();
         }
     }
 }
