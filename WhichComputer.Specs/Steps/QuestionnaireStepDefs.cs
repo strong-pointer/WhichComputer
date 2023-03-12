@@ -60,7 +60,7 @@ public sealed class QuestionnaireStepDefinitions
         _response.AddTagScore(tag, score);
     }
 
-    [Then("I expect that when retreiving all tags, a list with each of the currently entered tags {string} are returned")]
+    [Then("I expect that when retrieving all tags, a list with each of the currently entered tags {string} are returned")]
     public void ThenAllTagsPresent(string tags)
     {
         tagsList = tags.Split(',').ToList();
@@ -70,6 +70,11 @@ public sealed class QuestionnaireStepDefinitions
     [Then("I expect that when calling for the hashed string representation, {string} is returned")]
     public void ThenHashIsCorrect(string expectedHash)
     {
-        Assert.AreEqual(_response.GetHashedResponse(), expectedHash);
+        // This string goes thru the "ringer"
+        //  It first is generated as a hashed and encrypted response,
+        //  then, that encrypted hash is put thru the FromEncryptedHash function which then pulls out the necessary info,
+        //  then, it is finally given to a helper function which pulls out the unencrypted version of the hash
+        string ringer = QuestionnaireResponse.FromEncryptedHash(_response.GetHashedAndEncryptedResponse()).GetHashedResponse();
+        Assert.AreEqual(ringer, expectedHash);
     }
 }

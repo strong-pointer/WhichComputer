@@ -103,8 +103,29 @@ public class HomeController : Controller
         }
     }
 
+    [HttpGet]
     public IActionResult ComputerResults()
     {
+        string queryParam = string.Empty;
+
+        // "QResponse" is QuestionnaireResponse, the hashed and then encrypted string for the results
+        if (!string.IsNullOrEmpty(HttpContext.Request.Query["QResponse"]))
+        {
+            queryParam = HttpContext.Request.Query["QResponse"];
+        }
+
+        // Get the computers that match the decrypted hash's criteria
+        QuestionnaireResponse response = QuestionnaireResponse.FromEncryptedHash(queryParam);
+
+        /* Verify that the response was valid
+        if (response == null)
+        {
+            // Not a valid query parameter, throw an error
+            return View("ResultsError");
+            // Or we could do a simple 404 return: Response.StatusCode = 404; return View();
+        }*/
+
+        // Replace this with computer matching function call that returns a list of computers that is matching the tags?
         return View(Program.GetComputerLoader().Computers);
     }
 }

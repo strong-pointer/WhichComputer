@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WhichComputer
 {
@@ -6,13 +8,50 @@ namespace WhichComputer
     {
         // For double[] value: [0] == Total Score;  [1] == Total Count
         private Dictionary<string, double[]> _TagToTotalScoreAndCount;
-        private string _HashedResponse;
 
         public QuestionnaireResponse()
         {
             // Initialize the private vars
             _TagToTotalScoreAndCount = new Dictionary<string, double[]>();
-            _HashedResponse = string.Empty;
+        }
+
+        // Assume hash is encrypted, this function decrypts that string, un-hashes it, and puts it into the new
+        //  QuestionnaireResponse object that is made and returned.
+        public static QuestionnaireResponse? FromEncryptedHash(string encryptedHash)
+        {
+            QuestionnaireResponse newResponse = new QuestionnaireResponse();
+
+            // Decrypt hash
+            string decryptedHash;
+            try
+            {
+                decryptedHash = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedHash));
+            }
+            catch (FormatException fe)
+            {
+                return null;
+            }
+
+            // Verify/validate that the decryptedHash is a valid hash (in our case)
+            // For the 3500 folks, the regex it checks for is: ([text]'[number];)*
+            if (!Regex.IsMatch(decryptedHash, "([A-Za-z]+['][0-9]+[;])+", RegexOptions.IgnoreCase))
+            {
+                return null;
+            }
+
+            // Split decryptedHash into filling dictionary
+            List<string> hashedEntries = decryptedHash.Split(';').ToList();
+            foreach (var entry in hashedEntries)
+            {
+                if (entry != string.Empty)
+                {
+                    string[] tagAndScore = entry.Split("'");
+                    newResponse.AddTagScore(tagAndScore[0], Convert.ToDouble(tagAndScore[1]));
+                }
+            }
+
+            // create object from hash string
+            return newResponse;
         }
 
         public void AddTagScore(string tag, double score)
@@ -64,26 +103,49 @@ namespace WhichComputer
             }
         }
 
+        // Helper function that simply pulls from the existing tags and scores and then creates an unencrypted hash string
         public string GetHashedResponse()
         {
             // Reset string in case of this function being called >1 time
-            _HashedResponse = string.Empty;
+            string hashedResponse = string.Empty;
 
             // Calculate the hashed string by iterating through the dictionary in sorted order by its key
             foreach (var kvp in _TagToTotalScoreAndCount.OrderBy(x => x.Key))
             {
                 // The average scores are given some leeway in that they are always rounded up to the nearest integer
-                _HashedResponse += kvp.Key + Math.Ceiling(kvp.Value[0] / kvp.Value[1]).ToString();
+                hashedResponse += kvp.Key + "'" + Math.Ceiling(kvp.Value[0] / kvp.Value[1]).ToString() + ";";
             }
 
             // Checks if the hash function worked
-            if (string.IsNullOrEmpty(_HashedResponse))
+            if (string.IsNullOrEmpty(hashedResponse))
             {
                 Console.WriteLine("Error! Hash String is empty upon calling GetHashedResponse in Questionnaire.cs");
             }
 
-            // If there are exact matches (to the next int on average tag scores), then "hashes" will collide as intended
-            return _HashedResponse;
+            return hashedResponse;
+        }
+
+        // Returns the encrypted hash response that is put at the end of the url as a query param
+        public string GetHashedAndEncryptedResponse()
+        {
+            // Reset string in case of this function being called >1 time
+            string hashedResponse = string.Empty;
+
+            // Calculate the hashed string by iterating through the dictionary in sorted order by its key
+            foreach (var kvp in _TagToTotalScoreAndCount.OrderBy(x => x.Key))
+            {
+                // The average scores are given some leeway in that they are always rounded up to the nearest integer
+                hashedResponse += kvp.Key + "'" + Math.Ceiling(kvp.Value[0] / kvp.Value[1]).ToString() + ";";
+            }
+
+            // Checks if the hash function worked
+            if (string.IsNullOrEmpty(hashedResponse))
+            {
+                Console.WriteLine("Error! Hash String is empty upon calling GetHashedResponse in Questionnaire.cs");
+            }
+
+            // Encrypts and returns the hash
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(hashedResponse));
         }
     }
 }
