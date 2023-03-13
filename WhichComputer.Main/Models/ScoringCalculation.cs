@@ -8,7 +8,56 @@ namespace WhichComputer.Main
         {
             FinalScore finalScore = new FinalScore();
 
+            if (initialScore.Novice || !initialScore.NoChromebook || !initialScore.Gaming || !initialScore.Professional || !initialScore.Desktop)
+            {
+                finalScore.ChromebookOK = true;
+            }
+            else
+            {
+                finalScore.ChromebookOK = false;
+            }
 
+            switch (initialScore.PriceRange)
+            {
+                case 1:
+                    finalScore.PCTier = 1;
+                    break;
+                case 2:
+                    finalScore.PCTier = 2;
+                    break;
+                case 3:
+                    finalScore.PCTier = 2;
+                    break;
+                case 4:
+                    finalScore.PCTier = 3;
+                    break;
+                case 5:
+                    finalScore.PCTier = 3;
+                    break;
+                case 6:
+                    finalScore.PCTier = 4;
+                    break;
+                case 7:
+                    finalScore.PCTier = 4;
+                    break;
+                case 8:
+                    finalScore.PCTier = 5;
+                    break;
+                case 9:
+                    finalScore.PCTier = 6;
+                    break;
+                case 10:
+                    finalScore.PCTier = 7;
+                    break;
+            }
+
+            if (initialScore.Professional)
+            {
+                if (finalScore.PCTier <= 2)
+                {
+                    finalScore.PCTier = 3;
+                }
+            }
 
             return finalScore;
         }
