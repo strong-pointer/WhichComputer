@@ -91,10 +91,8 @@ public class HomeController : Controller
             {
                 return BadRequest(Json(new ErrorResponse($"The following responses could not be parsed: {failures}")));
             }
-            else
-            {
-                return Ok(Json("Success"));
-            }
+
+            return Ok(Json("Success"));
         }
         catch (Exception e)
         {

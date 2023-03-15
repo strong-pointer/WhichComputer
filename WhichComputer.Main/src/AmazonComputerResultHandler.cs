@@ -52,18 +52,31 @@ public class AmazonComputerResultHandler : IComputerResultHandler
         }
 
         // The first item is simply the results header.
-        var test = doc.CssSelect(".s-result-item").Where(n => !n.InnerText.Contains("RESULTS") && !n.InnerText.Trim().Equals(string.Empty)).Take(amount);
+        var test = doc.CssSelect(".s-result-item.sg-col-16-of-20").Where(n =>
+            !n.InnerText.Contains("RESULTS") && !n.InnerText.Trim().Equals(string.Empty));
         List<ComputerResult> results = new();
+        int total = 0;
         foreach (var node in test)
         {
-            ComputerResult result = new ComputerResult();
-            result.Computer = computer;
-            result.Used = used;
-            result.ListingName = node.CssSelect(".a-text-normal.a-size-medium.a-color-base").First().InnerText.ReplaceLineEndings(string.Empty);
-            result.Price = double.Parse(node.CssSelect(".a-offscreen").First().InnerText.Substring(1));
-            result.Url = node.CssSelect("a").First().GetAttributeValue("href");
-            result.Source = Service;
-            results.Add(result);
+            if (total == amount)
+                break;
+            try
+            {
+                ComputerResult result = new ComputerResult();
+                result.Computer = computer;
+                result.Used = used;
+                result.ListingName = node.CssSelect(".a-text-normal.a-size-medium.a-color-base").First().InnerText.ReplaceLineEndings(string.Empty);
+                result.Price = double.Parse(node.CssSelect(".a-offscreen").First().InnerText.Substring(1));
+                result.Url = node.CssSelect("a").First().GetAttributeValue("href");
+                result.Source = Service;
+                results.Add(result);
+                total++;
+            }
+            catch (InvalidOperationException ex)
+            {
+                // There is no price for this result - keep moving.
+                continue;
+            }
         }
 
         return results;
