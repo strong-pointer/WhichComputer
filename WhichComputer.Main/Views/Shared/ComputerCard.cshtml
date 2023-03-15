@@ -1,7 +1,9 @@
 ﻿@model WhichComputer.Main.Computer
 @{
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
+    var fetcher = new WhichComputer.Main.AmazonComputerResultHandler(ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader);
 }
+
 <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
     <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
         <div id="@id" class="h-56">
@@ -126,7 +128,11 @@
                         <tr >
                             <th scope="row" class="px-6 py-4 font-large text-white whitespace-nowrap dark:text-blue-100">
                                 @purchaseOptions
-                            </th>
+                                        @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                           @fetcher.Fetch(Model, true, 1).First().Price
+                                        }
+                                    </th>
 
                         </tr>
                         </tbody>

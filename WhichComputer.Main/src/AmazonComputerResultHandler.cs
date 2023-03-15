@@ -1,4 +1,5 @@
-﻿using System.Xml.XPath;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Xml.XPath;
 using HtmlAgilityPack;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
