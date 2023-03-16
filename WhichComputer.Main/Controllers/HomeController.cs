@@ -10,6 +10,7 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly Questionnaire _loader = Program.GetQuestionnaireLoader().Questions;
+    private readonly ComputerLoader _computerLoader = Program.GetComputerLoader();
 
     public HomeController(ILogger<HomeController> logger)
     {
@@ -124,6 +125,6 @@ public class HomeController : Controller
         }*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
-        return View(Program.GetComputerLoader().Computers);
+        return View(_computerLoader.Computers);
     }
 }
