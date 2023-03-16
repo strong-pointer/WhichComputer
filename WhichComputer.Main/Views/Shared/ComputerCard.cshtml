@@ -128,11 +128,11 @@
                         <tr >
                             <th scope="row" class="px-6 py-4 font-large text-white whitespace-nowrap dark:text-blue-100">
                                 @purchaseOptions
-                                        @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                           @fetcher.Fetch(Model, true, 1).First().Price
-                                        }
-                                    </th>
+                                 @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
+                                 {
+                                            @fetcher.Fetch(Model, true, 1).First().Price
+                                 }
+                            </th>
 
                         </tr>
                         </tbody>

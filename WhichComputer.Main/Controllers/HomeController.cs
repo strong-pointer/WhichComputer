@@ -124,9 +124,10 @@ public class HomeController : Controller
         }*/
 
         //Testing stuff
-        /*ViewData["CompLoader"] = Program.GetComputerLoader();
+        ViewData["CompLoader"] = Program.GetComputerLoader();
         AmazonComputerResultHandler handler = new AmazonComputerResultHandler(Program.GetComputerLoader());
-        var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);*/
+        var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);
+
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
 
         return View(Program.GetComputerLoader().Computers);
