@@ -2,6 +2,27 @@
 @{
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
     var fetcher = new WhichComputer.Main.AmazonComputerResultHandler(ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader);
+    Dictionary<string, WhichComputer.Main.ComputerResult> ServiceToResult = new();
+
+    WhichComputer.Main.ComputerResult GetProdInfo(string Service)
+    {
+        // Service already called
+        if (ServiceToResult.ContainsKey(Service))
+        {
+            // return existing computer result;; no need to fetch again
+            return ServiceToResult[Service];
+        }
+        // Service not yet called, fill out with new ComputerResult
+        else
+        {
+            // Fetch the info from the service and add it to the new result
+            WhichComputer.Main.ComputerResult newCompResult = fetcher.Fetch(Model, true, 1).First();
+
+            // Add to map and return that new result
+            ServiceToResult[Service] = newCompResult;
+            return newCompResult;
+        }
+    }
 }
 
 <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
@@ -10,7 +31,7 @@
             <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@Model.Name</h5>
             <p class="text-sm dark:text-white pb-3">Brand: @Model.Brand<br/><br/>@Model.Description </p>
         </div>
-        <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false">See more</button>
+        <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" onclick="@GetProdInfo("Amazon")" aria-expanded="false">See more</button>
         <div id="@id-body" class="hidden mt-6" aria-labelledby="@id">
             <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Features:</h5>
 
@@ -130,7 +151,7 @@
                                 @purchaseOptions
                                  @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
                                  {
-                                            @fetcher.Fetch(Model, true, 1).First().Price
+                                     @GetProdInfo(purchaseOptions).Price
                                  }
                             </th>
 
