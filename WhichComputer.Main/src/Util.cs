@@ -10,6 +10,8 @@ public static class Util
                 throw new NotImplementedException(); // TODO
             case SupportedServices.AMAZON:
                 return typeof(AmazonComputerResultHandler);
+            case SupportedServices.BEST_BUY:
+                return typeof(BestBuyResultHandler);
         }
 
         throw new NotImplementedException();
