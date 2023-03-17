@@ -134,8 +134,10 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult MoreInfo(string hash)
+    public IActionResult MoreInfo()
     {
+        string temp = Request.Query["hash"];
+        var hash = Tuple.Create(temp);
         return View(hash);
     }
 }

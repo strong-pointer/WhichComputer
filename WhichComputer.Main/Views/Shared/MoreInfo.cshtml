@@ -1,8 +1,8 @@
 ﻿@using WhichComputer.Main
-@model string
+@model Tuple<string>
 @{
     ViewData["Title"] = "More Info";
-    string jsonCurrComputer = TempData[Model] as string;
+    string jsonCurrComputer = TempData[Model.Item1] as string;
     Computer currComputer = Newtonsoft.Json.JsonConvert.DeserializeObject<Computer>(jsonCurrComputer);
 
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
@@ -46,124 +46,126 @@
     }
 }
 
-<div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
-    <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
-        <div id="@id" class="h-56">
-            <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@currComputer.Name</h5>
-            <p class="text-sm dark:text-white pb-3">Brand: @currComputer.Brand<br/><br/>@currComputer.Description </p>
-        </div>
-        <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false">See more</button>
-        <div id="@id-body" class="hidden mt-6" aria-labelledby="@id">
-            <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Features:</h5>
-
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-
-                    <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4">
-                            Operating System
-                        </th>
-                        <th scope="row" class="px-6 py-4">
-                            @currComputer.Specs.OS
-                        </th>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">
-                            Weight (lbs)
-                        </td>
-                        <td class="px-6 py-4">
-                            @currComputer.Specs.Weight
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">
-                            Screen Resolution
-                        </td>
-                        <td class="px-6 py-4">
-                            @currComputer.Specs.Resolution
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">
-                            Screen Size (in)
-                        </td>
-                        <td class="px-6 py-4">
-                            @currComputer.Specs.Screen
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">
-                            Ports
-                        </td>
-                        <td class="px-6 py-4">
-                            @currComputer.Specs.Ports
-                        </td>
-                    </tr>
-                    </tbody>
-
-
-                </table>
+<body class="bg-black">
+    <div class="py-4 m-auto grid grid-cols-3 gap-4 m-4 w-11/12" data-accordion="open" data-inactive-classes="dark:text-emerald-300" data-active-classes="dark:text-white">
+    <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
+        <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
+            <div id="@id" class="h-56">
+                <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@currComputer.Name</h5>
+                <p class="text-sm dark:text-white pb-3">Brand: @currComputer.Brand<br/><br/>@currComputer.Description </p>
             </div>
+            <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false">See more</button>
+            <div id="@id-body" class="hidden mt-6" aria-labelledby="@id">
+                <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Features:</h5>
 
-            <br/>
-            <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Options:</h5>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Storage (GB)
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Memory (GB)
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Processor
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Graphics
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var specOptions in currComputer.Specs.Options)
-                    {
+                        <tbody>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" class="px-6 py-4">
-                                @specOptions.Storage
+                                Operating System
                             </th>
-                            <td class="px-6 py-4">
-                                @specOptions.RAM
-                            </td>
-                            <td class="px-6 py-4">
-                                @specOptions.Processor
-                            </td>
-                            @if (!string.IsNullOrEmpty(specOptions.Graphics))
-                            {
-                                <td class="px-6 py-4">
-                                    @specOptions.Graphics
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="px-6 py-4">
-                                    N/A
-                                </td>
-                            }
+                            <th scope="row" class="px-6 py-4">
+                                @currComputer.Specs.OS
+                            </th>
                         </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-            <p>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Weight (lbs)
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Weight
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Screen Resolution
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Resolution
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Screen Size (in)
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Screen
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Ports
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Ports
+                            </td>
+                        </tr>
+                        </tbody>
 
-            <br/>
-            <h5 id="WhereToBuy" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Where To Buy:</h5>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full border-spacing-0 text-xl text-center text-blue-100 dark:text-blue-100">
-                    @foreach (var purchaseOptions in currComputer.AvailableFrom)
+
+                    </table>
+                </div>
+
+                <br/>
+                <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Options:</h5>
+
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Storage (GB)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Memory (GB)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Processor
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Graphics
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var specOptions in currComputer.Specs.Options)
+                        {
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4">
+                                    @specOptions.Storage
+                                </th>
+                                <td class="px-6 py-4">
+                                    @specOptions.RAM
+                                </td>
+                                <td class="px-6 py-4">
+                                    @specOptions.Processor
+                                </td>
+                                @if (!string.IsNullOrEmpty(specOptions.Graphics))
+                                {
+                                    <td class="px-6 py-4">
+                                        @specOptions.Graphics
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="px-6 py-4">
+                                        N/A
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+
+                <br/>
+                <h5 id="WhereToBuy" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Where To Buy:</h5>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full border-spacing-0 text-xl text-center text-blue-100 dark:text-blue-100">
+                        @foreach (var purchaseOptions in currComputer.AvailableFrom)
                         {
                             <tbody>
                             <tr>
@@ -182,9 +184,11 @@
                             </tr>
                             </tbody>
                         }
-                </table>
+                    </table>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
+    </div>
+</body>
