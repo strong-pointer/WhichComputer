@@ -124,12 +124,18 @@ public class HomeController : Controller
             // Or we could do a simple 404 return: Response.StatusCode = 404; return View();
         }*/
 
-        // Testing stuff
         ViewData["CompLoader"] = Program.GetComputerLoader();
+        /* Testing stuff
         AmazonComputerResultHandler handler = new AmazonComputerResultHandler(Program.GetComputerLoader());
-        var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);
+        var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
         return View(_computerLoader.Computers);
+    }
+
+    [HttpGet]
+    public IActionResult MoreInfo(string hash)
+    {
+        return View(hash);
     }
 }
