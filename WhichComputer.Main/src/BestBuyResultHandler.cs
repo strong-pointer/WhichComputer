@@ -1,32 +1,29 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Xml.XPath;
+﻿using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
 
 namespace WhichComputer.Main;
 
-public class AmazonComputerResultHandler : IComputerResultHandler
+public class BestBuyResultHandler : IComputerResultHandler
 {
-    private const string BaseUrl = "https://www.amazon.com";
+    private const string BaseUrl = "https://www.bestbuy.com";
     private static ScrapingBrowser _browser = new();
     private string _file = string.Empty;
     private ComputerLoader _computerLoader;
 
-    public AmazonComputerResultHandler(ComputerLoader loader)
-    {
-        _computerLoader = loader;
-    }
+    public BestBuyResultHandler(ComputerLoader loader) => _computerLoader = loader;
 
-    public AmazonComputerResultHandler(ComputerLoader loader, string file)
+    public BestBuyResultHandler(ComputerLoader loader, string file)
     {
         _file = file;
         _computerLoader = loader;
+        _browser.UserAgent = FakeUserAgents.Chrome;
     }
 
-    public SupportedServices Service { get; } = SupportedServices.AMAZON;
+    public SupportedServices Service { get; } = SupportedServices.BEST_BUY;
 
-    public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount = 5)
+    public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount)
     {
         HtmlNode doc;
         if (!_file.Equals(string.Empty))
@@ -42,19 +39,14 @@ public class AmazonComputerResultHandler : IComputerResultHandler
                 throw new InvalidOperationException("A computer cannot have an empty name.");
             }
 
-            var url = BaseUrl + "/s?k=" + computer.Name;
-            if (used)
-            {
-                // This is the query parameter for the "Renewed" status on Amazon's website.
-                url += "&rh=n:172282,p_n_condition-type:16907720011&ref=sr_nr_p_n_condition-type_2";
-            }
+            string condition = used ? "Refurbished" : "New";
 
-            doc = _browser.NavigateToPage(new Uri(url)).Html;
+            var url = $"{BaseUrl}/site/searchpage.jsp?qp=condition_facet%3DCondition~{condition}&st={computer.Name}";
+            doc = new HtmlWeb().Load(url).DocumentNode;
         }
 
         // The first item is simply the results header.
-        var test = doc.CssSelect(".s-result-item.sg-col-16-of-20").Where(n =>
-            !n.InnerText.Contains("RESULTS") && !n.InnerText.Trim().Equals(string.Empty));
+        var test = doc.CssSelect(".sku-item");
         List<ComputerResult> results = new();
         int total = 0;
         foreach (var node in test)
@@ -66,9 +58,9 @@ public class AmazonComputerResultHandler : IComputerResultHandler
                 ComputerResult result = new ComputerResult();
                 result.Computer = computer;
                 result.Used = used;
-                result.ListingName = node.CssSelect(".a-text-normal.a-size-medium.a-color-base").First().InnerText.ReplaceLineEndings(string.Empty);
-                result.Price = double.Parse(node.CssSelect(".a-offscreen").First().InnerText.Substring(1));
-                result.Url = node.CssSelect("a").First().GetAttributeValue("href");
+                result.ListingName = node.CssSelect(".sku-title").First().InnerText.Trim();
+                result.Price = double.Parse(Regex.Replace(node.CssSelect(".priceView-hero-price span").First().InnerText.Trim(), @"([a-zA-Z\$,])", string.Empty));
+                result.Url = node.CssSelect(".sku-title a").First().GetAttributeValue("href");
                 result.Source = Service;
                 results.Add(result);
                 total++;
@@ -85,7 +77,7 @@ public class AmazonComputerResultHandler : IComputerResultHandler
 
     public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
     {
-        Computer? computer = _computerLoader.Computers.GetComputer(computerName);
+        Computer? computer = _computerLoader.Computers?.GetComputer(computerName);
         if (string.IsNullOrWhiteSpace(computerName))
         {
             {
