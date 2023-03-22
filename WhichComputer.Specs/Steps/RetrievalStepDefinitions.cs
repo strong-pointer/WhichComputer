@@ -51,18 +51,18 @@ public sealed class RetrievalStepDefinitions
     public void errorMustBeThrownUponQuery(string query)
     {
         Assert.NotNull(_handler);
-        Assert.Catch<InvalidOperationException>(() => _handler.Fetch(query, false, 2));
+        Assert.CatchAsync<InvalidOperationException>(async () => await _handler.Fetch(query, false, 2));
     }
 
     [Then("I expect the following {int} results when I fetch results for the computer {string}:")]
-    public void expectResultsFromSearch(int number, string computerName, Table table)
+    public async Task expectResultsFromSearch(int number, string computerName, Table table)
     {
         Assert.NotNull(_handler);
         Computer? computer = _computerLoader.Computers?.GetComputer(computerName);
         Assert.NotNull(computer);
         if (computer != null)
         {
-            var results = _handler.Fetch(computer.Value, true, number).ToList();
+            var results = (await _handler.Fetch(computer.Value, true, number)).ToList();
             foreach (var row in table.Rows)
             {
                 ComputerResult trueResult = results[0];
