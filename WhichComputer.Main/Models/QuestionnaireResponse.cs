@@ -128,24 +128,8 @@ namespace WhichComputer
         // Returns the encrypted hash response that is put at the end of the url as a query param
         public string GetHashedAndEncryptedResponse()
         {
-            // Reset string in case of this function being called >1 time
-            string hashedResponse = string.Empty;
-
-            // Calculate the hashed string by iterating through the dictionary in sorted order by its key
-            foreach (var kvp in _TagToTotalScoreAndCount.OrderBy(x => x.Key))
-            {
-                // The average scores are given some leeway in that they are always rounded up to the nearest integer
-                hashedResponse += kvp.Key + "'" + Math.Ceiling(kvp.Value[0] / kvp.Value[1]).ToString() + ";";
-            }
-
-            // Checks if the hash function worked
-            if (string.IsNullOrEmpty(hashedResponse))
-            {
-                Console.WriteLine("Error! Hash String is empty upon calling GetHashedResponse in Questionnaire.cs");
-            }
-
             // Encrypts and returns the hash
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(hashedResponse));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(GetHashedResponse()));
         }
     }
 }
