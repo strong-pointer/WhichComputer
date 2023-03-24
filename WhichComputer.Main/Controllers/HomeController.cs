@@ -93,7 +93,10 @@ public class HomeController : Controller
                 return BadRequest(Json(new ErrorResponse($"The following responses could not be parsed: {failures}")));
             }
 
-            return Ok(Json("Success"));
+            Dictionary<String, String> response = new Dictionary<string, string>();
+            response.Add("hash", questionnaireResponse.GetHashedAndEncryptedResponse());
+
+            return Ok(Json(response));
         }
         catch (Exception e)
         {
