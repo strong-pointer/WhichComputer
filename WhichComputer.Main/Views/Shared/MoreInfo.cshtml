@@ -11,7 +11,7 @@
     var bbFetcher = new WhichComputer.Main.BestBuyResultHandler(loader);
     Dictionary<string, WhichComputer.Main.ComputerResult> ServiceToResult = new();
 
-    WhichComputer.Main.ComputerResult GetProdInfo(string service)
+    async Task<WhichComputer.Main.ComputerResult> GetProdInfo(string service)
     {
         // Service already called, just return cached info
         if (ServiceToResult.ContainsKey(service))
@@ -28,10 +28,10 @@
             switch (service)
             {
                 case "Amazon":
-                    newCompResult = amzFetcher.Fetch(currComputer, false, 1).First();
+                    newCompResult = (await amzFetcher.Fetch(currComputer, false, 1)).ToList().First();
                     break;
                 case "Best Buy":
-                    newCompResult = bbFetcher.Fetch(currComputer, false, 1).First();
+                    newCompResult = (await bbFetcher.Fetch(currComputer, false, 1)).ToList().First();
                     break;
                 default:
                     newCompResult = new ComputerResult();
@@ -174,11 +174,13 @@
 
                                     @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        @GetProdInfo(purchaseOptions).Price
+                                                    var temp = await GetProdInfo(purchaseOptions);
+                                                    @temp.Price
                                     }
                                     else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        @GetProdInfo(purchaseOptions).Price
+                                                    //var temp = await GetProdInfo(purchaseOptions);
+                                                    //@temp.Price
                                     }
                                 </th>
                             </tr>

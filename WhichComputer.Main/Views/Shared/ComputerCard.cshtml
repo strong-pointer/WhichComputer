@@ -13,27 +13,27 @@
     var bbFetcher = new WhichComputer.Main.BestBuyResultHandler(loader);
     Dictionary<string, WhichComputer.Main.ComputerResult> ServiceToResult = new();
 
-    WhichComputer.Main.ComputerResult GetProdInfo(string service)
+    async Task<WhichComputer.Main.ComputerResult> GetProdInfo(string service)
     {
         // Service already called, just return cached info
-            if (ServiceToResult.ContainsKey(service))
-            {
-                // return existing computer result;; no need to fetch again
-                return ServiceToResult[service];
-            }
-            // Service not yet called, fill out with new ComputerResult
-            else
-            {
-                ComputerResult newCompResult;
+        if (ServiceToResult.ContainsKey(service))
+        {
+            // return existing computer result;; no need to fetch again
+            return ServiceToResult[service];
+        }
+        // Service not yet called, fill out with new ComputerResult
+        else
+        {
+            ComputerResult newCompResult;
 
-                // Fetch the info from the service and add it to the new result
-                switch (service)
-                {
-                    case "Amazon":
-                        newCompResult = amzFetcher.Fetch(Model, false, 1).First();
-                        break;
+            // Fetch the info from the service and add it to the new result
+            switch (service)
+            {
+                case "Amazon":
+                    newCompResult = (await amzFetcher.Fetch(Model, false, 1)).ToList().First();
+                    break;
                     case "Best Buy":
-                        newCompResult = bbFetcher.Fetch(Model, false, 1).First();
+                        newCompResult = (await bbFetcher.Fetch(Model, false, 1)).ToList().First();
                         break;
                     default:
                         newCompResult = new ComputerResult();
@@ -174,12 +174,13 @@
 
                                     @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        //GetProdInfo(purchaseOptions).Price
-                                    }
+                                            //GetProdInfo(purchaseOptions).Price
+                                        }
                                     else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        //GetProdInfo(purchaseOptions).Price
-                                    }
+                                            //GetProdInfo(purchaseOptions).Price
+                                        }
+
                                 </th>
                             </tr>
                             </tbody>
