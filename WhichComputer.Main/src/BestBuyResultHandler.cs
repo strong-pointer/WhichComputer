@@ -23,7 +23,7 @@ public class BestBuyResultHandler : IComputerResultHandler
 
     public SupportedServices Service { get; } = SupportedServices.BEST_BUY;
 
-    public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount)
+    public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
     {
         HtmlNode doc;
         if (!_file.Equals(string.Empty))
@@ -42,7 +42,7 @@ public class BestBuyResultHandler : IComputerResultHandler
             string condition = used ? "Refurbished" : "New";
 
             var url = $"{BaseUrl}/site/searchpage.jsp?qp=condition_facet%3DCondition~{condition}&st={computer.Name}";
-            doc = new HtmlWeb().Load(url).DocumentNode;
+            doc = (await new HtmlWeb().LoadFromWebAsync(url)).DocumentNode;
         }
 
         // The first item is simply the results header.
@@ -75,7 +75,7 @@ public class BestBuyResultHandler : IComputerResultHandler
         return results;
     }
 
-    public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
+    public Task<IEnumerable<ComputerResult>> Fetch(string computerName, bool used, int amount)
     {
         Computer? computer = _computerLoader.Computers?.GetComputer(computerName);
         if (string.IsNullOrWhiteSpace(computerName))

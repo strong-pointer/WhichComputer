@@ -26,7 +26,7 @@ public class AmazonComputerResultHandler : IComputerResultHandler
 
     public SupportedServices Service { get; } = SupportedServices.AMAZON;
 
-    public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount = 5)
+    public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount = 5)
     {
         HtmlNode doc;
         if (!_file.Equals(string.Empty))
@@ -49,7 +49,7 @@ public class AmazonComputerResultHandler : IComputerResultHandler
                 url += "&rh=n:172282,p_n_condition-type:16907720011&ref=sr_nr_p_n_condition-type_2";
             }
 
-            doc = _browser.NavigateToPage(new Uri(url)).Html;
+            doc = (await _browser.NavigateToPageAsync(new Uri(url))).Html;
         }
 
         // The first item is simply the results header.
@@ -83,7 +83,7 @@ public class AmazonComputerResultHandler : IComputerResultHandler
         return results;
     }
 
-    public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
+    public async Task<IEnumerable<ComputerResult>> Fetch(string computerName, bool used, int amount)
     {
         Computer? computer = _computerLoader.Computers.GetComputer(computerName);
         if (string.IsNullOrWhiteSpace(computerName))
@@ -95,7 +95,7 @@ public class AmazonComputerResultHandler : IComputerResultHandler
 
         if (computer.HasValue)
         {
-            return Fetch(computer.Value, used, amount);
+            return await Fetch(computer.Value, used, amount);
         }
 
         throw new InvalidOperationException("No such computer exists in our database.");

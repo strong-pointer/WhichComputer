@@ -93,6 +93,9 @@ function postAnswers() {
                 }).remove();
             $(".answer-div").css("display", "none");
             $("#prompt").text("All done!");
+            Cookies.set('hash', result.value.hash);
+            console.log(result);
+            window.location.replace("/Home/ComputerResults?q=" + result.value.hash);
         },
         error: function (xhr, status, error) {
             $("#question-card").html(xhr.responseText);
