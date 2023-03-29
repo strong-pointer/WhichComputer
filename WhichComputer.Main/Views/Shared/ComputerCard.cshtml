@@ -55,7 +55,7 @@
             <p class="text-sm dark:text-white pb-3">Brand: @Model.Brand<br/><br/>@Model.Description </p>
         </div>
         <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false" onclick="location.href='@Url.Action("MoreInfo", "Home", new { hash = @hash })'">See more</button>
-        <div id="@id-body" class="hidden mt-6" aria-labelledby="@id">
+       <!-- <div id="@id-body" class="hidden mt-6" aria-labelledby="@id">
             <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Features:</h5>
 
             <div class="relative overflow-x-auto">
@@ -187,7 +187,7 @@
                         }
                 </table>
             </div>
-        </div>
+        </div>-->
 
     </div>
 </div>
