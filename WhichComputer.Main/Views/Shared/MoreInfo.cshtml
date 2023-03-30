@@ -1,9 +1,8 @@
 ﻿@using WhichComputer.Main
-@model Tuple<string>
+@model Computer
 @{
     ViewData["Title"] = "More Info";
-    string jsonCurrComputer = TempData[Model.Item1] as string;
-    Computer currComputer = Newtonsoft.Json.JsonConvert.DeserializeObject<Computer>(jsonCurrComputer);
+    Computer currComputer = Model;
 
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
     var loader = ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader;
@@ -174,8 +173,9 @@
 
                                     @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
                                     {
-                                                    var temp = await GetProdInfo(purchaseOptions);
-                                                string url = "https://www.amazon.com" + temp.Url;
+                                                var temp = await GetProdInfo(purchaseOptions);
+                                                temp.Url = Uri.UnescapeDataString(temp.Url);
+                                                string url = "https://www.amazon.com" + "/" + temp.Url.Substring(temp.Url.IndexOf("/dp/") + 1);
                                             <u><a href="@url" target="_blank" rel="noopener noreferrer"> @temp.Price </a></u>
                                     }
                                     else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))

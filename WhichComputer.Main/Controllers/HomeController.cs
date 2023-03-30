@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WhichComputer.Main.Models.JSON;
+using YamlDotNet.Core.Tokens;
 
 namespace WhichComputer.Main.Controllers;
 
@@ -139,8 +140,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult MoreInfo()
     {
-        string temp = Request.Query["hash"];
-        var hash = Tuple.Create(temp);
-        return View(hash);
+        Computer temp = Program.GetComputerLoader().Computers.GetComputer(Request.Query["computer"]).Value;
+        return View(temp);
     }
 }
