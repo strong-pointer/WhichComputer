@@ -23,7 +23,7 @@ public class BestBuyResultHandler : IComputerResultHandler
 
     public SupportedServices Service { get; } = SupportedServices.BEST_BUY;
 
-    public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
+    public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount = 5)
     {
         HtmlNode doc;
         if (!_file.Equals(string.Empty))

@@ -8,9 +8,9 @@
     var loader = ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader;
     var amzFetcher = new WhichComputer.Main.AmazonComputerResultHandler(loader);
     var bbFetcher = new WhichComputer.Main.BestBuyResultHandler(loader);
-    Dictionary<string, WhichComputer.Main.ComputerResult> ServiceToResult = new();
+    Dictionary<string, List<WhichComputer.Main.ComputerResult>> ServiceToResult = new();
 
-    async Task<WhichComputer.Main.ComputerResult> GetProdInfo(string service)
+    async Task<List<WhichComputer.Main.ComputerResult>> GetProdInfo(string service)
     {
         // Service already called, just return cached info
         if (ServiceToResult.ContainsKey(service))
@@ -21,33 +21,32 @@
         // Service not yet called, fill out with new ComputerResult
         else
         {
-            ComputerResult newCompResult;
+            List<ComputerResult> newCompResults;
 
             // Fetch the info from the service and add it to the new result
             switch (service)
             {
                 case "Amazon":
-                    newCompResult = (await amzFetcher.Fetch(currComputer, false, 1)).ToList().First();
+                    newCompResults = (await amzFetcher.Fetch(currComputer, false, 3)).ToList();
                     break;
                 case "Best Buy":
-                    newCompResult = (await bbFetcher.Fetch(currComputer, false, 1)).ToList().First();
+                    newCompResults = (await bbFetcher.Fetch(currComputer, false, 3)).ToList();
                     break;
                 default:
-                    newCompResult = new ComputerResult();
+                    newCompResults = new List<ComputerResult>();
                     break;
             }
 
-
+            // Sort list by lowest price first
+            List<ComputerResult> sortedCompresults = newCompResults.OrderBy(x => x.Price).ToList();
             // Add to map and return that new result
-            ServiceToResult[service] = newCompResult;
-            return newCompResult;
+            ServiceToResult[service] = sortedCompresults;
+            return sortedCompresults;
         }
     }
 }
 
 <body class="bg-black">
-    <!--div class="py-4 m-auto grid grid-cols-3 gap-4 m-4 w-11/12" data-accordion="open" data-inactive-classes="dark:text-emerald-300" data-active-classes="dark:text-white">-->
-    <!--<div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">-->
     <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
             <div id="@id" class="h-56">
                 <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@currComputer.Name</h5>
@@ -164,27 +163,70 @@
                 <h5 id="WhereToBuy" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Where To Buy:</h5>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full border-spacing-0 text-xl text-center text-blue-100 dark:text-blue-100">
+                        <tr scope="row" class="px-6 py-4 font-large text-white whitespace-nowrap dark:text-blue-100">
+                            <th>Site</th>
+                            <th>Price</th>
+                            <th>Condition</th>
+                        </tr>
                         @foreach (var purchaseOptions in currComputer.AvailableFrom)
                         {
                             <tbody>
-                            <tr>
-                                <th scope="row" class="px-6 py-4 font-large text-white whitespace-nowrap dark:text-blue-100">
-                                    @purchaseOptions
-
+                                <tr>
                                     @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
                                     {
-                                                var temp = await GetProdInfo(purchaseOptions);
-                                                temp.Url = Uri.UnescapeDataString(temp.Url);
-                                                string url = "https://www.amazon.com" + "/" + temp.Url.Substring(temp.Url.IndexOf("/dp/") + 1);
-                                            <u><a href="@url" target="_blank" rel="noopener noreferrer"> @temp.Price </a></u>
+                                        var resultList = await GetProdInfo(purchaseOptions);
+                                        bool first = true;
+
+                                        foreach(var temp in resultList) {
+                                        <tr>
+                                            @if (first)
+                                            {
+                                                // Only the first row has the site name
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    @purchaseOptions
+                                                </td>
+                                                first = false;
+                                            }
+                                            else
+                                            {
+                                                // Empty site column after the first was presented
+                                                <td></td>
+                                            }
+
+                                            @{
+                                            temp.Url = Uri.UnescapeDataString(temp.Url);
+                                            string url = "https://www.amazon.com" + "/" + temp.Url.Substring(temp.Url.IndexOf("/dp/") + 1);
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    @using System.Globalization
+                                                    <a href="@url" target="_blank" rel="noopener noreferrer"><u>@temp.Price.ToString("C", CultureInfo.CurrentCulture)</u></a>
+                                                </td>
+                                            if (!temp.Used)
+                                            {
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    <a>New</a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    <a>Used</a>
+                                                </td>
+                                            }
+                                            }
+                                            </tr>
+                                        }
                                     }
                                     else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))
                                     {
-                                                    //var temp = await GetProdInfo(purchaseOptions);
-                                                    //@temp.Price
+                                        //var temp = await GetProdInfo(purchaseOptions);
+                                        //@temp.Price
+                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
                                     }
-                                </th>
-                            </tr>
+                                    else
+                                    {
+                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
+                                    }
+                                </tr>
                             </tbody>
                         }
                     </table>
@@ -192,6 +234,4 @@
             </div>
 
         </div>
-        <!--</div>-->
-    <!--</div>-->
 </body>
