@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WhichComputer.Main.Models.JSON;
+using YamlDotNet.Core.Tokens;
 
 namespace WhichComputer.Main.Controllers;
 
@@ -127,7 +128,19 @@ public class HomeController : Controller
             // Or we could do a simple 404 return: Response.StatusCode = 404; return View();
         }*/
 
+        ViewData["CompLoader"] = Program.GetComputerLoader();
+        /* Testing stuff
+        AmazonComputerResultHandler handler = new AmazonComputerResultHandler(Program.GetComputerLoader());
+        var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);*/
+
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
         return View(_computerLoader.Computers);
+    }
+
+    [HttpGet]
+    public IActionResult MoreInfo()
+    {
+        Computer temp = Program.GetComputerLoader().Computers.GetComputer(Request.Query["computer"]).Value;
+        return View(temp);
     }
 }

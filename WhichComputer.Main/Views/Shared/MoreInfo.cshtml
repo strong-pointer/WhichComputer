@@ -1,0 +1,237 @@
+﻿@using WhichComputer.Main
+@model Computer
+@{
+    ViewData["Title"] = "More Info";
+    Computer currComputer = Model;
+
+    var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
+    var loader = ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader;
+    var amzFetcher = new WhichComputer.Main.AmazonComputerResultHandler(loader);
+    var bbFetcher = new WhichComputer.Main.BestBuyResultHandler(loader);
+    Dictionary<string, List<WhichComputer.Main.ComputerResult>> ServiceToResult = new();
+
+    async Task<List<WhichComputer.Main.ComputerResult>> GetProdInfo(string service)
+    {
+        // Service already called, just return cached info
+        if (ServiceToResult.ContainsKey(service))
+        {
+            // return existing computer result;; no need to fetch again
+            return ServiceToResult[service];
+        }
+        // Service not yet called, fill out with new ComputerResult
+        else
+        {
+            List<ComputerResult> newCompResults;
+
+            // Fetch the info from the service and add it to the new result
+            switch (service)
+            {
+                case "Amazon":
+                    newCompResults = (await amzFetcher.Fetch(currComputer, false, 3)).ToList();
+                    break;
+                case "Best Buy":
+                    newCompResults = (await bbFetcher.Fetch(currComputer, false, 3)).ToList();
+                    break;
+                default:
+                    newCompResults = new List<ComputerResult>();
+                    break;
+            }
+
+            // Sort list by lowest price first
+            List<ComputerResult> sortedCompresults = newCompResults.OrderBy(x => x.Price).ToList();
+            // Add to map and return that new result
+            ServiceToResult[service] = sortedCompresults;
+            return sortedCompresults;
+        }
+    }
+}
+
+<body class="bg-black">
+    <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
+            <div id="@id" class="h-56">
+                <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@currComputer.Name</h5>
+                <p class="text-sm dark:text-white pb-3">Brand: @currComputer.Brand<br/><br/>@currComputer.Description </p>
+            </div>
+                
+            <div id="@id-body"  aria-labelledby="@id">
+                <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Features:</h5>
+
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                        <tbody>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4">
+                                Operating System
+                            </th>
+                            <th scope="row" class="px-6 py-4">
+                                @currComputer.Specs.OS
+                            </th>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Weight (lbs)
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Weight
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Screen Resolution
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Resolution
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Screen Size (in)
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Screen
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4">
+                                Ports
+                            </td>
+                            <td class="px-6 py-4">
+                                @currComputer.Specs.Ports
+                            </td>
+                        </tr>
+                        </tbody>
+
+
+                    </table>
+                </div>
+
+                <br/>
+                <h5 id="Options" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Options:</h5>
+
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Storage (GB)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Memory (GB)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Processor
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Graphics
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var specOptions in currComputer.Specs.Options)
+                        {
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4">
+                                    @specOptions.Storage
+                                </th>
+                                <td class="px-6 py-4">
+                                    @specOptions.RAM
+                                </td>
+                                <td class="px-6 py-4">
+                                    @specOptions.Processor
+                                </td>
+                                @if (!string.IsNullOrEmpty(specOptions.Graphics))
+                                {
+                                    <td class="px-6 py-4">
+                                        @specOptions.Graphics
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="px-6 py-4">
+                                        N/A
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+
+                <br/>
+                <h5 id="WhereToBuy" class="pb-4 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-left">Where To Buy:</h5>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full border-spacing-0 text-xl text-center text-blue-100 dark:text-blue-100">
+                        <tr scope="row" class="px-6 py-4 font-large text-white whitespace-nowrap dark:text-blue-100">
+                            <th>Site</th>
+                            <th>Price</th>
+                            <th>Condition</th>
+                        </tr>
+                        @foreach (var purchaseOptions in currComputer.AvailableFrom)
+                        {
+                            <tbody>
+                                <tr>
+                                    @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        var resultList = await GetProdInfo(purchaseOptions);
+                                        bool first = true;
+
+                                        foreach(var temp in resultList) {
+                                        <tr>
+                                            @if (first)
+                                            {
+                                                // Only the first row has the site name
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    @purchaseOptions
+                                                </td>
+                                                first = false;
+                                            }
+                                            else
+                                            {
+                                                // Empty site column after the first was presented
+                                                <td></td>
+                                            }
+
+                                            @{
+                                            temp.Url = Uri.UnescapeDataString(temp.Url);
+                                            string url = "https://www.amazon.com" + "/" + temp.Url.Substring(temp.Url.IndexOf("/dp/") + 1);
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    @using System.Globalization
+                                                    <a href="@url" target="_blank" rel="noopener noreferrer"><u>@temp.Price.ToString("C", CultureInfo.CurrentCulture)</u></a>
+                                                </td>
+                                            if (!temp.Used)
+                                            {
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    <a>New</a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
+                                                    <a>Used</a>
+                                                </td>
+                                            }
+                                            }
+                                            </tr>
+                                        }
+                                    }
+                                    else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        //var temp = await GetProdInfo(purchaseOptions);
+                                        //@temp.Price
+                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
+                                    }
+                                    else
+                                    {
+                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+
+        </div>
+</body>
