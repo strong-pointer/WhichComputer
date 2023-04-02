@@ -27,7 +27,7 @@
 
         public bool Professional { get; set; }
 
-        public int Graphics { get; set; }
+        public int Graphics { get; set; } // 1 - 10
 
         public bool Gaming { get; set; }
 
