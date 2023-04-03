@@ -130,7 +130,7 @@ questions:
       - choice: $2000+
         explanation: Typically this price range includes Enthusiast-Grade Gaming/Workstation PCs and Mac Pro Configurations. This is the best of the best.
         tags:
-          price-range: 6.0
+          price-range: 7.0
 
             
 
@@ -145,7 +145,7 @@ tags:
   - browser-focused     # - Chromebooks should be shown, same for Mini-PCs
   - minimal             # - Tablet PCs, 2-In-1s, and Macbook Airs should be displayed
   - lightweight         # - Prioritize lightweight machines. Macbook Airs, Surface Laptops, etc.
-  - high-use            # - Aluminum Cases/Good Build Quality should be a priority. Battery Life should be large factor
+  - high-use            # - Aluminum Cases/Good Build Quality should be a priority. Battery Life should be large factor (7+ hours minimum)
   - professional        # - i5 as a bare minimum, i7/Ryzen 7 should be options. Engineering Sample GPUs should be recommended.
   - graphics            # - Use this point value to determine a GPU, higher numbers require some kind of dedicated GPU.
   - gaming              # - A GPU for gaming will be displayed based on this value (RTX, Radeon RX, Intel Arc, etc.)

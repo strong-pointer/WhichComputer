@@ -39,30 +39,30 @@ public sealed class RetrievalStepDefinitions
     }
 
     [When("I load the HTML located at {string} for the {string} service")]
-    public void whenLoadHTMLFile(string filename, SupportedServices service) => _handler = (IComputerResultHandler) Activator.CreateInstance(Util.GetHandlerForService(service), _computerLoader, filename)! ?? throw new InvalidOperationException();
+    public void whenLoadHTMLFile(string filename, SupportedServices service) => _handler = (IComputerResultHandler)Activator.CreateInstance(Util.GetHandlerForService(service), _computerLoader, filename)! ?? throw new InvalidOperationException();
 
     [When("I use the {string} service")]
     public void SetService(SupportedServices service)
     {
-        _handler = (IComputerResultHandler) Activator.CreateInstance(Util.GetHandlerForService(service), _computerLoader)! ?? throw new InvalidOperationException();
+        _handler = (IComputerResultHandler)Activator.CreateInstance(Util.GetHandlerForService(service), _computerLoader)! ?? throw new InvalidOperationException();
     }
 
     [Then("I expect the application to throw an error when I query with {string}")]
     public void errorMustBeThrownUponQuery(string query)
     {
         Assert.NotNull(_handler);
-        Assert.Catch<InvalidOperationException>(() => _handler.Fetch(query, false, 2));
+        Assert.CatchAsync<InvalidOperationException>(async () => await _handler.Fetch(query, false, 2));
     }
-    
+
     [Then("I expect the following {int} results when I fetch results for the computer {string}:")]
-    public void expectResultsFromSearch(int number, string computerName, Table table)
+    public async Task expectResultsFromSearch(int number, string computerName, Table table)
     {
         Assert.NotNull(_handler);
         Computer? computer = _computerLoader.Computers?.GetComputer(computerName);
         Assert.NotNull(computer);
         if (computer != null)
         {
-            var results = _handler.Fetch(computer.Value, true, number).ToList();
+            var results = (await _handler.Fetch(computer.Value, true, number)).ToList();
             foreach (var row in table.Rows)
             {
                 ComputerResult trueResult = results[0];
@@ -74,7 +74,7 @@ public sealed class RetrievalStepDefinitions
                 expectedResult.Used = Boolean.Parse(row["used"]);
                 expectedResult.Url = row["url"];
                 expectedResult.Source = _handler.Service;
-                
+
                 Assert.AreEqual(trueResult, expectedResult);
             }
         }

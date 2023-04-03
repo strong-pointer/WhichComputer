@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -34,7 +34,8 @@
         <Exec Command="npm run css:build" />
     </Target>
     
-    <Target Name="Format" BeforeTargets="Build">
+    <!-- Formatting after the program is run to minimize build time when actively programming -->
+    <Target Name="Format" AfterTargets="Run">
         <Exec Command="dotnet format" />
     </Target>
 
