@@ -8,8 +8,11 @@
         <CodeAnalysisRuleSet>stylecop.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
     <ItemGroup>
-        <PackageReference Include="eBay.Service" Version="3.1113.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.5.0" />
+        <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="3.6.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
         <PackageReference Include="ScrapySharp" Version="3.0.0" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">

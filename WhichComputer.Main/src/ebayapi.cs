@@ -1,54 +1,65 @@
-using System;
-using System.Collections.Generic;
-using eBay.Service.Core.Soap;
-using eBay.Service.Call;
+using Newtonsoft.Json;
 
 namespace WhichComputer.Main
 {
-    class eBayAPI : IComputerResultHandler
+    internal class EBayAPI : IComputerResultHandler
     {
-        public SupportedServices Service => SupportedServices.eBay;
+        private const string AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
 
-        public IEnumerable<ComputerResult> Fetch(Computer computer, bool used, int amount)
+        public SupportedServices Service => SupportedServices.EBAY;
+
+        public async Task<IEnumerable<ComputerResult>> Fetch(string brand, string model, bool used, int amount)
         {
-            ApiContext apiContext = new ApiContext();
-            apiContext.ApiCredential = new ApiCredential();
-            apiContext.ApiCredential.eBayToken = "v^1.1#i^1#I^3#f^0#p^3#r^1#t^Ul4xMF8xMDo5MzlGODZCODgzRTU5REExNEY4QjBBNzY3RjlCOUNCM18zXzEjRV4yNjA=";
-            apiContext.ApiCredential.AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
-            apiContext.ApiCredential.DevId = "c40ac8de-96cf-4601-bd0b-21418807e2c6";
-            apiContext.ApiCredential.CertId = "PRD-756826fccb48-e32f-4f1c-a73c-a0c4";
-            apiContext.SoapApiServerUrl = "https://api.ebay.com/wsapi";
+            var url = "https://svcs.ebay.com/services/search/FindingService/v1"
+                  + "?OPERATION-NAME=findItemsAdvanced"
+                  + "&SERVICE-VERSION=1.0.0"
+                  + "&SECURITY-APPNAME=" + AppId
+                  + "&RESPONSE-DATA-FORMAT=JSON"
+                  + "&REST-PAYLOAD"
+                  + "&categoryId=175672"
+                  + "&paginationInput.entriesPerPage=" + amount
+                  + "&sortOrder=PricePlusShippingLowest"
+                  + "&itemFilter(0).name=Condition"
+                  + "&itemFilter(0).value=" + (used ? "3000" : "1000")
+                  + "&keywords=" + Uri.EscapeDataString(brand + " " + model);
 
-            FindItemsAdvancedCall apiCall = new FindItemsAdvancedCall(apiContext);
-            apiCall.Keywords = computer.Brand + " " + computer.Model;
-            if (used)
+            using var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
             {
-                apiCall.ConditionIds = new int[] { 3000 };
+                throw new Exception("Failed to fetch results from eBay API: " + response.ReasonPhrase);
             }
-            apiCall.Sort = 2; // sort by lowest price
 
-            // pages
-            apiCall.Pagination = new PaginationType();
-            apiCall.Pagination.EntriesPerPage = amount;
-            apiCall.Pagination.PageNumber = 1;
-
+            var content = await response.Content.ReadAsStringAsync();
+            var json = JsonConvert.DeserializeObject<dynamic>(content);
 
             var results = new List<ComputerResult>();
-            var response = apiCall.Execute();
-            foreach (var item in response.SearchResult.Item)
+
+            foreach (var item in json.findItemsAdvancedResponse[0].searchResult[0].item)
             {
                 var result = new ComputerResult();
-                result.Title = item.Title;
-                result.Price = (decimal)item.SellingStatus.CurrentPrice.Value;
-                result.Currency = item.SellingStatus.CurrentPrice.CurrencyID.ToString();
-                result.Condition = item.ConditionDisplayName;
-                result.Url = item.ViewItemURLForNaturalSearch;
+                result.ListingName = item.title[0].Value;
+                result.Price = (double)(decimal)item.sellingStatus[0].currentPrice[0].Value;
+                result.Used = item.condition[0].conditionDisplayName[0].Value;
+                result.Url = item.viewItemURL[0].Value;
                 results.Add(result);
             }
+
             return results;
         }
 
+        public Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
+        {
+            return Fetch(computer.Brand, computer.Model, used, amount);
+        }
+
         public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ComputerResult> IComputerResultHandler.Fetch(Computer computer, bool used, int amount)
         {
             throw new NotImplementedException();
         }
