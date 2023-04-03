@@ -7,7 +7,10 @@ using YamlDotNet.Serialization;
 
 namespace WhichComputer.Main
 {
-    public record struct Computer(string Name, List<string> ExcludeTags, List<Dictionary<string, object>> Tags, string Brand, List<string> AvailableFrom, List<string> Caveats, string Description, ComputerSpecs Specs);
+    public record struct Computer(string Name, List<string> ExcludeTags, List<Dictionary<string, object>> Tags, string Brand, List<string> AvailableFrom, List<string> Caveats, string Description, ComputerSpecs Specs)
+    {
+        internal string Model;
+    }
 
     public record struct ComputerSpecs(List<ComputerOption> Options, [property: YamlMember(Alias = "OS", ApplyNamingConventions = false)] string OS, float Weight, string Resolution, float Screen, string Ports);
 
