@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace WhichComputer.Main.Models
+﻿namespace WhichComputer.Main.Models
 {
     public class FinalScore
     {
