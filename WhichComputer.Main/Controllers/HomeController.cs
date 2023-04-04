@@ -96,7 +96,6 @@ public class HomeController : Controller
 
             Dictionary<string, string> response = new Dictionary<string, string>();
             response.Add("hash", questionnaireResponse.GetHashedAndEncryptedResponse());
-
             return Ok(Json(response));
         }
         catch (Exception e)
@@ -112,9 +111,9 @@ public class HomeController : Controller
         string queryParam = string.Empty;
 
         // "QResponse" is QuestionnaireResponse, the hashed and then encrypted string for the results
-        if (!string.IsNullOrEmpty(HttpContext.Request.Query["QResponse"]))
+        if (!string.IsNullOrEmpty(HttpContext.Request.Query["q"]))
         {
-            queryParam = HttpContext.Request.Query["QResponse"];
+            queryParam = HttpContext.Request.Query["q"];
         }
 
         // Get the computers that match the decrypted hash's criteria
@@ -134,7 +133,8 @@ public class HomeController : Controller
         var tester = handler.Fetch("Samsung Galaxy Chromebook 2", false, 1);*/
 
         // Replace this with computer matching function call that returns a list of computers that is matching the tags?
-        return View(_computerLoader.Computers);
+        List<Computer> results = ScoringCalculation.CalculateScore(response);
+        return View(new ComputerList(results));
     }
 
     [HttpGet]

@@ -43,11 +43,13 @@ questions:
         tags:
           low-use: 5.0
           lightweight: 8.0
+          no-chromebook: 10.0
       - choice: Everything! I'm a power user
         follow-up: [5]
         explanation: For if you use technology frequently, and want something that can serve and last you for a good while, but don't need top-quality graphics
         tags:
-          high-use: 8.0
+          high-use: 8.
+          no-chromebook: 10.0
       - choice: Gaming, rendering - only the best!
         explanation: For if you use technology frequently, and need something with a lot of space and graphic capabilities
         follow-up: [-1]
@@ -57,6 +59,7 @@ questions:
           graphics: 10.0
           gaming: 8.0
           high-storage: 10.0
+          no-chromebook: 10.0
   - prompt: Do you download applications regularly?
     id: 4
     explanation: We want to know if you'd like a computer that only supports a few applications.

@@ -5,12 +5,10 @@
     Computer currComputer = Model;
 
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
-    var loader = ViewData["CompLoader"] as WhichComputer.Main.ComputerLoader;
-    var amzFetcher = new WhichComputer.Main.AmazonComputerResultHandler(loader);
-    var bbFetcher = new WhichComputer.Main.BestBuyResultHandler(loader);
-    Dictionary<string, List<WhichComputer.Main.ComputerResult>> ServiceToResult = new();
+    var loader = ViewData["CompLoader"] as ComputerLoader;
+    Dictionary<string, List<ComputerResult>> ServiceToResult = new();
 
-    async Task<List<WhichComputer.Main.ComputerResult>> GetProdInfo(string service)
+    async Task<List<ComputerResult>> GetProdInfo(string service)
     {
         // Service already called, just return cached info
         if (ServiceToResult.ContainsKey(service))
@@ -21,21 +19,21 @@
         // Service not yet called, fill out with new ComputerResult
         else
         {
-            List<ComputerResult> newCompResults;
-
-            // Fetch the info from the service and add it to the new result
+            // default to amazon.
+            SupportedServices trueService = SupportedServices.AMAZON;
             switch (service)
             {
-                case "Amazon":
-                    newCompResults = (await amzFetcher.Fetch(currComputer, false, 3)).ToList();
-                    break;
                 case "Best Buy":
-                    newCompResults = (await bbFetcher.Fetch(currComputer, false, 3)).ToList();
+                    trueService = SupportedServices.BEST_BUY;
                     break;
-                default:
-                    newCompResults = new List<ComputerResult>();
+                case "eBay":
+                    trueService = SupportedServices.EBAY;
+                    break;
+                case "Amazon":
+                    trueService = SupportedServices.AMAZON;
                     break;
             }
+            List<ComputerResult> newCompResults = (await ((IComputerResultHandler)Activator.CreateInstance(Util.GetHandlerForService(trueService), loader)).Fetch(currComputer, false, 3)).ToList();
 
             // Sort list by lowest price first
             List<ComputerResult> sortedCompresults = newCompResults.OrderBy(x => x.Price).ToList();
@@ -172,8 +170,7 @@
                         {
                             <tbody>
                                 <tr>
-                                    @if (string.Equals(purchaseOptions, "Amazon", StringComparison.OrdinalIgnoreCase))
-                                    {
+                                    @{
                                         var resultList = await GetProdInfo(purchaseOptions);
                                         bool first = true;
 
@@ -194,11 +191,8 @@
                                             }
 
                                             @{
-                                            temp.Url = Uri.UnescapeDataString(temp.Url);
-                                            string url = "https://www.amazon.com" + "/" + temp.Url.Substring(temp.Url.IndexOf("/dp/") + 1);
                                                 <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">
-                                                    @using System.Globalization
-                                                    <a href="@url" target="_blank" rel="noopener noreferrer"><u>@temp.Price.ToString("C", CultureInfo.CurrentCulture)</u></a>
+                                                    <a href="@temp.Url" target="_blank" rel="noopener noreferrer"><u>@temp.Price.ToString("C", System.Globalization.CultureInfo.CurrentCulture)</u></a>
                                                 </td>
                                             if (!temp.Used)
                                             {
@@ -215,16 +209,6 @@
                                             }
                                             </tr>
                                         }
-                                    }
-                                    else if (string.Equals(purchaseOptions, "Best Buy", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        //var temp = await GetProdInfo(purchaseOptions);
-                                        //@temp.Price
-                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
-                                    }
-                                    else
-                                    {
-                                        <td scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-blue-100">@purchaseOptions</td>
                                     }
                                 </tr>
                             </tbody>
