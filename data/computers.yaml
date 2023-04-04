@@ -20,6 +20,7 @@ computers:
     available-from:
       - Amazon
       - Best Buy
+      - eBay
     caveats:
       - Buying this computer used may not come with the perks that Google offers for buying Chromebooks.
     description: |

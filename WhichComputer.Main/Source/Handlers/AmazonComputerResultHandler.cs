@@ -68,7 +68,8 @@ public class AmazonComputerResultHandler : IComputerResultHandler
                 result.Used = used;
                 result.ListingName = node.CssSelect(".a-text-normal.a-size-medium.a-color-base").First().InnerText.ReplaceLineEndings(string.Empty);
                 result.Price = double.Parse(node.CssSelect(".a-offscreen").First().InnerText.Substring(1));
-                result.Url = node.CssSelect("a").First().GetAttributeValue("href");
+                result.Url = Uri.UnescapeDataString(node.CssSelect("a").First().GetAttributeValue("href"));
+                result.Url = BaseUrl + "/" + result.Url.Substring(result.Url.IndexOf("/dp/") + 1);
                 result.Source = Service;
                 results.Add(result);
                 total++;

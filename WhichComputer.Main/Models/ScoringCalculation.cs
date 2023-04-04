@@ -4,6 +4,40 @@ namespace WhichComputer.Main
 {
     public class ScoringCalculation
     {
+        public const double Threshold = 1.5;
+
+        public static List<Computer> CalculateScore(QuestionnaireResponse responses, int resultsToReturn = 3)
+        {
+            int items = 0;
+            List<Computer> valid = new();
+            var loader = Program.GetComputerLoader().Computers;
+            Dictionary<string, double> averages = responses.GetAllTagAverages();
+            var nonExcluded = loader.Computers.Where(c => !averages.Keys.Any(k => c.ExcludeTags.Contains(k)));
+
+            Dictionary<Computer, int> points = new();
+            foreach (var computer in nonExcluded)
+            {
+                foreach (var entry in averages)
+                {
+                    if (computer.GetTag(entry.Key) != null && Math.Abs(entry.Value - computer.GetTagValue(entry.Key)) <= Threshold)
+                    {
+                        if (!points.ContainsKey(computer))
+                        {
+                            points.Add(computer, 1);
+                        }
+                        else
+                        {
+                            points[computer]++;
+                        }
+                    }
+                }
+            }
+
+            valid = points.OrderByDescending(e => e.Value).Take(resultsToReturn).Select(p => p.Key).ToList();
+
+            return valid;
+        }
+
         public static FinalScore CalculateScore(InitialScoreTags initialScore)
         {
             FinalScore finalScore = new FinalScore();
