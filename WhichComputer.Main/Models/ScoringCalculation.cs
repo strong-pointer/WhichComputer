@@ -60,6 +60,7 @@ namespace WhichComputer.Main
                 {
                     finalScore.PCTier = 3;
                 }
+
                 if (!initialScore.Office)
                 {
                     if (finalScore.PCTier < 4)
@@ -78,60 +79,70 @@ namespace WhichComputer.Main
                         {
                             finalScore.PCTier = 4;
                         }
+
                         break;
                     case 2:
                         if (finalScore.PCTier < 4)
                         {
                             finalScore.PCTier = 4;
                         }
-                        break; 
+
+                        break;
                     case 3:
                         if (finalScore.PCTier < 4)
                         {
                             finalScore.PCTier = 4;
                         }
+
                         break;
                     case 4:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 5:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 6:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 7:
                         if (finalScore.PCTier < 6)
                         {
                             finalScore.PCTier = 6;
                         }
+
                         break;
                     case 8:
                         if (finalScore.PCTier < 6)
                         {
                             finalScore.PCTier = 6;
                         }
+
                         break;
                     case 9:
                         if (finalScore.PCTier < 7)
                         {
                             finalScore.PCTier = 7;
                         }
+
                         break;
                     case 10:
                         if (finalScore.PCTier < 7)
                         {
                             finalScore.PCTier = 7;
                         }
+
                         break;
                 }
             }
@@ -143,7 +154,6 @@ namespace WhichComputer.Main
                     finalScore.PCTier = 2;
                 }
             }
-
 
             if (initialScore.HighStorage)
             {

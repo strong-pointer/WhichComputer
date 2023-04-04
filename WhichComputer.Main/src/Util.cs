@@ -7,7 +7,7 @@ public static class Util
         switch (service)
         {
             case SupportedServices.EBAY:
-                throw new NotImplementedException(); // TODO
+                return typeof(EbayResultHandler);
             case SupportedServices.AMAZON:
                 return typeof(AmazonComputerResultHandler);
             case SupportedServices.BEST_BUY:

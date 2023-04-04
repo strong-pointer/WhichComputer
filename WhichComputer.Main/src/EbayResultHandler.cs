@@ -2,13 +2,13 @@ using Newtonsoft.Json;
 
 namespace WhichComputer.Main
 {
-    internal class EBayAPI : IComputerResultHandler
+    public class EbayResultHandler : IComputerResultHandler
     {
         private const string AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
 
         public SupportedServices Service => SupportedServices.EBAY;
 
-        public async Task<IEnumerable<ComputerResult>> Fetch(string brand, string model, bool used, int amount)
+        public async Task<IEnumerable<ComputerResult>> Fetch(string computerName, bool used, int amount)
         {
             var url = "https://svcs.ebay.com/services/search/FindingService/v1"
                   + "?OPERATION-NAME=findItemsAdvanced"
@@ -21,7 +21,7 @@ namespace WhichComputer.Main
                   + "&sortOrder=PricePlusShippingLowest"
                   + "&itemFilter(0).name=Condition"
                   + "&itemFilter(0).value=" + (used ? "3000" : "1000")
-                  + "&keywords=" + Uri.EscapeDataString(brand + " " + model);
+                  + "&keywords=" + Uri.EscapeDataString(computerName);
 
             using var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(url);
@@ -49,19 +49,9 @@ namespace WhichComputer.Main
             return results;
         }
 
-        public Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
+        public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
         {
-            return Fetch(computer.Brand, computer.Model, used, amount);
-        }
-
-        public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<ComputerResult> IComputerResultHandler.Fetch(Computer computer, bool used, int amount)
-        {
-            throw new NotImplementedException();
+            return await Fetch(computer.Name, used, amount);
         }
     }
 }
