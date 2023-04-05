@@ -103,6 +103,17 @@ namespace WhichComputer
             }
         }
 
+        public Dictionary<string, double> GetAllTagAverages()
+        {
+            Dictionary<string, double> tags = new();
+            foreach (var tag in _TagToTotalScoreAndCount.Keys)
+            {
+                tags[tag] = GetTagAverage(tag);
+            }
+
+            return tags;
+        }
+
         // Helper function that simply pulls from the existing tags and scores and then creates an unencrypted hash string
         public string GetHashedResponse()
         {
