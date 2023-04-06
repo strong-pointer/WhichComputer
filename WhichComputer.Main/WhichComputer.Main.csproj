@@ -35,9 +35,9 @@
     </Target>
     
     <!-- Formatting after the program is run to minimize build time when actively programming -->
-    <!--<Target Name="Format" AfterTargets="Run">
+    <Target Name="Format" AfterTargets="Run">
         <Exec Command="dotnet format" />
-    </Target>-->
+    </Target>
 
     <ItemGroup>
         <Content Include="..\data\questionnaire.yaml">
