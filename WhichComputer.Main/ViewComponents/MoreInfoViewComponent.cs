@@ -11,7 +11,7 @@ namespace WhichComputer.Main.ViewComponents
              * the rendering of the cshtml template related
              * to this view component
              */
-            return View("~/Views/Shared/MoreInfo.cshtml");
+            return View("~/Views/Home/MoreInfo.cshtml");
         }
     }
 }
