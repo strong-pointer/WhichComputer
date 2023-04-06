@@ -26,6 +26,8 @@ public class NeweggResultHandler : IComputerResultHandler
     public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount = 5)
     {
         HtmlNode doc;
+        Regex regex = new Regex(@"-?\d+(?:\.\d+)?");
+        Match match = null;
         if (!_file.Equals(string.Empty))
         {
             var tmp = new HtmlDocument();
@@ -49,7 +51,7 @@ public class NeweggResultHandler : IComputerResultHandler
         }
 
         // The first item is simply the results header.
-        var test = doc.CssSelect(".item-cells-wrap border-cells items-grid-view four-cells expulsion-one-cell");
+        var test = doc.CssSelect(".item-cell");
         List<ComputerResult> results = new();
         int total = 0;
         bool isFirstToSkip = true;
@@ -64,11 +66,17 @@ public class NeweggResultHandler : IComputerResultHandler
             }
             try
             {
+                // Ensures that the item is NOT a sponsored item. Messes w numbers and typically not the same product
+                var isSponsored = node.CssSelect(".item-sponsored-box").FirstOrDefault();
+                if (isSponsored != null)
+                    continue;
+                
                 ComputerResult result = new ComputerResult();
                 result.Computer = computer;
                 result.Used = used;
-                result.ListingName = node.CssSelect("item-title").First().InnerText.Trim();
-                result.Price = double.Parse(Regex.Replace(node.CssSelect(".price-current-label").First().InnerText.Trim(), @"([a-zA-Z\$,])", string.Empty));
+                result.ListingName = node.CssSelect(".item-title").First().InnerText.Trim();
+                match = regex.Match(node.CssSelect(".price-current").First().InnerText.Trim());
+                result.Price = double.Parse(match.ToString());
                 result.Url = node.CssSelect(".item-img").First().GetAttributeValue("href");
                 result.Source = Service;
                 results.Add(result);

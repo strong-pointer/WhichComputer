@@ -32,6 +32,9 @@
                 case "Amazon":
                     trueService = SupportedServices.AMAZON;
                     break;
+                case "Newegg":
+                    trueService = SupportedServices.NEWEGG;
+                    break;
             }
             List<ComputerResult> newCompResults = (await ((IComputerResultHandler)Activator.CreateInstance(Util.GetHandlerForService(trueService), loader)).Fetch(currComputer, false, 3)).ToList();
 
