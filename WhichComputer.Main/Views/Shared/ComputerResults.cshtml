@@ -2,8 +2,64 @@
 @{
     ViewData["Title"] = "Computer Results";
 }
+<script>
+    function getCurrentURL() {
+        var x = document.getElementById("URL");
+        x.innerHTML = window.location.href;
+        x.style.display = "inline";
+    }
+    function displayLinkCopied() {
+        document.getElementById('LinkCopied').style.display = "block";
+        var copyText = document.getElementById("URL").innerHTML
+        try {
+            navigator.clipboard.writeText(copyText);
+            console.log('Content copied to clipboard');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+        setTimeout(() => { document.getElementById('LinkCopied').style.display = "none"; }, 1000);
+    }
+</script>
 
-<body class="bg-black">
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3 rounded inline" role="alert" style="display:none" id="LinkCopied">
+    <center><p>Link Copied to Clipboard!</p></center>
+</div>
+
+<body onload="getCurrentURL()" class="max-w-sm w-full lg:max-w-full lg:flex bg-black">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0" nonce="M8Em6Kyn"></script>
+    
+    <center>
+        <div class="rounded overflow-hidden shadow-lg border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+            <div class="px-6 pt-4">
+                <div class="font-bold text-xl mb-2" style="color:white">Share Your Results!</div>
+                <button class="outline-dotted outline-2 outline-offset-2 text-gray-500 text-base" id="URL" onclick="displayLinkCopied()"></button>
+                <div class="font-normal text-sm mb-2 pt-2" style="color:dimgray">Click To Copy!</div>
+            </div>
+            <center>
+                <div class="max-w-sm">
+                    <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full w-40 py-1.2 px-0.5" data-href="https://WhichComputer.com" data-layout="" data-size="">
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FWhichComputer.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+                            Share on FaceBook
+                        </a>
+                    </div>
+                    <div class="py-1" />
+                    <a class="twitter-share-button"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       data-size="large"
+                       href="https://twitter.com/intent/tweet?text=Check out my recommendations from WhichComputer! ">
+                        Tweet
+                    </a>
+                </div>
+            </center>
+        </div>
+        
+    </center>
+
+
     <div class="py-4 m-auto grid grid-cols-3 gap-4 m-4 w-11/12" data-accordion="open" data-inactive-classes="dark:text-emerald-300" data-active-classes="dark:text-white">
         @foreach (var computer in @Model.Computers)
         {
