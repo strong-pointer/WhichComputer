@@ -64,13 +64,14 @@ public class NeweggResultHandler : IComputerResultHandler
                 isFirstToSkip = false;
                 continue;
             }
+
             try
             {
                 // Ensures that the item is NOT a sponsored item. Messes w numbers and typically not the same product
                 var isSponsored = node.CssSelect(".item-sponsored-box").FirstOrDefault();
                 if (isSponsored != null)
                     continue;
-                
+
                 ComputerResult result = new ComputerResult();
                 result.Computer = computer;
                 result.Used = used;
