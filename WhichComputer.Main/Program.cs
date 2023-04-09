@@ -5,8 +5,9 @@ namespace WhichComputer.Main
 {
     public class Program
     {
-        public static IConfigurationRoot Config { get;  } = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
         private static QuestionnaireLoader _loader = new QuestionnaireLoader(QuestionnaireLoader.LocalPath);
+
+        public static IConfigurationRoot Config { get; } = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
 
         private static ComputerLoader ComputerLoader { get; } = new ComputerLoader(ComputerLoader.LocalPath);
 

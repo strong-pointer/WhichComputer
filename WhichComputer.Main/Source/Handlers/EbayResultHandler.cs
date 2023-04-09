@@ -4,7 +4,7 @@ namespace WhichComputer.Main
 {
     public class EbayResultHandler : IComputerResultHandler
     {
-        private string AppId = Program.Config.GetValue<string>("eBayKey");
+        private string _AppId = Program.Config.GetValue<string>("eBayKey");
         private ComputerLoader _computerLoader;
 
         public EbayResultHandler(ComputerLoader loader)
@@ -19,7 +19,7 @@ namespace WhichComputer.Main
             var url = "https://svcs.ebay.com/services/search/FindingService/v1"
                   + "?OPERATION-NAME=findItemsAdvanced"
                   + "&SERVICE-VERSION=1.0.0"
-                  + "&SECURITY-APPNAME=" + AppId
+                  + "&SECURITY-APPNAME=" + _AppId
                   + "&RESPONSE-DATA-FORMAT=JSON"
                   + "&REST-PAYLOAD"
                   + "&categoryId=175672"
