@@ -6,7 +6,7 @@ public class DatabaseRepository
 
     public DatabaseRepository()
     {
-        this.connectionString = "Data Source=whichcomputer4720.cnhnorewhlzk.us-east-1.rds.amazonaws.com";
+        this.connectionString = Program.Config.GetConnectionString("AWS");
     }
 
     public void AddResponse(Responses response)
