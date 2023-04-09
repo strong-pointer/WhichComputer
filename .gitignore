@@ -6,3 +6,6 @@ node_modules/
 *.feature.cs
 .idea/
 WhichComputer.Main/wwwroot/css/output.css
+*.user
+*.DotSettings
+appsettings*.json

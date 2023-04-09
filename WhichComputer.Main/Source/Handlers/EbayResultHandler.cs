@@ -2,13 +2,19 @@ using Newtonsoft.Json;
 
 namespace WhichComputer.Main
 {
-    internal class EBayAPI : IComputerResultHandler
+    public class EbayResultHandler : IComputerResultHandler
     {
-        private const string AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
+        private string AppId = Program.Config.GetValue<string>("eBayKey");
+        private ComputerLoader _computerLoader;
+
+        public EbayResultHandler(ComputerLoader loader)
+        {
+            _computerLoader = loader;
+        }
 
         public SupportedServices Service => SupportedServices.EBAY;
 
-        public async Task<IEnumerable<ComputerResult>> Fetch(string brand, string model, bool used, int amount)
+        public async Task<IEnumerable<ComputerResult>> Fetch(string computerName, bool used, int amount)
         {
             var url = "https://svcs.ebay.com/services/search/FindingService/v1"
                   + "?OPERATION-NAME=findItemsAdvanced"
@@ -21,7 +27,7 @@ namespace WhichComputer.Main
                   + "&sortOrder=PricePlusShippingLowest"
                   + "&itemFilter(0).name=Condition"
                   + "&itemFilter(0).value=" + (used ? "3000" : "1000")
-                  + "&keywords=" + Uri.EscapeDataString(brand + " " + model);
+                  + "&keywords=" + Uri.EscapeDataString(computerName);
 
             using var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(url);
@@ -36,32 +42,23 @@ namespace WhichComputer.Main
 
             var results = new List<ComputerResult>();
 
-            foreach (var item in json.findItemsAdvancedResponse[0].searchResult[0].item)
+            foreach (var item in json["findItemsAdvancedResponse"][0]["searchResult"][0]["item"])
             {
                 var result = new ComputerResult();
-                result.ListingName = item.title[0].Value;
-                result.Price = (double)(decimal)item.sellingStatus[0].currentPrice[0].Value;
-                result.Used = item.condition[0].conditionDisplayName[0].Value;
-                result.Url = item.viewItemURL[0].Value;
+                result.ListingName = item["title"][0];
+                result.Price = double.Parse((string)item["sellingStatus"][0]["currentPrice"][0]["__value__"]);
+                result.Used = !item["condition"][0]["conditionDisplayName"][0].Equals("New");
+                result.Url = item["viewItemURL"][0];
+                result.Source = Service;
                 results.Add(result);
             }
 
             return results;
         }
 
-        public Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
+        public async Task<IEnumerable<ComputerResult>> Fetch(Computer computer, bool used, int amount)
         {
-            return Fetch(computer.Brand, computer.Model, used, amount);
-        }
-
-        public IEnumerable<ComputerResult> Fetch(string computerName, bool used, int amount)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<ComputerResult> IComputerResultHandler.Fetch(Computer computer, bool used, int amount)
-        {
-            throw new NotImplementedException();
+            return await Fetch(computer.Name, used, amount);
         }
     }
 }

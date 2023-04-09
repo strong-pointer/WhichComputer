@@ -1,4 +1,6 @@
-﻿namespace WhichComputer.Main;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace WhichComputer.Main;
 
 public static class Util
 {
@@ -7,11 +9,13 @@ public static class Util
         switch (service)
         {
             case SupportedServices.EBAY:
-                throw new NotImplementedException(); // TODO
+                return typeof(EbayResultHandler);
             case SupportedServices.AMAZON:
                 return typeof(AmazonComputerResultHandler);
             case SupportedServices.BEST_BUY:
                 return typeof(BestBuyResultHandler);
+            case SupportedServices.NEWEGG:
+                return typeof(NeweggResultHandler);
         }
 
         throw new NotImplementedException();

@@ -4,6 +4,40 @@ namespace WhichComputer.Main
 {
     public class ScoringCalculation
     {
+        public const double Threshold = 1.5;
+
+        public static List<Computer> CalculateScore(QuestionnaireResponse responses, int resultsToReturn = 3)
+        {
+            int items = 0;
+            List<Computer> valid = new();
+            var loader = Program.GetComputerLoader().Computers;
+            Dictionary<string, double> averages = responses.GetAllTagAverages();
+            var nonExcluded = loader.Computers.Where(c => !averages.Keys.Any(k => c.ExcludeTags.Contains(k)));
+
+            Dictionary<Computer, int> points = new();
+            foreach (var computer in nonExcluded)
+            {
+                foreach (var entry in averages)
+                {
+                    if (computer.GetTag(entry.Key) != null && Math.Abs(entry.Value - computer.GetTagValue(entry.Key)) <= Threshold)
+                    {
+                        if (!points.ContainsKey(computer))
+                        {
+                            points.Add(computer, 1);
+                        }
+                        else
+                        {
+                            points[computer]++;
+                        }
+                    }
+                }
+            }
+
+            valid = points.OrderByDescending(e => e.Value).Take(resultsToReturn).Select(p => p.Key).ToList();
+
+            return valid;
+        }
+
         public static FinalScore CalculateScore(InitialScoreTags initialScore)
         {
             FinalScore finalScore = new FinalScore();
@@ -60,6 +94,7 @@ namespace WhichComputer.Main
                 {
                     finalScore.PCTier = 3;
                 }
+
                 if (!initialScore.Office)
                 {
                     if (finalScore.PCTier < 4)
@@ -78,60 +113,70 @@ namespace WhichComputer.Main
                         {
                             finalScore.PCTier = 4;
                         }
+
                         break;
                     case 2:
                         if (finalScore.PCTier < 4)
                         {
                             finalScore.PCTier = 4;
                         }
-                        break; 
+
+                        break;
                     case 3:
                         if (finalScore.PCTier < 4)
                         {
                             finalScore.PCTier = 4;
                         }
+
                         break;
                     case 4:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 5:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 6:
                         if (finalScore.PCTier < 5)
                         {
                             finalScore.PCTier = 5;
                         }
+
                         break;
                     case 7:
                         if (finalScore.PCTier < 6)
                         {
                             finalScore.PCTier = 6;
                         }
+
                         break;
                     case 8:
                         if (finalScore.PCTier < 6)
                         {
                             finalScore.PCTier = 6;
                         }
+
                         break;
                     case 9:
                         if (finalScore.PCTier < 7)
                         {
                             finalScore.PCTier = 7;
                         }
+
                         break;
                     case 10:
                         if (finalScore.PCTier < 7)
                         {
                             finalScore.PCTier = 7;
                         }
+
                         break;
                 }
             }
@@ -143,7 +188,6 @@ namespace WhichComputer.Main
                     finalScore.PCTier = 2;
                 }
             }
-
 
             if (initialScore.HighStorage)
             {

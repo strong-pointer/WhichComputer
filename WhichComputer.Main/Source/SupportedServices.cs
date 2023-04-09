@@ -5,4 +5,5 @@ public enum SupportedServices
     EBAY,
     AMAZON,
     BEST_BUY,
+    NEWEGG,
 }

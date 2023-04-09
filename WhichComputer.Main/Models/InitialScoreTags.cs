@@ -2,7 +2,6 @@
 {
     public class InitialScoreTags
     {
-
         public bool Novice { get; set; }
 
         public bool Intermediate { get; set; }
