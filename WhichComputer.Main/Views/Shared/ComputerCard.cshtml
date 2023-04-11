@@ -7,23 +7,114 @@
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
 }
 
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+    <style>
+
+/* Ratings widget */
+.rate {
+    text-align: center;
+    margin: auto;
+    display: inline-block;
+    border: 0;
+}
+/* Hide radio */
+.rate > input {
+    display: none;
+}
+/* Order correctly by floating highest to the right */
+.rate > label {
+    float: right;
+}
+/* The star of the show */
+.rate > label:before {
+    display: inline-block;
+    font-size: 2rem;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-family: FontAwesome;
+    content: "\f005 "; /* full star */
+}
+
+/* Half star trick */
+.rate .half:before {
+    content: "\f089 "; /* half star no outline */
+    position: absolute;
+    padding-right: 0;
+}
+/* Click + hover color */
+input:checked ~ label, /* color current and previous stars on checked */
+        label:hover, label:hover ~ label {
+            color: #e3a008;
+        }
+            /* color previous stars on hover */
+
+/* Hover highlights */
+input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+            label:hover ~ input:checked ~ label /* highlight previous selected stars */ {
+                color: #e3a008;
+            }
+
+    fieldset.hidden {
+        display: none;
+    }
+    </style>
+
 <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
     <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
         <div id="@id" class="h-56">
             <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@Model.Name</h5>
             <p class="text-sm dark:text-white pb-3">Brand: @Model.Brand<br/><br/>@Model.Description </p>
-            
-            <span class="star" value=1 onclick="starClick(this)">&#9733;</span>
-            <span class="star" value=2 onclick="starClick(this)">&#9733;</span>
-            <span class="star" value=3 onclick="starClick(this)">&#9733;</span>
-            <span class="star" value=4 onclick="starClick(this)">&#9733;</span>
-            <span class="star" value=5 onclick="starClick(this)">&#9733;</span>
         </div>
         
                
            
         <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false" onclick="location.href='@Url.Action("MoreInfo", "Home", new { computer = @computer })'">See more</button>
-   
+        
+        <br />
+        <fieldset id="@id+Star" class="rate">
+            <h5 class="text-xl tracking-tight text-gray-900 dark:text-white self-center">
+                    Rate This Recommendation!
+                </h5>
+
+            <input type="radio" id="rating10+@id" name="rating" value="10" onclick="starClick(5, '@Model.Name', '@id')" />
+            <label for="rating10+@id" title="5 stars"></label>
+
+            <input type="radio" id="rating9+@id" name="rating" value="9" onclick="starClick(4.5, '@Model.Name', '@id')" />
+            <label class="half" for="rating9+@id" title="4 1/2 stars"></label>
+
+            <input type="radio" id="rating8+@id" name="rating" value="8" onclick="starClick(4, '@Model.Name', '@id')" />
+            <label for="rating8+@id" title="4 stars"></label>
+
+            <input type="radio" id="rating7+@id" name="rating" value="7" onclick="starClick(3.5, '@Model.Name', '@id')" />
+            <label class="half" for="rating7+@id" title="3 1/2 stars"></label>
+
+            <input type="radio" id="rating6+@id" name="rating" value="6" onclick="starClick(3, '@Model.Name', '@id')" />
+            <label for="rating6+@id" title="3 stars"></label>
+
+            <input type="radio" id="rating5+@id" name="rating" value="5" onclick="starClick(2.5, '@Model.Name', '@id')" />
+            <label class="half" for="rating5+@id" title="2 1/2 stars"></label>
+
+            <input type="radio" id="rating4+@id" name="rating" value="4" onclick="starClick(2, '@Model.Name', '@id')" />
+            <label for="rating4+@id" title="2 stars"></label>
+
+            <input type="radio" id="rating3+@id" name="rating" value="3" onclick="starClick(1.5, '@Model.Name', '@id')" />
+            <label class="half" for="rating3+@id" title="1 1/2 stars"></label>
+
+            <input type="radio" id="rating2+@id" name="rating" value="2" onclick="starClick(1, '@Model.Name', '@id')" />
+            <label for="rating2+@id" title="1 star"></label>
+
+            <input type="radio" id="rating1+@id" name="rating" value="1" onclick="starClick(0.5, '@Model.Name', '@id')" />
+            <label class="half" for="rating1+@id" title="1/2 star"></label>
+        </fieldset>
+
+        <div class="hidden pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center" id="thankYou+@id">
+            <h5>
+                Thank You For Your Feedback!
+            </h5>
+        </div>
       
     
     <!-- JavaScript code to handle the star rating system -->
@@ -42,11 +133,19 @@
          });
        }
         
-        function starClick(starSpan) {
-          var itemName = "@Model.Name";
-          var ratingValue = starSpan.getAttribute('value');
-          console.log(itemName + " " + ratingValue);
-          sendRating(itemName, ratingValue);
+        function starClick(ratingValue, compName, id) {
+          console.log(compName + " " + ratingValue);
+          // Hides the fieldset (stars) once a rating is selected
+          var fieldset = document.getElementById(id+'+Star')//document.querySelector('fieldset.rate');
+          fieldset.classList.remove('rate');
+          fieldset.classList.add('hidden');
+          // Unhides the "Thank You For Your Feedback!" text
+          var thankYouMessage = document.getElementById('thankYou+'+id);
+          thankYouMessage.classList.remove('hidden');
+
+
+          // Sends the rating over to the controller thru this function
+          sendRating(compName, ratingValue);
         }
     </script>
 

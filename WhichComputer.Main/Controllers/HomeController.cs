@@ -147,7 +147,7 @@ public class HomeController : Controller
     [HttpPost]
     public ActionResult SubmitRating(string itemName, double ratingValue)
     {
-        Console.WriteLine(itemName + " " + ratingValue);
+        Debug.WriteLine(itemName + " " + ratingValue);
         return Json(new { success = true });
     }
 }
