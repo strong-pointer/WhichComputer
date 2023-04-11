@@ -1,6 +1,8 @@
-﻿@using WhichComputer.Main
+﻿<script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+@using WhichComputer.Main
 @model WhichComputer.Main.Computer
 @{
+    Layout = "_Layout";
     string computer = Model.Name;
     var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
 }
@@ -10,7 +12,43 @@
         <div id="@id" class="h-56">
             <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@Model.Name</h5>
             <p class="text-sm dark:text-white pb-3">Brand: @Model.Brand<br/><br/>@Model.Description </p>
+            
+            <span class="star" value=1 onclick="starClick(this)">&#9733;</span>
+            <span class="star" value=2 onclick="starClick(this)">&#9733;</span>
+            <span class="star" value=3 onclick="starClick(this)">&#9733;</span>
+            <span class="star" value=4 onclick="starClick(this)">&#9733;</span>
+            <span class="star" value=5 onclick="starClick(this)">&#9733;</span>
         </div>
+        
+               
+           
         <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false" onclick="location.href='@Url.Action("MoreInfo", "Home", new { computer = @computer })'">See more</button>
-    </div>
+   
+      
+    
+    <!-- JavaScript code to handle the star rating system -->
+    <script type="text/javascript">        
+       function sendRating(itemName, ratingValue) {   
+         $.ajax({
+           type: "POST",
+           url: "/Home/SubmitRating",
+           data: { itemName: itemName, ratingValue: ratingValue },
+           success: function(response) {
+             // handle success response
+           },
+           error: function(xhr, textStatus, errorThrown) {
+             // handle error response
+           }
+         });
+       }
+        
+        function starClick(starSpan) {
+          var itemName = "@Model.Name";
+          var ratingValue = starSpan.getAttribute('value');
+          console.log(itemName + " " + ratingValue);
+          sendRating(itemName, ratingValue);
+        }
+    </script>
+
+        </div>
 </div>

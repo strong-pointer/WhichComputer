@@ -143,4 +143,11 @@ public class HomeController : Controller
         Computer temp = Program.GetComputerLoader().Computers.GetComputer(Request.Query["computer"]).Value;
         return View(temp);
     }
+
+    [HttpPost]
+    public ActionResult SubmitRating(string itemName, double ratingValue)
+    {
+        Console.WriteLine(itemName + " " + ratingValue);
+        return Json(new { success = true });
+    }
 }

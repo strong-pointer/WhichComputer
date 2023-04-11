@@ -20,3 +20,22 @@ CREATE TABLE Recommendations (
     rating INT
 );
 
+/* Hayden's Tweaks for Rating System */
+CREATE SCHEMA Whichschema;
+USE Whichschema;
+
+CREATE TABLE responses (
+	response_id INT AUTO_INCREMENT PRIMARY KEY,
+    response_hash TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ratings (
+	rating_id INT AUTO_INCREMENT PRIMARY KEY,
+    response_id INT NOT NULL,
+    computer_name TEXT NOT NULL,
+    rating DECIMAL(5, 2) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (response_id) REFERENCES responses(response_id)
+);
+
