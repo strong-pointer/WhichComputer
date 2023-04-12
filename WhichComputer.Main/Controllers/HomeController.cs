@@ -116,6 +116,11 @@ public class HomeController : Controller
             queryParam = HttpContext.Request.Query["q"];
         }
 
+        // Put this hash into the "responses" table
+        // Get the response_id that matches this (which is autoincremented), and send it to the card
+        // (in SubmitRating)
+        // The card sends over the response_id along with hash, name, and rating
+
         // Get the computers that match the decrypted hash's criteria
         QuestionnaireResponse response = QuestionnaireResponse.FromEncryptedHash(queryParam);
 
@@ -148,6 +153,7 @@ public class HomeController : Controller
     public ActionResult SubmitRating(string itemName, double ratingValue)
     {
         Debug.WriteLine(itemName + " " + ratingValue);
+        // Send rating to ratings table in the db
         return Json(new { success = true });
     }
 }
