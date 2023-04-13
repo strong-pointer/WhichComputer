@@ -8,6 +8,8 @@ namespace WhichComputer
     {
         // For double[] value: [0] == Total Score;  [1] == Total Count
         private Dictionary<string, double[]> _TagToTotalScoreAndCount;
+        public long id = -1;
+        public DateTime time;
 
         public QuestionnaireResponse()
         {
