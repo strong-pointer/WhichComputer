@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using WhichComputer;
 using WhichComputer.Main;
 
 public class DatabaseRepository
@@ -10,51 +11,60 @@ public class DatabaseRepository
         _connectionString = Program.Config.GetConnectionString("AWS");
     }
 
-    public void AddResponse(Responses response)
+    public long AddResponse(QuestionnaireResponse response)
     {
         using (var connection = new MySqlConnection(_connectionString))
         {
-            var query = "INSERT INTO Responses (tag, total_score, total_count) VALUES (@Tag, @TotalScore, @TotalCount)";
+            connection.Open();
+            var query = "INSERT INTO Responses (response_hash) VALUES (@response_hash)";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("Tag", response.Tag);
-            command.Parameters.AddWithValue("TotalScore", response.TotalScore);
-            command.Parameters.AddWithValue("TotalCount", response.TotalCount);
+            command.Parameters.AddWithValue("response_hash", response.GetHashedAndEncryptedResponse());
             command.ExecuteNonQuery();
+
+            connection.Close();
+
+            return command.LastInsertedId;
         }
     }
 
-    public void AddRating(Ratings rating)
+    public long AddRating(Ratings rating)
     {
         using (var connection = new MySqlConnection(_connectionString))
         {
-            var query = "INSERT INTO Ratings (computer_id, rating) VALUES (@ComputerId, @Rating)";
+            connection.Open();
+            var query = "INSERT INTO Ratings (response_id, computer_name, rating) VALUES (@ResponseId, @ComputerName, @Rating)";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("ComputerId", rating.ComputerId);
+            command.Parameters.AddWithValue("ResponseId", rating.ResponseId);
+            command.Parameters.AddWithValue("ComputerName", rating.ComputerName);
             command.Parameters.AddWithValue("Rating", rating.Rating);
             command.ExecuteNonQuery();
+
+            connection.Close();
+
+            return command.LastInsertedId;
         }
     }
 
-    public void AddRecommendation(Recommendations recommendation)
+    public List<QuestionnaireResponse> GetResponses()
     {
         using (var connection = new MySqlConnection(_connectionString))
         {
-            var query = "INSERT INTO Recommendations (computer_id, rating) VALUES (@ComputerId, @Rating)";
-            MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("ComputerId", recommendation.ComputerId);
-            command.Parameters.AddWithValue("Rating", recommendation.Rating);
-            command.ExecuteNonQuery();
-        }
-    }
-
-    public List<Responses> GetResponses()
-    {
-        using (var connection = new MySqlConnection(_connectionString))
-        {
+            connection.Open();
+            List<QuestionnaireResponse> allResponses = new();
             var query = "SELECT * FROM Responses";
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader reader = command.ExecuteReader();
-            throw new NotImplementedException();
+            while (reader.Read())
+            {
+                QuestionnaireResponse curr = QuestionnaireResponse.FromEncryptedHash(reader.GetString("response_hash"));
+                curr.id = reader.GetInt32("response_id");
+                curr.time = reader.GetDateTime("created_at");
+
+                allResponses.Add(curr);
+            }
+
+            connection.Close();
+            return allResponses;
         }
     }
 
@@ -62,17 +72,25 @@ public class DatabaseRepository
     {
         using (var connection = new MySqlConnection(_connectionString))
         {
+            connection.Open();
+            List<Ratings> allRatings = new();
             var query = "SELECT * FROM Ratings";
-            throw new NotImplementedException();
-        }
-    }
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Ratings curr = new Ratings();
+                curr.RatingId = reader.GetInt32("rating_id");
+                curr.ResponseId = reader.GetInt32("response_id");
+                curr.ComputerName = reader.GetString("computer_name");
+                curr.Rating = reader.GetDouble("rating");
+                curr.CreatedAt = reader.GetDateTime("created_at");
 
-    public List<Recommendations> GetRecommendations()
-    {
-        using (var connection = new MySqlConnection(_connectionString))
-        {
-            var query = "SELECT * FROM Recommendations";
-            throw new NotImplementedException();
+                allRatings.Add(curr);
+            }
+
+            connection.Close();
+            return allRatings;
         }
     }
 }

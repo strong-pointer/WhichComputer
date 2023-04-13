@@ -4,9 +4,11 @@ namespace WhichComputer.Main
     {
         public int RatingId { get; set; }
 
-        public int ComputerId { get; set; }
+        public string ComputerName { get; set; }
 
-        public int Rating { get; set; }
+        public int ResponseId { get; set; }
+
+        public double Rating { get; set; }
 
         public DateTime CreatedAt { get; set; }
     }
