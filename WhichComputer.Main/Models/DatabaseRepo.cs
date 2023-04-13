@@ -20,9 +20,9 @@ public class DatabaseRepository
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("response_hash", response.GetHashedAndEncryptedResponse());
             command.ExecuteNonQuery();
-            
+
             connection.Close();
-            
+
             return command.LastInsertedId;
         }
     }
@@ -38,7 +38,7 @@ public class DatabaseRepository
             command.Parameters.AddWithValue("ComputerName", rating.ComputerName);
             command.Parameters.AddWithValue("Rating", rating.Rating);
             command.ExecuteNonQuery();
-            
+
             connection.Close();
 
             return command.LastInsertedId;
@@ -50,7 +50,7 @@ public class DatabaseRepository
         using (var connection = new MySqlConnection(_connectionString))
         {
             connection.Open();
-            List<QuestionnaireResponse> allResponses = new List<QuestionnaireResponse>();
+            List<QuestionnaireResponse> allResponses = new();
             var query = "SELECT * FROM Responses";
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader reader = command.ExecuteReader();
@@ -73,8 +73,24 @@ public class DatabaseRepository
         using (var connection = new MySqlConnection(_connectionString))
         {
             connection.Open();
+            List<Ratings> allRatings = new();
             var query = "SELECT * FROM Ratings";
-            throw new NotImplementedException();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Ratings curr = new Ratings();
+                curr.RatingId = reader.GetInt32("rating_id");
+                curr.ResponseId = reader.GetInt32("response_id");
+                curr.ComputerName = reader.GetString("computer_name");
+                curr.Rating = reader.GetDouble("rating");
+                curr.CreatedAt = reader.GetDateTime("created_at");
+
+                allRatings.Add(curr);
+            }
+
+            connection.Close();
+            return allRatings;
         }
     }
 }

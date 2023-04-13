@@ -1,5 +1,5 @@
-﻿<script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" type="text/javascript"></script>
-@using WhichComputer.Main
+﻿<script src="@Url.Content("Views/Shared/_Layout.cshtml")" type="text/javascript"></script>
+<!-- ~/lib/jquery/dist/jquery.min.js-->
 @model WhichComputer.Main.Computer
 @{
     Layout = "_Layout";
@@ -9,59 +9,58 @@
 }
 
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
-    <style>
-
-/* Ratings widget */
-.rate {
-    text-align: center;
-    margin: auto;
-    display: inline-block;
-    border: 0;
-}
-/* Hide radio */
-.rate > input {
-    display: none;
-}
-/* Order correctly by floating highest to the right */
-.rate > label {
-    float: right;
-}
-/* The star of the show */
-.rate > label:before {
-    display: inline-block;
-    font-size: 2rem;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    font-family: FontAwesome;
-    content: "\f005 "; /* full star */
-}
-
-/* Half star trick */
-.rate .half:before {
-    content: "\f089 "; /* half star no outline */
-    position: absolute;
-    padding-right: 0;
-}
-/* Click + hover color */
-input:checked ~ label, /* color current and previous stars on checked */
-        label:hover, label:hover ~ label {
-            color: #e3a008;
-        }
-            /* color previous stars on hover */
-
-/* Hover highlights */
-input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
-input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
-            label:hover ~ input:checked ~ label /* highlight previous selected stars */ {
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+<style>
+    /* Ratings widget */
+    .rate {
+        text-align: center;
+        margin: auto;
+        display: inline-block;
+        border: 0;
+    }
+    /* Hide radio */
+    .rate > input {
+        display: none;
+    }
+    /* Order correctly by floating highest to the right */
+    .rate > label {
+        float: right;
+    }
+    /* The star of the show */
+    .rate > label:before {
+        display: inline-block;
+        font-size: 2rem;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        font-family: FontAwesome;
+        content: "\f005 "; /* full star */
+    }
+    
+    /* Half star trick */
+    .rate .half:before {
+        content: "\f089 "; /* half star no outline */
+        position: absolute;
+        padding-right: 0;
+    }
+    /* Click + hover color */
+    input:checked ~ label, /* color current and previous stars on checked */
+            label:hover, label:hover ~ label {
                 color: #e3a008;
             }
-
+            /* color previous stars on hover */
+    
+    /* Hover highlights */
+    input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+    input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+                label:hover ~ input:checked ~ label /* highlight previous selected stars */ {
+                    color: #e3a008;
+                }
+    /* Hides the stars/prompt to rate */
     fieldset.hidden {
         display: none;
     }
-    </style>
+</style>
 
 <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
     <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
@@ -140,7 +139,7 @@ input:checked ~ label:hover ~ label, /* highlight previous selected stars for ne
           var fieldset = document.getElementById(id+'+Star')
           fieldset.classList.remove('rate');
           fieldset.classList.add('hidden');
-          // Unhides the "Thank You For Your Feedback!" text
+          // Un-hides the "Thank You For Your Feedback!" text
           var thankYouMessage = document.getElementById('thankYou+'+id);
           thankYouMessage.classList.remove('hidden');
 
