@@ -16,3 +16,9 @@ CREATE TABLE IF NOT EXISTS Ratings (
     FOREIGN KEY (response_id) REFERENCES Responses(response_id)
 );
 
+CREATE TABLE IF NOT EXISTS QuestionnaireMetrics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tag VARCHAR(255) UNIQUE NOT NULL,
+    times_selected INT NOT NULL
+);
+

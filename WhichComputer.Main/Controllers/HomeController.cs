@@ -99,6 +99,7 @@ public class HomeController : Controller
 
             Dictionary<string, object> response = new();
             response.Add("hash", questionnaireResponse.GetHashedAndEncryptedResponse());
+
             // Put this hash into the "responses" table
             // Get the response_id that matches this (which is auto-incremented), and send it to the card
             long responseId = _db.AddResponse(questionnaireResponse);
