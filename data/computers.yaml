@@ -90,7 +90,6 @@ computers:
       resolution: 2560 x 1600
       screen: 13.3
       ports: Two Thunderbolt/USB 4 ports, 3.5 mm headphone jack
-
   - name: HP Spectre x360
     exclude-tags:
       - no-convertible

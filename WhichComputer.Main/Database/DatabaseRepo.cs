@@ -20,10 +20,21 @@ public class DatabaseRepository
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("response_hash", response.GetHashedAndEncryptedResponse());
             command.ExecuteNonQuery();
+            long responseID = command.LastInsertedId;
+            MySqlCommand metricsUpload =
+                new MySqlCommand(
+                    "INSERT INTO QuestionnaireMetrics (tag, times_selected) VALUES (@tag, 1) ON DUPLICATE KEY UPDATE times_selected = times_selected + 1", connection);
+
+            foreach (var tag in response.GetAllTags())
+            {
+                metricsUpload.Parameters.Clear();
+                metricsUpload.Parameters.AddWithValue("tag", tag);
+                metricsUpload.ExecuteNonQuery();
+            }
 
             connection.Close();
 
-            return command.LastInsertedId;
+            return responseID;
         }
     }
 
@@ -57,8 +68,8 @@ public class DatabaseRepository
             while (reader.Read())
             {
                 QuestionnaireResponse curr = QuestionnaireResponse.FromEncryptedHash(reader.GetString("response_hash"));
-                curr.id = reader.GetInt32("response_id");
-                curr.time = reader.GetDateTime("created_at");
+                curr.Id = reader.GetInt32("response_id");
+                curr.Time = reader.GetDateTime("created_at");
 
                 allResponses.Add(curr);
             }
