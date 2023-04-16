@@ -1,0 +1,73 @@
+﻿@model WhichComputer.Main.SurveyResponse
+@{
+    ViewData["Title"] = "Survey";
+}
+
+<script>
+    function displaySliderVal() 
+    {
+        document.getElementById('sldrVal').innerHTML = document.getElementById('sldr').value;
+    }
+</script>
+
+
+<div class="py-4">
+    <div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-101">
+        <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
+
+            @using (Html.BeginForm("UploadSurveyResponse", "Home", FormMethod.Post))
+            {
+                <center><h1>Help Us Improve WhichComputer!</h1></center>
+
+                <div class="grid grid-cols-1 divide-y py-3">
+                    <div class="py-3">
+                        <div class="py-2">
+                            <h2>What is your email?</h2>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Email, new { @type = "text", @class = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", @placeholder = "Enter Email Here" })
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <div class="py-2">
+                            <h2>What features did you enjoy about our app?</h2>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.LikedResponse, new { @rows="4", @class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", @placeholder = "Enter Response Here" })
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <div class="py-2">
+                            <h2>What did you dislike about our app?</h2>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.DislikedResponse, new { @rows="4", @class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", @placeholder = "Enter Response Here" })
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <div class="py-2">
+                            <h2>Would you recommend our app to others?</h2>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Recommend, new { @rows="4", @class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", @placeholder = "Enter Response Here" })
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <div class="py-2">
+                            <h2>How would you rate your overall satisfaction of our app?</h2>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Statisfaction, new { @class = "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700", @type="range", @min="0", @max="10", @value="5", @id="sldr"})
+                        </div>
+
+                    </div>
+                </div>
+
+                <p>
+                    <center><input type="submit" value="Submit Responses" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 hover:scale-105" /></center>
+                </p>
+            }
+
+        </div>
+    </div>
+</div>
