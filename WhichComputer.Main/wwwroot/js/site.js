@@ -95,7 +95,7 @@ function postAnswers() {
             $("#prompt").text("All done!");
             Cookies.set('hash', result.value.hash);
             console.log(result);
-            window.location.replace("/Home/ComputerResults?q=" + result.value.hash);
+            window.location.replace("/Home/ComputerResults?q=" + result.value.hash + "&responseId=" + result.value.responseId);
         },
         error: function (xhr, status, error) {
             $("#question-card").html(xhr.responseText);
