@@ -1,4 +1,6 @@
-﻿namespace WhichComputer.Main;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace WhichComputer.Main;
 
 public static class Util
 {
@@ -12,6 +14,8 @@ public static class Util
                 return typeof(AmazonComputerResultHandler);
             case SupportedServices.BEST_BUY:
                 return typeof(BestBuyResultHandler);
+            case SupportedServices.NEWEGG:
+                return typeof(NeweggResultHandler);
         }
 
         throw new NotImplementedException();

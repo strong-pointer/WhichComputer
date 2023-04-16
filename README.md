@@ -11,3 +11,7 @@ If you run into any issues, try opening the solution again as a project and dele
 
 The recommended way to run the code is `dotnet watch run` in the root directory, as this has hot reload of the website included.
 Regular running through the IDE is fine though.
+
+## TODO
+- Optimize the tags to create more optimal results
+- Add more robust error handling

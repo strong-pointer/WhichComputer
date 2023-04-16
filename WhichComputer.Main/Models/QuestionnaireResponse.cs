@@ -6,8 +6,10 @@ namespace WhichComputer
 {
     public class QuestionnaireResponse
     {
+        public long Id = -1;
         // For double[] value: [0] == Total Score;  [1] == Total Count
         private Dictionary<string, double[]> _TagToTotalScoreAndCount;
+        public DateTime Time;
 
         public QuestionnaireResponse()
         {
@@ -101,6 +103,17 @@ namespace WhichComputer
                 Console.WriteLine("Error! GetTagAverage() in QuestionnaireResponse.cs:\ninput tag is invalid, has no score in map");
                 return -1;
             }
+        }
+
+        public Dictionary<string, double> GetAllTagAverages()
+        {
+            Dictionary<string, double> tags = new();
+            foreach (var tag in _TagToTotalScoreAndCount.Keys)
+            {
+                tags[tag] = GetTagAverage(tag);
+            }
+
+            return tags;
         }
 
         // Helper function that simply pulls from the existing tags and scores and then creates an unencrypted hash string

@@ -4,7 +4,13 @@ namespace WhichComputer.Main
 {
     public class EbayResultHandler : IComputerResultHandler
     {
-        private const string AppId = "AieshaPa-whichcom-PRD-d756826fc-fafa7d06";
+        private string _AppId = Program.Config.GetValue<string>("eBayKey");
+        private ComputerLoader _computerLoader;
+
+        public EbayResultHandler(ComputerLoader loader)
+        {
+            _computerLoader = loader;
+        }
 
         public SupportedServices Service => SupportedServices.EBAY;
 
@@ -13,7 +19,7 @@ namespace WhichComputer.Main
             var url = "https://svcs.ebay.com/services/search/FindingService/v1"
                   + "?OPERATION-NAME=findItemsAdvanced"
                   + "&SERVICE-VERSION=1.0.0"
-                  + "&SECURITY-APPNAME=" + AppId
+                  + "&SECURITY-APPNAME=" + _AppId
                   + "&RESPONSE-DATA-FORMAT=JSON"
                   + "&REST-PAYLOAD"
                   + "&categoryId=175672"
@@ -36,13 +42,14 @@ namespace WhichComputer.Main
 
             var results = new List<ComputerResult>();
 
-            foreach (var item in json.findItemsAdvancedResponse[0].searchResult[0].item)
+            foreach (var item in json["findItemsAdvancedResponse"][0]["searchResult"][0]["item"])
             {
                 var result = new ComputerResult();
-                result.ListingName = item.title[0].Value;
-                result.Price = (double)(decimal)item.sellingStatus[0].currentPrice[0].Value;
-                result.Used = item.condition[0].conditionDisplayName[0].Value;
-                result.Url = item.viewItemURL[0].Value;
+                result.ListingName = item["title"][0];
+                result.Price = double.Parse((string)item["sellingStatus"][0]["currentPrice"][0]["__value__"]);
+                result.Used = !item["condition"][0]["conditionDisplayName"][0].Equals("New");
+                result.Url = item["viewItemURL"][0];
+                result.Source = Service;
                 results.Add(result);
             }
 

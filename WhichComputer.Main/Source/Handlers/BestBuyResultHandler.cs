@@ -42,7 +42,9 @@ public class BestBuyResultHandler : IComputerResultHandler
             string condition = used ? "Refurbished" : "New";
 
             var url = $"{BaseUrl}/site/searchpage.jsp?qp=condition_facet%3DCondition~{condition}&st={computer.Name}";
-            doc = (await new HtmlWeb().LoadFromWebAsync(url)).DocumentNode;
+            HtmlWeb web = new HtmlWeb();
+            web.UserAgent = FakeUserAgents.Chrome.ToString();
+            doc = web.Load(url).DocumentNode;
         }
 
         // The first item is simply the results header.
@@ -60,7 +62,7 @@ public class BestBuyResultHandler : IComputerResultHandler
                 result.Used = used;
                 result.ListingName = node.CssSelect(".sku-title").First().InnerText.Trim();
                 result.Price = double.Parse(Regex.Replace(node.CssSelect(".priceView-hero-price span").First().InnerText.Trim(), @"([a-zA-Z\$,])", string.Empty));
-                result.Url = node.CssSelect(".sku-title a").First().GetAttributeValue("href");
+                result.Url = BaseUrl + node.CssSelect(".sku-title a").First().GetAttributeValue("href");
                 result.Source = Service;
                 results.Add(result);
                 total++;

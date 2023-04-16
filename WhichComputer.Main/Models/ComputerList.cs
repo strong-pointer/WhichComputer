@@ -10,6 +10,27 @@ namespace WhichComputer.Main
     public record struct Computer(string Name, List<string> ExcludeTags, List<Dictionary<string, object>> Tags, string Brand, List<string> AvailableFrom, List<string> Caveats, string Description, ComputerSpecs Specs)
     {
         internal string Model;
+
+        public Dictionary<string, object>? GetTag(string identifier)
+        {
+            foreach (var tag in Tags)
+            {
+                if (tag.ContainsKey(identifier))
+                {
+                    return tag;
+                }
+            }
+
+            return null;
+        }
+
+        public double GetTagValue(string identifier)
+        {
+            var tag = GetTag(identifier);
+            double value;
+            double.TryParse((string)tag[identifier], out value);
+            return value;
+        }
     }
 
     public record struct ComputerSpecs(List<ComputerOption> Options, [property: YamlMember(Alias = "OS", ApplyNamingConventions = false)] string OS, float Weight, string Resolution, float Screen, string Ports);
@@ -19,6 +40,15 @@ namespace WhichComputer.Main
     public class ComputerList
     {
         public List<Computer> Computers = new();
+
+        public ComputerList()
+        {
+        }
+
+        public ComputerList(List<Computer> computers)
+        {
+            Computers = computers;
+        }
 
         // Returns a single computer based on its name
         public Computer? GetComputer(string name)

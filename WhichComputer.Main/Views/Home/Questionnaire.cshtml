@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Computer";
+    ViewData["Title"] = "Questionnaire";
 }
 
 <body class="bg-black">
@@ -7,8 +7,8 @@
         @await Component.InvokeAsync("QuestionCard", ViewData["Question"])
     </div>
     <script>
-    if (Cookies.get('hash') !== undefined) {
+    /*if (Cookies.get('hash') !== undefined) {
         window.location.replace("/Home/ComputerResults?q=" + Cookies.get('hash'));
-     }
+     }*/
     </script>
 </body>
