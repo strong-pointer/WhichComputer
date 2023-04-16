@@ -173,7 +173,7 @@ public class HomeController : Controller
     {
         try
         {
-            string connection = @"Data Source=whichcomputer4720.cnhnorewhlzk.us-east-1.rds.amazonaws.com;Port=3306;Initial Catalog=whichschema;User ID=whichcomputer;Password=whichcomputer4720pass$;";
+            string connection = Program.Config.GetConnectionString("AWS");
 
             using (var con = new MySqlConnection(connection))
             {
