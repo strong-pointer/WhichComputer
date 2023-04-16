@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
 using Newtonsoft.Json;
 using WhichComputer.Main.Models.JSON;
 using YamlDotNet.Core.Tokens;
+using MySqlConnector;
 
 namespace WhichComputer.Main.Controllers;
 
@@ -19,6 +21,11 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Survey()
     {
         return View();
     }
@@ -142,5 +149,42 @@ public class HomeController : Controller
     {
         Computer temp = Program.GetComputerLoader().Computers.GetComputer(Request.Query["computer"]).Value;
         return View(temp);
+    }
+
+    [HttpPost]
+    public ActionResult UploadSurveyResponse(SurveyResponse model)
+    {
+        try
+        {
+            string connection = @"Data Source=whichcomputer4720.cnhnorewhlzk.us-east-1.rds.amazonaws.com;Port=3306;Initial Catalog=whichschema;User ID=whichcomputer;Password=whichcomputer4720pass$;";
+
+            using (var con = new MySqlConnection(connection))
+            {
+                string sql = "INSERT INTO SurveyResponse (email, likedResponse, dislikedResponse, recommend, satisfaction) VALUES (@email, @liked, @disliked, @recommend, @satisfaction);";
+                var cmd = new MySqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@email", model.Email);
+                cmd.Parameters.AddWithValue("@liked", model.LikedResponse);
+                cmd.Parameters.AddWithValue("@disliked", model.DislikedResponse);
+                cmd.Parameters.AddWithValue("@recommend", model.Recommend);
+                cmd.Parameters.AddWithValue("@satisfaction", model.Statisfaction);
+
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Records Inserted Successfully");
+                }
+                catch (MySqlException e)
+                {
+                    Console.WriteLine("Error Generated. Details: " + e.ToString());
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+        catch (MySqlException ex)
+        {
+            throw ex;
+        }
     }
 }
