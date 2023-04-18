@@ -65,7 +65,6 @@ computers:
       - audio-video-editing: 8.0
     brand: Apple
     available-from:
-      - Apple Store
       - Best Buy
     caveats:
       - Upgrading the storage is expensive, so be sure to choose the right size when you purchase.
@@ -90,6 +89,7 @@ computers:
       resolution: 2560 x 1600
       screen: 13.3
       ports: Two Thunderbolt/USB 4 ports, 3.5 mm headphone jack
+
   - name: HP Spectre x360
     exclude-tags:
       - no-convertible
@@ -104,7 +104,6 @@ computers:
     available-from:
       - Amazon
       - Best Buy
-      - HP
     caveats:
       - The battery life is shorter than some of the other laptops on this list.
     description: |
@@ -140,8 +139,6 @@ computers:
       - stylish: 7.0
     brand: Dell
     available-from:
-      - Dell
-      - Amazon
       - Best Buy
     caveats:
       - The webcam is located at the bottom of the screen, which may not be ideal for video calls.
@@ -183,7 +180,6 @@ computers:
       - security: 8.0
     brand: Lenovo
     available-from:
-      - Lenovo
       - Amazon
       - Best Buy
     caveats:
@@ -370,4 +366,449 @@ computers:
       weight: 3.64
       resolution: 1920 x 1080
       screen: 15.6
-      ports: 2 USB-A, 1 USB-C, HDMI, Ethernet, headphone, mic, SD card reader
+      ports: 2 USB-A, 1 USB-C, HDMI, Ethernet, headphone, mic, SD card reader 
+          
+  - name: ASUS ROG Strix G15 G513
+    exclude-tags:
+      - no-windows
+      - no-asus
+    tags:
+      - high-performance: 10.0
+      - gaming-laptop: 10.0
+      - multimedia: 8.0
+    brand: ASUS
+    available-from:
+      - eBay
+      - Newegg
+      - Amazon
+      - Best Buy
+    caveats:
+      - This laptop can be quite heavy for some users, weighing in at 5.3 pounds.
+    description: |
+      The ASUS ROG Strix G15 G513 is a powerful gaming laptop that features an NVIDIA GeForce RTX 3060
+      graphics card, an Intel Core i7-11800H processor, and 16GB of DDR4 memory. The laptop comes with a
+      512GB NVMe SSD and a 15.6-inch FHD display with a refresh rate of up to 300Hz. 
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-11800H 2.3 GHz
+          graphics: NVIDIA GeForce RTX 3060
+          cores: 8
+          threads: 16
+      OS: Windows 10 Home
+      weight: 5.3
+      resolution: 1920 x 1080
+      screen: 15.6
+      ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, headphone, mic
+
+  - name: HP OMEN Obelisk 875-1023
+    exclude-tags:
+      - no-windows
+      - no-hp
+    tags:
+      - high-performance: 10.0
+      - gaming-desktop: 10.0
+    brand: HP
+    available-from:
+      - eBay
+      - Newegg
+      - Amazon
+      - Best Buy
+    caveats:
+      - This desktop does not come with a monitor, keyboard, or mouse.
+    description: |
+      The HP OMEN Obelisk 875-1023 is a powerful gaming desktop that features an NVIDIA GeForce GTX 1660
+      graphics card, an Intel Core i5-10400F processor, and 8GB of DDR4 memory. The desktop comes with a
+      512GB PCIe NVMe SSD and supports Wi-Fi 6. 
+    specs:
+      options:
+        - storage: 512
+          RAM: 8
+          processor: Intel Core i5-10400F 2.9 GHz
+          graphics: NVIDIA GeForce GTX 1660
+          cores: 6
+          threads: 12
+      OS: Windows 10 Home
+      weight: 22.05
+      ports: 7 USB-A, 1 USB-C, HDMI, DisplayPort, Ethernet, headphone, mic
+
+  - name: Lenovo Yoga C940-14IIL
+    exclude-tags:
+      - no-windows
+      - no-lenovo
+    tags:
+      - convertible: 10.0
+      - high-performance: 8.0
+      - multimedia: 7.0
+    brand: Lenovo
+    available-from:
+      - eBay
+      - Newegg
+      - Amazon
+      - Best Buy
+    caveats:
+      - The battery life of this convertible may be shorter than some other laptops in this price range.
+    description: |
+      The Lenovo Yoga C940-14IIL is a versatile 2-in-1 convertible laptop that features an Intel
+  - name: "Alienware Aurora R10 Gaming Desktop"
+    exclude-tags:
+      - no-desktop
+    tags:
+      - gaming: 10.0
+      - powerful: 10.0
+      - customizable: 10.0
+      - high-end: 10.0
+      - heavy: 8.0
+        explanation: This desktop is quite large and heavy, so it may not be suitable for small spaces.
+      - RGB: 9.0
+        explanation: This desktop has customizable RGB lighting.
+    brand: Alienware
+    available-from:
+      - Best Buy
+    description: |
+      The Alienware Aurora R10 is a high-end gaming desktop that offers a lot of power and customization options.
+      It features the latest AMD Ryzen processors and NVIDIA graphics cards, which deliver exceptional gaming performance.
+      It also has customizable RGB lighting and a tool-less design, making it easy to upgrade and customize.
+      However, it is quite large and heavy, so it may not be suitable for small spaces.
+    specs:
+      options:
+        - storage: 1TB SSD
+          RAM: 16GB
+          processor: AMD Ryzen 7 5800X
+          graphics-card: NVIDIA GeForce RTX 3060 Ti 8GB GDDR6
+          power-supply: 550W
+        - storage: 2TB SSD
+          RAM: 32GB
+          processor: AMD Ryzen 9 5900X
+          graphics-card: NVIDIA GeForce RTX 3080 10GB GDDR6X
+          power-supply: 1000W
+      OS: Windows 10 Home 64-bit
+      weight: 39.2 lbs
+      dimensions: 18.9 x 8.8 x 17.0 in
+      ports: 8 USB-A, 2 USB-C, Ethernet, audio-out, audio-in, DisplayPort, HDMI
+
+  - name: "ASUS ROG Strix GA15 Gaming Desktop"
+    exclude-tags:
+      - no-desktop
+    tags:
+      - gaming: 10.0
+      - high-end: 8.0
+      - compact: 7.0
+        explanation: This desktop has a relatively small form factor, making it suitable for small spaces.
+      - powerful: 9.0
+      - VR-ready: 8.0
+        explanation: This desktop is capable of running virtual reality (VR) applications and games.
+      - customizable: 9.0
+        explanation: This desktop has customizable RGB lighting and a transparent side panel.
+    brand: ASUS
+    available-from:
+      - Amazon
+      - Best Buy
+    description: |
+      The ASUS ROG Strix GA15 is a powerful gaming desktop that offers a lot of customization options.
+      It features the latest AMD Ryzen processors and NVIDIA graphics cards, which deliver exceptional gaming performance.
+      It also has customizable RGB lighting and a transparent side panel, allowing you to show off your build.
+      Additionally, it has a relatively small form factor, making it suitable for small spaces.
+    specs:
+      options:
+        - storage: 512GB SSD
+          RAM: 16GB
+          processor: AMD Ryzen 7 5800X
+          graphics-card: NVIDIA GeForce RTX 3070 8GB GDDR6
+          power-supply: 500W
+        - storage: 1TB SSD
+          RAM: 32GB
+          processor: AMD Ryzen 9 5900X
+          graphics-card: NVIDIA GeForce RTX 3080 10GB GDDR6X
+  - name: "Dell XPS 13 2-in-1"
+    exclude-tags:
+      - gaming
+    tags:
+      - lightweight: 9.5
+      - 2-in-1: 10.0
+      - productivity: 9.0
+      - portability: 9.5
+      - professional: 8.5
+      - touchscreen: 10.0
+    brand: Dell
+    available-from:
+        - Dell
+        - Amazon
+        - Best Buy
+        - Newegg
+    caveats:
+        - The keyboard can be a little shallow for some users.
+        - Battery life can be shorter than expected.
+    description: |
+        The Dell XPS 13 2-in-1 is an excellent choice for professionals on-the-go who require a lightweight
+        and versatile computer. The 360-degree hinge allows it to easily transform into a tablet or tent mode,
+        and the touchscreen display offers great clarity and color accuracy. It is powered by an 11th Gen Intel
+        Core i7 processor and up to 16GB of RAM, making it capable of handling demanding tasks with ease. Its
+        only drawback may be its battery life, which can last up to 8 hours depending on usage.
+    specs:
+        options:
+          - storage: 512
+            RAM: 16
+            processor: Intel Core i7-1165G7 2.80 GHz
+            cores: 4
+            threads: 8
+          - storage: 1TB
+            RAM: 32
+            processor: Intel Core i7-1165G7 2.80 GHz
+            cores: 4
+            threads: 8
+        OS: Windows 10 Home
+        weight: 2.9
+        resolution: 1920 x 1200
+        screen: 13.4
+        ports: 2 Thunderbolt 4, microSD, headphone jack       
+  - name: "Dell Inspiron 14 2-in-1 Laptop"
+    exclude-tags:
+      - no-2in1
+    tags:
+      - convertible: 10.0
+      - touchscreen: 10.0
+      - lightweight: 7.0
+      - office: 8.0
+      - student: 8.0
+      - budget: 8.0
+    brand: Dell
+    available-from:
+      - Best Buy
+      - Amazon
+    caveats:
+      - Battery life is not great.
+    description: |
+      The Dell Inspiron 14 2-in-1 is a versatile laptop that is perfect for students or office workers on a budget.
+      It can be used as a laptop or tablet, making it ideal for taking notes or drawing. It has a decent
+      performance and lightweight design, making it a great choice for people on-the-go.
+    specs:
+      options:
+        - storage: 256
+          RAM: 8
+          processor: Intel Core i5-1135G7 2.4 GHz
+          cores: 4
+          threads: 8
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-1165G7 2.8 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Home
+      weight: 3.42
+      resolution: 1920 x 1080
+      screen: 14
+      ports: 1 USB-C, 2 USB-A, HDMI, headphone/microphone combo
+  - name: "ASUS ZenBook Pro Duo"
+    exclude-tags:
+      - no-convertible
+    tags:
+      - video-editing: 10.0
+      - creative-work: 10.0
+      - high-performance: 10.0
+      - multitasking: 10.0
+      - power-users: 10.0
+      - desktop-replacement: 10.0
+    brand: ASUS
+    available-from:
+      - Amazon
+      - Best Buy
+      - Newegg
+    caveats:
+      - This computer is heavier and bulkier than most laptops due to its dual screens and powerful hardware.
+    description: |
+      The ASUS ZenBook Pro Duo is an innovative and powerful laptop designed for creative professionals who require
+      high-performance and multitasking capabilities. It features a secondary 14-inch 4K touch display called the
+      ScreenPad Plus that sits above the keyboard and provides an additional workspace for tasks like video editing,
+      3D modeling, and music production. The main display is a 15.6-inch 4K OLED panel that offers excellent color
+      accuracy and contrast. Under the hood, the ZenBook Pro Duo is powered by an Intel Core i9 processor, 32GB of RAM,
+      and a 1TB SSD, making it capable of handling demanding workloads with ease.
+    specs:
+      options:
+        - storage: 1TB
+          RAM: 32
+          processor: Intel Core i9-10980HK 2.4 GHz
+          cores: 8
+          threads: 16
+        - storage: 2TB
+          RAM: 32
+          processor: Intel Core i9-10980HK 2.4 GHz
+          cores: 8
+          threads: 16
+      OS: Windows 10 Pro
+      weight: 5.51
+      resolution: 3840 x 2160
+      screen: 15.6
+      ports: 2 USB-C, 2 USB-A, HDMI, headphone, mic
+  - name: "HP Pavilion x360"
+    exclude-tags:
+      - heavy
+    tags:
+      - budget: 10.0
+      - convertible: 8.0
+      - lightweight: 6.0
+      - student: 8.0
+      - office: 7.0
+    brand: HP
+    available-from:
+      - Amazon
+      - Best Buy
+      - HP Store
+    caveats:
+      - The budget version comes with an Intel Pentium processor, which may not be powerful enough for demanding tasks.
+      - Battery life is average, at around 7 hours.
+    description: |
+      The HP Pavilion x360 is a budget-friendly convertible laptop that's perfect for students or office use.
+      It can be used as a laptop, tent, or tablet, making it versatile and easy to use. The budget version comes
+      with an Intel Pentium processor, which may not be powerful enough for demanding tasks, but it also comes
+      with 8GB of RAM and a 128GB SSD. The battery life is around 7 hours, which is average for a laptop of this
+      size and price range.
+    specs:
+      options:
+        - storage: 128
+          RAM: 8
+          processor: Intel Pentium Gold 6405U 2.4 GHz
+          cores: 2
+          threads: 4
+        - storage: 256
+          RAM: 8
+          processor: Intel Core i3-1115G4 3.0 GHz
+          cores: 2
+          threads: 4
+        - storage: 512
+          RAM: 8
+          processor: Intel Core i5-1135G7 2.4 GHz
+          cores: 4
+          threads: 8
+      OS: Windows 10 Home
+      weight: 3.75
+      resolution: 1920 x 1080
+      screen: 14
+      ports: 1 USB-C, 2 USB-A, HDMI, headphone/microphone combo
+  - name: "ASUS ROG Strix Scar 15"
+    exclude-tags:
+      - no-gaming
+    tags:
+      - high-performance: 10.0
+      - gaming: 10.0
+      - workstation: 8.0
+      - content-creation: 7.0
+      - VR-ready: 10.0
+      - powerful: 10.0
+    brand: ASUS
+    available-from:
+      - Amazon
+      - Best Buy
+      - Newegg
+    description: |
+      The ASUS ROG Strix Scar 15 is a powerful gaming laptop with an NVIDIA GeForce RTX 30-series graphics card
+      and AMD Ryzen 9 processor. It has a fast 240Hz refresh rate display for smooth gameplay and is VR-ready.
+      It's also great for content creation, with its high-performance components and 4K resolution display.
+    specs:
+      options:
+        - storage: 1TB SSD
+          RAM: 16
+          processor: AMD Ryzen 9 5900HX
+          graphics-card: NVIDIA GeForce RTX 3070
+          display: 15.6-inch 4K UHD (3840 x 2160) IPS-level panel, 240Hz
+          battery-life: up to 9 hours
+          weight: 5.1 lbs
+          ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, SD card reader, headphone/mic combo jack
+        - storage: 1TB SSD
+          RAM: 32
+          processor: AMD Ryzen 9 5900HX
+          graphics-card: NVIDIA GeForce RTX 3080
+          display: 15.6-inch 4K UHD (3840 x 2160) IPS-level panel, 240Hz
+          battery-life: up to 9 hours
+          weight: 5.1 lbs
+          ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, SD card reader, headphone/mic combo jack
+    OS: Windows 10
+  - name: "ASUS ROG Strix Scar 17"
+    exclude-tags:
+      - no-laptop
+    tags:
+      - gaming: 10.0
+      - high-performance: 10.0
+      - large-storage: 10.0
+      - heavy: 10.0
+      - power-user: 10.0
+    brand: ASUS
+    available-from:
+      - Amazon
+      - Best Buy
+      - Newegg
+    caveats:
+      - This laptop is heavy, weighing in at almost 6 pounds.
+    description: |
+      The ASUS ROG Strix Scar 17 is a powerhouse gaming laptop with plenty of performance and storage to spare.
+      Its large 17-inch screen and heavy weight make it less portable, but ideal for serious gamers who need 
+      a powerful machine to keep up with their games. It features an NVIDIA GeForce RTX 3080 graphics card,
+      an Intel Core i9-11900H processor, and up to 64GB of DDR4 RAM, making it capable of handling even the most 
+      demanding games and applications.
+    specs:
+      options:
+        - storage: 1TB SSD
+          RAM: 16GB DDR4
+          processor: Intel Core i7-11800H 2.3 GHz
+          cores: 8
+          threads: 16
+        - storage: 2TB SSD
+          RAM: 32GB DDR4
+          processor: Intel Core i7-11800H 2.3 GHz
+          cores: 8
+          threads: 16
+        - storage: 4TB SSD
+          RAM: 64GB DDR4
+          processor: Intel Core i9-11900H 2.5 GHz
+          cores: 8
+          threads: 16
+      OS: Windows 10 Home
+      weight: 5.95
+      resolution: 1920 x 1080
+      screen: 17.3
+      ports: 3 USB 3.2 Type A, 1 USB 3.2 Type C, HDMI, RJ45 Ethernet, 3.5mm headphone and mic combo jack
+  - name: "MSI GE76 Raider"
+    exclude-tags:
+      - budget
+    tags:
+      - gaming: 10.0
+      - high-performance: 10.0
+      - power: 10.0
+      - desktop-replacement: 10.0
+      - large-screen: 10.0
+      - VR-ready: 10.0
+      - RGB-lighting: 10.0
+    brand: MSI
+    available-from:
+      - Amazon
+      - Newegg
+      - Best Buy
+      - Micro Center
+    description: |
+      The MSI GE76 Raider is a high-performance gaming laptop that's perfect for serious gamers who need a powerful machine on the go. It comes with the latest Intel Core i7 processor, 16GB of RAM, and NVIDIA GeForce RTX 3070 graphics card, making it capable of running the latest games and software smoothly. It also has a large 17.3-inch Full HD IPS display with a fast 240Hz refresh rate, delivering crisp and clear visuals with no lag. With its RGB lighting, it looks great both in and out of game.
+    specs:
+      options:
+        - storage: 512
+          RAM: 16
+          processor: Intel Core i7-11800H 2.3 - 4.6GHz
+          cores: 8
+          threads: 16
+          graphics-card: NVIDIA GeForce RTX 3060
+        - storage: 1TB
+          RAM: 32
+          processor: Intel Core i7-11800H 2.3 - 4.6GHz
+          cores: 8
+          threads: 16
+          graphics-card: NVIDIA GeForce RTX 3070
+        - storage: 1TB
+          RAM: 64
+          processor: Intel Core i7-11800H 2.3 - 4.6GHz
+          cores: 8
+          threads: 16
+          graphics-card: NVIDIA GeForce RTX 3080
+      OS: Windows 10 Pro
+      weight: 6.39 lbs
+      resolution: 1920 x 1080
+      screen: 17.3
+      ports: 1 x HDMI, 1 x USB-C Thunderbolt 4, 3 x USB 3.2 Gen 1, 1 x SD card reader, 1 x Ethernet port
