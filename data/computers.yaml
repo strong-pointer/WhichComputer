@@ -473,19 +473,16 @@ computers:
       However, it is quite large and heavy, so it may not be suitable for small spaces.
     specs:
       options:
-        - storage: 1TB SSD
-          RAM: 16GB
+        - storage: 1000
+          RAM: 16
           processor: AMD Ryzen 7 5800X
-          graphics-card: NVIDIA GeForce RTX 3060 Ti 8GB GDDR6
-          power-supply: 550W
-        - storage: 2TB SSD
-          RAM: 32GB
+          graphics: NVIDIA GeForce RTX 3060 Ti 8GB GDDR6
+        - storage: 2000
+          RAM: 32
           processor: AMD Ryzen 9 5900X
-          graphics-card: NVIDIA GeForce RTX 3080 10GB GDDR6X
-          power-supply: 1000W
+          graphics: NVIDIA GeForce RTX 3080 10GB GDDR6X
       OS: Windows 10 Home 64-bit
-      weight: 39.2 lbs
-      dimensions: 18.9 x 8.8 x 17.0 in
+      weight: 39.2
       ports: 8 USB-A, 2 USB-C, Ethernet, audio-out, audio-in, DisplayPort, HDMI
 
   - name: "ASUS ROG Strix GA15 Gaming Desktop"
@@ -512,15 +509,14 @@ computers:
       Additionally, it has a relatively small form factor, making it suitable for small spaces.
     specs:
       options:
-        - storage: 512GB SSD
-          RAM: 16GB
+        - storage: 512
+          RAM: 16
           processor: AMD Ryzen 7 5800X
-          graphics-card: NVIDIA GeForce RTX 3070 8GB GDDR6
-          power-supply: 500W
-        - storage: 1TB SSD
-          RAM: 32GB
+          graphics: NVIDIA GeForce RTX 3070 8GB GDDR6
+        - storage: 1000
+          RAM: 32
           processor: AMD Ryzen 9 5900X
-          graphics-card: NVIDIA GeForce RTX 3080 10GB GDDR6X
+          graphics: NVIDIA GeForce RTX 3080 10GB GDDR6X
   - name: "Dell XPS 13 2-in-1"
     exclude-tags:
       - gaming
@@ -533,7 +529,6 @@ computers:
       - touchscreen: 10.0
     brand: Dell
     available-from:
-        - Dell
         - Amazon
         - Best Buy
         - Newegg
@@ -553,7 +548,7 @@ computers:
             processor: Intel Core i7-1165G7 2.80 GHz
             cores: 4
             threads: 8
-          - storage: 1TB
+          - storage: 1000
             RAM: 32
             processor: Intel Core i7-1165G7 2.80 GHz
             cores: 4
@@ -626,12 +621,12 @@ computers:
       and a 1TB SSD, making it capable of handling demanding workloads with ease.
     specs:
       options:
-        - storage: 1TB
+        - storage: 1000
           RAM: 32
           processor: Intel Core i9-10980HK 2.4 GHz
           cores: 8
           threads: 16
-        - storage: 2TB
+        - storage: 2000
           RAM: 32
           processor: Intel Core i9-10980HK 2.4 GHz
           cores: 8
@@ -654,7 +649,6 @@ computers:
     available-from:
       - Amazon
       - Best Buy
-      - HP Store
     caveats:
       - The budget version comes with an Intel Pentium processor, which may not be powerful enough for demanding tasks.
       - Battery life is average, at around 7 hours.
@@ -707,23 +701,18 @@ computers:
       It's also great for content creation, with its high-performance components and 4K resolution display.
     specs:
       options:
-        - storage: 1TB SSD
+        - storage: 1000
           RAM: 16
           processor: AMD Ryzen 9 5900HX
-          graphics-card: NVIDIA GeForce RTX 3070
-          display: 15.6-inch 4K UHD (3840 x 2160) IPS-level panel, 240Hz
-          battery-life: up to 9 hours
-          weight: 5.1 lbs
-          ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, SD card reader, headphone/mic combo jack
-        - storage: 1TB SSD
+          graphics: NVIDIA GeForce RTX 3070
+        - storage: 1000
           RAM: 32
           processor: AMD Ryzen 9 5900HX
-          graphics-card: NVIDIA GeForce RTX 3080
-          display: 15.6-inch 4K UHD (3840 x 2160) IPS-level panel, 240Hz
-          battery-life: up to 9 hours
-          weight: 5.1 lbs
-          ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, SD card reader, headphone/mic combo jack
-    OS: Windows 10
+          graphics: NVIDIA GeForce RTX 3080
+      OS: Windows 10
+      weight: 5.1
+      screen: 15.6
+      ports: 3 USB-A, 1 USB-C, HDMI, Ethernet, SD card reader, headphone/mic combo jack
   - name: "ASUS ROG Strix Scar 17"
     exclude-tags:
       - no-laptop
@@ -748,18 +737,18 @@ computers:
       demanding games and applications.
     specs:
       options:
-        - storage: 1TB SSD
-          RAM: 16GB DDR4
+        - storage: 1000
+          RAM: 16
           processor: Intel Core i7-11800H 2.3 GHz
           cores: 8
           threads: 16
-        - storage: 2TB SSD
-          RAM: 32GB DDR4
+        - storage: 2000
+          RAM: 32
           processor: Intel Core i7-11800H 2.3 GHz
           cores: 8
           threads: 16
-        - storage: 4TB SSD
-          RAM: 64GB DDR4
+        - storage: 4000
+          RAM: 64
           processor: Intel Core i9-11900H 2.5 GHz
           cores: 8
           threads: 16
@@ -784,7 +773,6 @@ computers:
       - Amazon
       - Newegg
       - Best Buy
-      - Micro Center
     description: |
       The MSI GE76 Raider is a high-performance gaming laptop that's perfect for serious gamers who need a powerful machine on the go. It comes with the latest Intel Core i7 processor, 16GB of RAM, and NVIDIA GeForce RTX 3070 graphics card, making it capable of running the latest games and software smoothly. It also has a large 17.3-inch Full HD IPS display with a fast 240Hz refresh rate, delivering crisp and clear visuals with no lag. With its RGB lighting, it looks great both in and out of game.
     specs:
@@ -794,21 +782,21 @@ computers:
           processor: Intel Core i7-11800H 2.3 - 4.6GHz
           cores: 8
           threads: 16
-          graphics-card: NVIDIA GeForce RTX 3060
-        - storage: 1TB
+          graphics: NVIDIA GeForce RTX 3060
+        - storage: 1000
           RAM: 32
           processor: Intel Core i7-11800H 2.3 - 4.6GHz
           cores: 8
           threads: 16
-          graphics-card: NVIDIA GeForce RTX 3070
-        - storage: 1TB
+          graphics: NVIDIA GeForce RTX 3070
+        - storage: 1000
           RAM: 64
           processor: Intel Core i7-11800H 2.3 - 4.6GHz
           cores: 8
           threads: 16
-          graphics-card: NVIDIA GeForce RTX 3080
+          graphics: NVIDIA GeForce RTX 3080
       OS: Windows 10 Pro
-      weight: 6.39 lbs
+      weight: 6.39
       resolution: 1920 x 1080
       screen: 17.3
       ports: 1 x HDMI, 1 x USB-C Thunderbolt 4, 3 x USB 3.2 Gen 1, 1 x SD card reader, 1 x Ethernet port
