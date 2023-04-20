@@ -1,0 +1,18 @@
+﻿@model WhichComputer.Main.Computer
+@{
+    Layout = "_Layout";
+    string computer = Model.Name;
+    var id = "a" + Guid.NewGuid().ToString("N").Substring(0, 10);
+}
+
+<div class="computer-card h-full opacity-75 transition ease-in-out hover:opacity-100 hover:scale-105">
+    <div class="m-8 h-full max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto">
+        <div id="@id" class="h-56">
+            <h5 id="BrandAndDesc" class="pb-4 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">@Model.Name</h5>
+            <p class="text-sm dark:text-white pb-3">Brand: @Model.Brand<br/><br/>@Model.Description </p>
+        </div>      
+           
+        <button class="dark:text-emerald-300 block mx-auto" data-accordion-target="#@id-body" aria-controls="@id-body" aria-expanded="false" onclick="location.href='@Url.Action("MoreInfo", "Home", new { computer = @computer })'">See more</button>
+       
+        </div>
+</div>

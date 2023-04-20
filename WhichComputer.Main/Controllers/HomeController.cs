@@ -122,6 +122,17 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    public IActionResult MostPopularComputers()
+    {
+        Tuple<string, long> mostPop = _db.GetMostPopularHash();
+        QuestionnaireResponse response = QuestionnaireResponse.FromEncryptedHash(mostPop.Item1);
+        ViewData["MostPopularCount"] = mostPop.Item2;
+
+        List<Computer> mostPopular = ScoringCalculation.CalculateScore(response);
+        return View(new ComputerList(mostPopular));
+    }
+
+    [HttpGet]
     public IActionResult ComputerResults()
     {
         string queryParam = string.Empty;
