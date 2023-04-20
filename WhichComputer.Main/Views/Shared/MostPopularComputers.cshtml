@@ -1,0 +1,29 @@
+﻿@model WhichComputer.Main.ComputerList
+@{
+    ViewData["Title"] = "Most Popular Results";
+    long hashCount = (long)ViewData["MostPopularCount"];
+}
+
+<section class="bg-white dark:bg-gray-900">
+    <div class="text-center text-sm font-semibold whitespace-nowrap dark:text-white">
+        <h4 class="mb-4 text-sm font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl  dark:text-white">Our most popular recommendations.</h4>
+    <p><br /></p>
+        <h4 class="mb-4 text-sm tracking-tight leading-none text-gray-900  dark:text-white">This particular set of computers has been recommended <b>@hashCount</b> time(s)!</h4>
+        <p><br /></p>
+    </div>
+</section>
+
+<body  class="max-w-sm w-full lg:max-w-full lg:flex bg-black">
+    
+
+ <div class="py-4 m-auto grid grid-cols-3 gap-4 m-4 w-11/12" data-accordion="open" data-inactive-classes="dark:text-emerald-300" data-active-classes="dark:text-white">
+        @foreach (var computer in @Model.Computers)
+        {
+            @await Component.InvokeAsync("MostPopularComputerCard", computer)
+        }
+    </div>
+
+    <div class="text-center text-m font-semibold whitespace-nowrap dark:text-white">
+        These are the recommendations that have been made <i>time and time again</i> <b>for you</b>, the user!
+    </div>
+</body>

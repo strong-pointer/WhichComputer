@@ -104,4 +104,25 @@ public class DatabaseRepository
             return allRatings;
         }
     }
+
+    public Tuple<string, long> GetMostPopularHash()
+    {
+        using (var connection = new MySqlConnection(_connectionString))
+        {
+            connection.Open();
+            long mostPopularCount = 0;
+            string mostPopular = string.Empty;
+            var query = "SELECT response_hash, COUNT(response_hash) AS hashCount FROM Responses GROUP BY response_hash ORDER BY hashCount DESC LIMIT 1";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                mostPopular = reader.GetString("response_hash");
+                mostPopularCount = reader.GetInt64("hashCount");
+            }
+
+            connection.Close();
+            return new(mostPopular, mostPopularCount);
+        }
+    }
 }
